@@ -1,5 +1,4 @@
 
-package BattleShip;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
