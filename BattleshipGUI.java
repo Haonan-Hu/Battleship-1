@@ -45,31 +45,28 @@ public class BattleshipGUI extends Application{
         stage1 = primaryStage;
         stage1.setTitle("Battleship!");
         
-		Button btn = new Button();
-		btn.setText("Play Game'");
-		btn.setOnAction(new EventHandler<ActionEvent>(){
-			
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
-				
-			}
-			
-		});
-        
         font1 = new Font("Georgia", 20);
         
         stage1.getIcons().add(new Image(getClass().getResourceAsStream("icon.jpg")));
-        //https://media.istockphoto.com/vectors/aircraft-carrier-transportation-cartoon-character-side-view-vector-vector-id981633486
-        
-        
+        //https://media.istockphoto.com/vectors/aircraft-carrier-transportation-cartoon-character-side-view-vector-vector-id981633486     
 		
-		StackPane root = new StackPane();
-		root.getChildren().add(btn);
-		stage1.setScene(new Scene(root, 300, 250));
+
+		
+		stage1.setScene(new MenuScene(stage1, font1).getScene());
 		stage1.show();
         stage1.setAlwaysOnTop(false);
 	}
+    
+    public static void nextScene(Scene next, int max)
+    {
+    	
+    	stage1.setScene(next);
+    	stage1.setMaxHeight(max*150);
+    	stage1.setMaxWidth(max*150);
+    	stage1.setMinHeight(max*70);
+    	stage1.setMinWidth(max*70);    	
+    	
+    }
     
     public static Stage getStage()
     {
