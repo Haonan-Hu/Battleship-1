@@ -21,7 +21,38 @@ import javafx.stage.Stage;
 public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     
     
+    private Label player1, player2, numOfShip, themeText;
+    private TextField name1, name2;
+    private Button start;
+    
     public PlayerOptionsGUI(String gamemode, Stage s, Font f){
+     
+        this.gamemode = gamemode;
+        
+        player1 = new Label("Player 1");
+        player1.setFont(f);
+        name1 = new TextField("Player 1 Name");
+        
+        player2 = new Label("Player 2");
+        player2.setFont(f);
+        name2 = new TextField("Player 2 Name");
+        
+        numofShip = new Label("Choose number of ships:");
+        ObservableList<String> listOfShip = FXCollections.observeableArrayList(
+                                            "1",
+                                            "2",
+                                            "3",
+                                            "4",
+                                            "5");
+        final ComboBox shipNum = new ComboBox(listofShip);
+        
+        themeText = new Label("Choose theme:");
+        ObservableList<String> themeList  = FXCollections.observeableArrayList(
+                                            "Default",
+                                            "Temp 2",
+                                            "Temp 3",
+                                            "Star Wars");
+        final ComboBox theme = new themeList(listofShip);
         
     }
     
@@ -32,6 +63,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     
     @Override
 	public void handle(ActionEvent e) {
-		System.out.println("");		
+		
+        if(e.getSource() == start)
 	}
 }
