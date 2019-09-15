@@ -23,27 +23,43 @@ import java.util.ArrayList;
 import javafx.collections.*;
 import javafx.collections.FXCollections;
 
+/*
 
+Battleship!
+
+KU EECS 448 project 1
+
+Team Name:
+Poor Yorick
+
+Team members:
+Max Goad
+Jace Bayless
+Tri Pham
+Apurva Rai
+Meet Kapadia
+*/
+
+//This class serves as a the executive class of Battleship as well as making basic gui elements.
 
 
 
 
 public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     
-    
+    //Declare variables for the labels and text fields
     private Label player1, player2, numOfShip, themeText;
     private TextField name1, name2;
     private Button start;
     private String gamemode;
-    
     private GridPane gr;
-    
     private Scene options;
     
     public PlayerOptionsGUI(String gamemode, Stage s, Font f){
      
         this.gamemode = gamemode;
         
+        //Define the variables
         player1 = new Label("Player 1");
         player1.setFont(f);
         name1 = new TextField("Player 1 Name");
@@ -71,6 +87,13 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         final ComboBox theme = new ComboBox(themeList);
         theme.setValue("Default");
         
+        start = new Button("Start");
+        size.setFont(f);
+        
+        start.setOnAction(this);
+        
+        
+        //Define their placement in the grid
         gr = new GridPane();
         
         gr.add(player1 ,1, 1);
@@ -83,6 +106,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         gr.add(shipNum, 5, 5);
         gr.add(themeText,1, 10);
         gr.add(theme,10,10);
+        gr.add(start, 10, 15);
         
         options = new Scene(gr);
         
@@ -95,6 +119,11 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     
     @Override
 	public void handle(ActionEvent e) {
+        
+        if(e.getSource() == start){
+            
+            BattleshipGUI.nextScene( )
+        }
 	
 	}
 }
