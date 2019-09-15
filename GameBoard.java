@@ -1,3 +1,5 @@
+import java.awt.Point;
+
 public class GameBoard{
     private int boardSize;
     private int[][] board;
@@ -11,21 +13,22 @@ public class GameBoard{
         4 = SUNK SHIP ?
      ***                 ***/
 
-    public GameBoard(int boardSize, Ship[] ships){
+    public GameBoard(int boardSize){
         this.boardSize = boardSize;
         this.ships = ships;
         board = new int[boardSize][boardSize];
+    }
 
-        for(int row = 0; row < boardSize; row++){
-            for(int col = 0; col < boardSize; col++){
-                board[row][col] = 0;
-                for(Ship ship : ships){
-                    if(ship.contains(x,y)){
-                        board[row][col] = 2;
-                    }
-                }
+    public boolean addShip(Ship newShip){
+        Point[] newShipCords = newShip.getShipCords();
+
+        for(Point newShipCords : newShipCord){
+            for(Ship ship : ships){
+                if(ship.contains(newShipCord))
+                    return false;
             }
         }
+        return true;
     }
 
     public String fire(int x, int y){
