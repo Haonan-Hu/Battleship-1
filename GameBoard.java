@@ -30,4 +30,16 @@ public class GameBoard{
         }
     }
 
+    public String fire(int x, int y){
+        if(x >= boardSize || y >= boardSize)
+            return "Error: out of board bounds";
+
+        if(board[x][y] == 0){
+            return "Miss";
+        }
+        else if(board[x][y] == 1){
+            return "HIT!";
+        }
+        return "Error";
+    }
 }
