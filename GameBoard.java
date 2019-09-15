@@ -5,9 +5,10 @@ public class GameBoard{
 
     /*** BOARD VARIABLES ***
         0 = EMPTY SPACE
-        1 = SHIP
-        2 = SHIP HIT
-        3 = SUNK SHIP ?
+        1 = EMPTY MISS
+        2 = SHIP
+        3 = SHIP HIT
+        4 = SUNK SHIP ?
      ***                 ***/
 
     public GameBoard(int boardSize, Ship[] ships){
@@ -18,16 +19,12 @@ public class GameBoard{
         for(int row = 0; row < boardSize; row++){
             for(int col = 0; col < boardSize; col++){
                 board[row][col] = 0;
+                for(Ship ship : ships){
+                    if(ship.contains(x,y)){
+                        board[row][col] = 2;
+                    }
+                }
             }
-        }
-    }
-
-    public void printBoard(){
-        for(int row = 0; row < boardSize; row++){
-            for(int col = 0; col < boardSize; col++){
-                System.out.print(board[row][col] + " ");
-            }
-            System.out.println(" ");
         }
     }
 
@@ -36,6 +33,7 @@ public class GameBoard{
             return "Error: out of board bounds";
 
         if(board[x][y] == 0){
+            board[x][y] == 1;
             return "Miss";
         }
         else if(board[x][y] == 1){
