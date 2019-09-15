@@ -57,8 +57,7 @@ public class BattleshipGUI extends Application{
         stage1.setAlwaysOnTop(false);
 	}
     
-    public static void nextScene(Scene next, int max)
-    {
+    public static void nextScene(Scene next, int max){
     	
     	stage1.setScene(next);
     	stage1.setMaxHeight(max*150);
@@ -68,18 +67,15 @@ public class BattleshipGUI extends Application{
     	
     }
     
-    public static Stage getStage()
-    {
+    public static Stage getStage(){
     	return stage1;
     }
     
-    public void changeTitle(String title)
-    {
+    public void changeTitle(String title){
     	stage1.setTitle(title);
     }
     
-    public static Font getFont()
-    {
+    public static Font getFont(){
     	return font1;
     }  
     
