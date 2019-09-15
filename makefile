@@ -6,7 +6,11 @@ JC = javac
 
 CLASSES = \
 	BattleShip.java \
+    HelloWorldGUI.java \
+    BattleshipGUI.java \
 	GameBoard.java \
+    PlayerOptions.java \
+
 
 default: classes
 
