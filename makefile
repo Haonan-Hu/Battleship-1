@@ -8,6 +8,9 @@ CLASSES = \
 	BattleShip.java \
     HelloWorldGUI.java \
     BattleshipGUI.java \
+	GameBoard.java \
+    PlayerOptions.java \
+
 
 default: classes
 
@@ -15,3 +18,6 @@ classes: $(CLASSES:.java=.class)
 
 clean:
 	$(RM) *.class
+
+run:
+	java BattleShip
