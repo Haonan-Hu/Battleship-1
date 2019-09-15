@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ComboBox;
+
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.layout.ColumnConstraints;
@@ -16,6 +18,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.List;
+import java.util.ArrayList;
+import javafx.collections.*;
+import javafx.collections.FXCollections;
+
+
+
+
 
 
 public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
@@ -24,6 +34,11 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     private Label player1, player2, numOfShip, themeText;
     private TextField name1, name2;
     private Button start;
+    private String gamemode;
+    
+    private GridPane gr;
+    
+    private Scene options;
     
     public PlayerOptionsGUI(String gamemode, Stage s, Font f){
      
@@ -37,33 +52,49 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         player2.setFont(f);
         name2 = new TextField("Player 2 Name");
         
-        numofShip = new Label("Choose number of ships:");
-        ObservableList<String> listOfShip = FXCollections.observeableArrayList(
+        numOfShip = new Label("Choose number of ships:");
+        ObservableList<String> listOfShip = FXCollections.observableArrayList(
                                             "1",
                                             "2",
                                             "3",
                                             "4",
                                             "5");
-        final ComboBox shipNum = new ComboBox(listofShip);
+        final ComboBox shipNum = new ComboBox(listOfShip);
+        shipNum.setValue("1");
         
         themeText = new Label("Choose theme:");
-        ObservableList<String> themeList  = FXCollections.observeableArrayList(
+        ObservableList<String> themeList  = FXCollections.observableArrayList(
                                             "Default",
                                             "Temp 2",
                                             "Temp 3",
                                             "Star Wars");
-        final ComboBox theme = new themeList(listofShip);
+        final ComboBox theme = new ComboBox(themeList);
+        theme.setValue("Default");
+        
+        gr = new GridPane();
+        
+        gr.add(player1 ,1, 1);
+        gr.add(name1, 1, 3);
+        
+        gr.add(player2, 5, 1);
+        gr.add(name2, 3, 3);
+        
+        gr.add(numOfShip,1, 5);
+        gr.add(shipNum, 5, 5);
+        gr.add(themeText,1, 10);
+        gr.add(theme,10,10);
+        
+        options = new Scene(gr);
         
     }
     
     @Override
     public Scene getScene() {        
-        return null;
+        return options;
     }
     
     @Override
 	public void handle(ActionEvent e) {
-		
-        if(e.getSource() == start)
+	
 	}
 }
