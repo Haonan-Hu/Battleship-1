@@ -23,21 +23,43 @@ public class Ship {
     public void setShipCoordinates() {
         Scanner input = new Scanner(System.in);
         shipCoordinates = new Point[shipSize];
-        for (int i = 0; i < shipSize; i++) {
-            xCoordinate = input.nextInt();
-            yCoordinate = input.nextInt();
-            shipCoordinates[i] = setCoordinate(xCoordinate,yCoordinate);
+        xCoordinate = input.nextInt();
+        yCoordinate = input.nextInt();
+        shipCoordinates[0] = setCoordinate(xCoordinate,yCoordinate);
+        if (shipSize > 1) {
+            for (int i = 1; i < shipSize; i++) {
+                xCoordinate = input.nextInt();
+                yCoordinate = input.nextInt();
+                shipCoordinates[i] = setConsecutiveCoordinates(xCoordinate, yCoordinate);
+            }
         }
+    }
+
+    public Point setConsecutiveCoordinates (int x, int y) {
+        Point p = new Point(x,y);
+        if (isAligned(startCoordinate,p)) {
+            startCoordinate = p;
+        }
+        else throw new ArithmeticException("Coordinates not consecutive");
+        return startCoordinate;
     }
 
     public Point setCoordinate (int x, int y) {
         if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
-            this.startCoordinate = new Point(x,y);
             this.xCoordinate = x;
             this.yCoordinate = y;
+            this.startCoordinate = new Point(xCoordinate, yCoordinate);
         }
         else throw new ArithmeticException("Invalid coordinate");
         return startCoordinate;
+    }
+
+    private int x,y;
+    public boolean isAligned(Point p1, Point p2) {
+        if ((p1.x == p2.x) || (p1.y == p2.y)) {
+            if (Math.sqrt((p2.x - p1.x)*(p2.x - p1.x) + (p2.y - p1.y)*(p2.y - p1.y)) == 1) return true;
+        }
+        return false;
     }
 
     public int getSize() {
