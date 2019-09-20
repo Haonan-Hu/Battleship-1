@@ -9,13 +9,13 @@ public class Ship {
     private int shipSize;
     private int shipPieces;
 
-    public void createShip (int size) {
+    public Ship (int size) {
         this.shipSize = size;
         this.shipPieces = size;
     }
 
     public void getShipCoordinates() {
-        for (int i = 0; i < shipSize; i++) {
+        for (int i=0; i<shipSize; i++) {
             System.out.println(shipCoordinates[i]);
         }
     }
@@ -62,13 +62,34 @@ public class Ship {
         return false;
     }
 
+    public Point hit(int x, int y) {
+        if (containCoordinate(x,y)) shipPieces--;
+        return null;
+    }
+
+    public boolean containCoordinate(int x, int y) {
+        if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
+            Point p = new Point(x, y);
+            for (int i = 0; i < shipSize; i++) {
+                if (shipCoordinates[i] == p) return true;
+            }
+        }
+        else throw new ArithmeticException("Invalid coordinate");
+        return false;
+    }
+
+    public boolean containPoint(Point p) {
+        if (p != null) {
+            for (int i = 0; i < shipSize; i++) {
+                if (shipCoordinates[i] == p) return true;
+            }
+        }
+        return false;
+    }
+
     public int getSize() {
         if (shipSize >= 1 && shipSize <=5) return shipSize;
         return -1;
-    }
-
-    public void decreaseShipPieces() {
-        shipPieces--;
     }
 
     public boolean isDestroyed() {

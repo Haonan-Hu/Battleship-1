@@ -20,11 +20,11 @@ public class GameBoard{
     }
 
     public boolean addShip(Ship newShip){
-        Point[] newShipCords = newShip.getShipCords();
+        Point[] newShipCords = newShip.getShipCoordinates();
 
-        for(Point newShipCords : newShipCord){
+        for(Point newShipCord : newShipCords){
             for(Ship ship : ships){
-                if(ship.contains(newShipCord))
+                if(ship.containPoint(newShipCord))
                     return false;
             }
         }
@@ -41,7 +41,7 @@ public class GameBoard{
         }
         else if(board[x][y] == 1){
             for(Ship ship : ships){
-                if(ship.contains(x,y)){
+                if(ship.containCoordinate(x,y)){
                     ship.hit(x,y);
                     return "Hit";
                 }
@@ -57,12 +57,12 @@ public class GameBoard{
 
     public boolean gameOver(){
         boolean gameOver = true;
-        for(Ship ship :ships){
-            if(!ship.sunk()){
+        for(Ship ship : ships){
+            if(!ship.isDestroyed()){
                 gameOver = false;
                 break;
             }
-            return gameOver;
         }
+        return gameOver;
     }
 }
