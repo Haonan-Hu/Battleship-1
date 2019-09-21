@@ -66,7 +66,7 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
 		if(e.getSource() == start){
 			// this mess uses the static fields and methods from the Menu clas to set the next appropriate scene
 			System.out.println("working");
-            BattleshipGUI.nextScene(new PlayerOptionsGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
+            BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
 		}			
 	}
     
