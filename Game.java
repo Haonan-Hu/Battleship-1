@@ -11,8 +11,13 @@ class Game{
         int numShips = -1;
 
         System.out.println("Welcome to Battleship!");
+
         while(numShips > 5 || numShips < 1){
             System.out.print("How many ships would you like to have(1-5): ");
+            while(!input.hasNextInt()){
+                System.out.print("How many ships would you like to have(1-5): ");
+                input.next();
+            }
             numShips = input.nextInt();
         }
 
@@ -20,13 +25,13 @@ class Game{
         System.out.println("Player 1 please place your ships");
         placeShips(input, Player1, numShips);
         System.out.println("Player 1's board...");
-        Player1.printBoard();
+        //Player1.printBoard();
 
         System.out.println(" ");
         System.out.println("Player 2 please place your ships");
         placeShips(input, Player2, numShips);
         System.out.println("Player 2's board...");
-        Player2.printBoard();
+        //Player2.printBoard();
 
         playGame(input, Player1, Player2);
 
@@ -38,10 +43,10 @@ class Game{
             int shipLength = i;
             Ship tempShip = new Ship(shipLength);
 
-            player.printBoard();
+            //player.printBoard();
 
             for(int j = 1; j <= shipLength; j++){
-                System.out.println("");
+                System.out.println(" ");
                 System.out.println("Please place piece " + j + " of " + shipLength);
 
                 int shipCol = getColumn(input);
@@ -71,35 +76,35 @@ class Game{
                 col = getColumn(input);
                 row = getRow(input);
                 switch(Player2.fire(row,col)){
-                    case "Miss":{
+                    case "Miss":
                         System.out.println("Miss");
                         Player1.updateOppBoard(row,col,"Miss");
                         validInput = true;
                         break;
-                    }
-                    case "Hit": {
+
+                    case "Hit":
                         System.out.println("Hit!");
                         Player1.updateOppBoard(row,col,"Hit");
                         validInput = true;
                         break;
-                    }
-                    case "Sunk":{
+
+                    case "Sunk":
                         System.out.println("Sunk!");
                         Player1.updateOppBoard(row,col,"Hit");
                         validInput = true;
                         break;
-                    }
-                    case "Error Bounds": {
+
+                    case "Error Bounds":
                         System.out.println("Out of bounds");
                         break;
-                    }
-                    case "Error": {
+
+                    case "Error":
                         System.out.println("IDK what happened");
                         break;
-                    }
                 }
             }
-            if(Player2.gameOver()) break;
+            if(Player2.gameOver())
+                break;
 
             System.out.println("");
             System.out.println("Player 2 please fire");
@@ -110,49 +115,48 @@ class Game{
                 col = getColumn(input);
                 row = getRow(input);
                 switch(Player1.fire(row,col)){
-                    case "Miss":{
+                    case "Miss":
                         System.out.println("Miss");
                         Player2.updateOppBoard(row,col,"Miss");
                         validInput = true;
                         break;
-                    }
-                    case "Hit": {
+
+                    case "Hit":
                         System.out.println("Hit!");
                         Player2.updateOppBoard(row,col,"Hit");
                         validInput = true;
                         break;
-                    }
-                    case "Sunk":{
+
+                    case "Sunk":
                         System.out.println("Sunk!");
                         Player2.updateOppBoard(row,col,"Hit");
                         validInput = true;
                         break;
-                    }
-                    case "Error Bounds": {
+
+                    case "Error Bounds":
                         System.out.println("Out of bounds");
                         break;
-                    }
-                    case "Error": {
+
+                    case "Error":
                         System.out.println("IDK what happened");
                         break;
-                    }
                 }
             }
 
-            if(Player1.gameOver()) break;
-
+            if(Player1.gameOver())
+                break;
         }
 
-        if(Player1.gameOver()){
+        if(Player1.gameOver())
             System.out.println("Congrats Player 2, you won");
-        }
-        if(Player2.gameOver()){
+
+        if(Player2.gameOver())
             System.out.println("Congrats Player 1, you won");
-        }
     }
 
     private int getColumn(Scanner input){
         int shipCol = -1;
+
         while(shipCol == -1){
             String shipColString;
 
@@ -160,15 +164,15 @@ class Game{
             shipColString = input.next().toUpperCase();
 
             switch (shipColString){
-                case "A": { shipCol = 0; break; }
-                case "B": { shipCol = 1; break; }
-                case "C": { shipCol = 2; break; }
-                case "D": { shipCol = 3; break; }
-                case "E": { shipCol = 4; break; }
-                case "F": { shipCol = 5; break; }
-                case "G": { shipCol = 6; break; }
-                case "H": { shipCol = 7; break; }
-                default: { shipCol = -1; break; }
+                case "A": shipCol = 0; break;
+                case "B": shipCol = 1; break;
+                case "C": shipCol = 2; break;
+                case "D": shipCol = 3; break;
+                case "E": shipCol = 4; break;
+                case "F": shipCol = 5; break;
+                case "G": shipCol = 6; break;
+                case "H": shipCol = 7; break;
+                default: shipCol = -1; break;
             }
         }
         return shipCol;
@@ -180,6 +184,11 @@ class Game{
             int tempRow;
 
             System.out.print("Ship row(1-8): ");
+
+            while(!input.hasNextInt()){
+                System.out.print("Ship row(1-8): ");
+                input.next();
+            }
             tempRow = input.nextInt();
 
             if(tempRow > 0 && tempRow <= 8)
