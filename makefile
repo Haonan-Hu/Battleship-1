@@ -6,8 +6,10 @@ JC = javac
 
 CLASSES = \
     Main.java \
+	Game.java \
 	Ship.java \
 	GameBoard.java \
+
 
 default: classes
 
