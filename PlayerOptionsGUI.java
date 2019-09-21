@@ -88,7 +88,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         theme.setValue("Default");
         
         start = new Button("Start");
-        size.setFont(f);
+        start.setFont(f);
         
         start.setOnAction(this);
         
@@ -122,7 +122,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         
         if(e.getSource() == start){
             
-            BattleshipGUI.nextScene( )
+            //
         }
 	
 	}
