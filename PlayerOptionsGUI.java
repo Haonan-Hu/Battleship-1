@@ -61,10 +61,17 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     private Button exit;
     private Label message;
     private int cols = 7, rows = 15;
+    private Font f;
+    
 
     public PlayerOptionsGUI(String gamemode, Stage s, Font f){
+        
+    
 
         this.gamemode = gamemode;
+        this.f = f;
+        
+        
 
         //Define the variables
         player1 = new Label("Player 1");
@@ -155,6 +162,11 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         gr.setStyle("-fx-background-color: yellow;");
 
         options = new Scene(gr);
+        
+        s.setX(0);
+        s.setY(0);
+        s.setFullScreen();
+        
     }
 
     @Override
@@ -167,7 +179,8 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
 
         if(e.getSource() == start){
 
-            //BattleshipGUI.nextScene();
+            System.out.println("working");
+            BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
         }
 
 	}

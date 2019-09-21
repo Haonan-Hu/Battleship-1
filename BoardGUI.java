@@ -98,8 +98,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                 Button b2 = new Button();
                 b1.setGraphic(new ImageView(image));
                 b2.setGraphic(new ImageView(image));
-                b1.setPrefSize(10,10);
-                b2.setPrefSize(10,10);
+                b1.setMinSize(50,50);
+                b2.setMinSize(50,50);
                 
                 player1.add(b1, c+1, r+1);
                 player2.add(b2, c+1, r+1);

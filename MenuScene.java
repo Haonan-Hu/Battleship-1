@@ -18,6 +18,9 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
 
 
     public MenuScene(Stage s, Font f){
+        s.centerOnScreen();
+        
+        f = new Font(f.getName(), 50);
 
         start = new Button();
         start.setText("START");
@@ -34,7 +37,7 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
         name.setFont(f);
 
         title = new Label();
-        title.setText("BattleShip");
+        title.setText("Battleship");
         title.setFont(f);
 
         StackPane panes =  new StackPane();
@@ -46,10 +49,6 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
 
         buttons.getChildren().addAll(title, start, exit, name);
         buttons.setAlignment(Pos.CENTER);
-
-        //Glow g = new Glow();
-		//g.setLevel(.75);
-		//title.setEffect(g);
 
         panes.getChildren().addAll(border, buttons);
         firstscene = new Scene(panes, 500, 500);
@@ -66,7 +65,7 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
 		if(e.getSource() == start){
 			// this mess uses the static fields and methods from the Menu clas to set the next appropriate scene
 			System.out.println("working");
-            BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
+            BattleshipGUI.nextScene(new PlayerOptionsGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
 		}
 	}
 
