@@ -30,6 +30,16 @@ import javafx.scene.shape.Rectangle;
 
 import javafx.geometry.Pos;
 
+import javafx.scene.image.ImageView;
+
+import javafx.scene.image.Image;
+
+import javafx.scene.text.Text;
+
+import javafx.scene.text.TextAlignment;
+
+import javafx.geometry.HPos;
+
 
 
 
@@ -42,11 +52,14 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     private String gamemode;
     private GridPane player1, player2,gr;
     private Scene options;
-    private int rows = 8, cols = 8;
+    private int rows = 9, cols = 9;
     
     public BoardGUI(String gamemode, Stage s, Font f){
      
         this.gamemode = gamemode;
+        
+        Image image = new Image(getClass().getResourceAsStream("images/water.png"));
+        
         
         
         //Define their placement in the grid
@@ -75,13 +88,48 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
             player2.getRowConstraints().add(r);
         }
         
+        String str = "ABCDEFGH";
+        String str2 = "12345678";
         
-        for(int c = 0; c < cols; c++){
-            for(int r = 0; r < rows; r++){
-                player1.add(new Rectangle(20, 20), c, r);
-                player2.add(new Rectangle(20, 20), c, r);
+        for(int c = 0; c < cols-1; c++){
+            for(int r = 0; r < rows-1; r++){
+                
+                Button b1 = new Button();
+                Button b2 = new Button();
+                b1.setGraphic(new ImageView(image));
+                b2.setGraphic(new ImageView(image));
+                b1.setPrefSize(10,10);
+                b2.setPrefSize(10,10);
+                
+                player1.add(b1, c+1, r+1);
+                player2.add(b2, c+1, r+1);
+                
+                player1.setHalignment(b1, HPos.CENTER );
+                player2.setHalignment(b2, HPos.CENTER );
+                
+                Text t_row1 = new Text(str2.substring(r,r+1));
+                Text t_row2 = new Text(str2.substring(r,r+1));
+                
+                player1.add(t_row1, 0, r+1);
+                player2.add(t_row2, 0, r+1);
+                
+                player1.setHalignment(t_row1, HPos.CENTER );
+                player2.setHalignment(t_row2, HPos.CENTER );
+                
+                
             }
+            //letters above columns
+            Text t_col1 = new Text(str.substring(c,c+1));
+            Text t_col2 = new Text(str.substring(c,c+1));
+           
+            player1.add(t_col1, c+1, 0);
+            player2.add(t_col2, c+1, 0);
+            
+            player1.setHalignment(t_col1, HPos.CENTER );
+            player2.setHalignment(t_col2, HPos.CENTER );
         }
+        
+   
         
         /*
         for(int cc = 0; cc < 3; cc++){
@@ -110,11 +158,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         RowConstraints r3 = new RowConstraints();
         r3.setPercentHeight(10);
         
-        player1.setHgap(10);
-        player2.setHgap(10);
+        player1.setHgap(0);
+        player2.setHgap(0);
         
-         player1.setVgap(10);
-        player2.setVgap(20);
+         player1.setVgap(0);
+        player2.setVgap(0);
         
        
         gr.getRowConstraints().add(r1);
@@ -127,7 +175,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         
         
         gr.setStyle("-fx-background-color: lightslategray;");
-        options = new Scene(gr);
+        options = new Scene(gr, 1400, 800);
         
         
     }
@@ -139,7 +187,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     
     @Override
 	public void handle(ActionEvent e) {
-
+        
 	
 	}
 }

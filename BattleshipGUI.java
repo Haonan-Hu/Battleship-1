@@ -60,10 +60,10 @@ public class BattleshipGUI extends Application{
     public static void nextScene(Scene next, int max){
     	
     	stage1.setScene(next);
-    	stage1.setMaxHeight(max*150);
-    	stage1.setMaxWidth(max*150);
-    	stage1.setMinHeight(max*70);
-    	stage1.setMinWidth(max*70);    	
+    	stage1.setMaxHeight(max*300);
+    	stage1.setMaxWidth(max*300);
+    	stage1.setMinHeight(100);
+    	stage1.setMinWidth(100);    	
     	
     }
     
