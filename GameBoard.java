@@ -2,6 +2,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public class GameBoard{
+
     private int boardSize;
     private int[][] board;
     private int[][] oppBoard;
@@ -17,7 +18,6 @@ public class GameBoard{
         1 = MISS
         2 = HIT SHIP
      ***                 ***/
-
 
     public GameBoard(){
         boardSize = 8;
@@ -41,9 +41,9 @@ public class GameBoard{
         if(x >= boardSize || y >= boardSize || x < 0 || y < 0)
             return "Error Bounds";
 
-        if(board[x][y] == 0){
+        if(board[x][y] == 0)
             return "Miss";
-        }
+
         else if(board[x][y] == 1){
             for(Ship ship : ships){
                 if(ship.containsCoordinate(x,y)){
@@ -57,15 +57,12 @@ public class GameBoard{
         return "Error";
     }
 
-    public int[][] getBoard(){
-        return board;
-    }
+    public int[][] getBoard(){ return board; }
 
     public boolean gameOver(){
         for(Ship ship : ships){
-            if(!ship.isDestroyed()){
+            if(!ship.isDestroyed())
                 return false;
-            }
         }
         return true;
     }
@@ -100,9 +97,8 @@ public class GameBoard{
         System.out.println("  A B C D E F G H");
         for(int i = 0; i < boardSize; i++){
             System.out.print((i + 1) + " ");
-            for(int j = 0; j < boardSize; j++){
+            for(int j = 0; j < boardSize; j++)
                 System.out.print(oppBoard[i][j] + " ");
-            }
             System.out.println(" ");
         }
     }
