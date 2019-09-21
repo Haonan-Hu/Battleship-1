@@ -5,12 +5,9 @@ JC = javac
 	$(JC) $(JFLAGS) $*.java
 
 CLASSES = \
-    BattleshipGUI.java \
-    PlayerOptionsGUI.java \
-    MenuScene.java \
-    OverScene.java \
-   
-
+    Main.java \
+	Ship.java \
+	GameBoard.java \
 
 default: classes
 

@@ -14,10 +14,8 @@ public class Ship {
         this.shipPieces = size;
     }
 
-    public void getShipCoordinates() {
-        for (int i=0; i<shipSize; i++) {
-            System.out.println(shipCoordinates[i]);
-        }
+    public Point[] getShipCoordinates() {
+        return shipCoordinates;
     }
 
     public void setShipCoordinates() {

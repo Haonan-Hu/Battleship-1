@@ -15,7 +15,6 @@ public class GameBoard{
 
     public GameBoard(int boardSize){
         this.boardSize = boardSize;
-        this.ships = ships;
         board = new int[boardSize][boardSize];
     }
 
