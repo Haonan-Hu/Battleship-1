@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.ArrayList;
 import javafx.collections.*;
 import javafx.collections.FXCollections;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.RowConstraints;
+
+import javafx.geometry.HPos;
 
 /*
 
@@ -46,7 +50,7 @@ Meet Kapadia
 
 
 public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
-    
+
     //Declare variables for the labels and text fields
     private Label player1, player2, numOfShip, themeText;
     private TextField name1, name2;
@@ -54,21 +58,29 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     private String gamemode;
     private GridPane gr;
     private Scene options;
-    
+    private Button exit;
+    private Label message;
+    private int cols = 7, rows = 15;
+
     public PlayerOptionsGUI(String gamemode, Stage s, Font f){
-     
+
         this.gamemode = gamemode;
-        
+
         //Define the variables
         player1 = new Label("Player 1");
         player1.setFont(f);
         name1 = new TextField("Player 1 Name");
-        
+
         player2 = new Label("Player 2");
         player2.setFont(f);
         name2 = new TextField("Player 2 Name");
-        
-        numOfShip = new Label("Choose number of ships:");
+
+        numOfShip = new Label("# of ships:");
+        numOfShip.setFont(f);
+
+        message = new Label("We love Gibbons");
+        message.setFont(f);
+
         ObservableList<String> listOfShip = FXCollections.observableArrayList(
                                             "1",
                                             "2",
@@ -77,7 +89,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
                                             "5");
         final ComboBox shipNum = new ComboBox(listOfShip);
         shipNum.setValue("1");
-        
+
         themeText = new Label("Choose theme:");
         ObservableList<String> themeList  = FXCollections.observableArrayList(
                                             "Default",
@@ -86,44 +98,77 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
                                             "Star Wars");
         final ComboBox theme = new ComboBox(themeList);
         theme.setValue("Default");
-        
-        start = new Button("Start");
-        size.setFont(f);
-        
-        start.setOnAction(this);
-        
-        
-        //Define their placement in the grid
+
         gr = new GridPane();
-        
-        gr.add(player1 ,1, 1);
-        gr.add(name1, 1, 3);
-        
-        gr.add(player2, 5, 1);
-        gr.add(name2, 3, 3);
-        
-        gr.add(numOfShip,1, 5);
-        gr.add(shipNum, 5, 5);
-        gr.add(themeText,1, 10);
-        gr.add(theme,10,10);
-        gr.add(start, 10, 15);
-        
+        for(int x = 0; x<cols; x++){
+          ColumnConstraints c = new ColumnConstraints();
+          c.setPercentWidth(100.0/cols);
+          gr.getColumnConstraints().add(c);
+        }
+
+        for(int y = 0; y<rows; y++){
+         RowConstraints r = new RowConstraints();
+          r.setPercentHeight(100.0/rows);
+          gr.getRowConstraints().add(r);
+        }
+
+        start = new Button("Start");
+        start.setFont(f);
+
+        exit = new Button("Exit");
+        exit.setOnAction(e -> s.close());
+        exit.setFont(f);
+
+        start.setOnAction(this);
+
+
+        //Define their placement in the grid
+
+
+        gr.add(player1 ,1, 4);
+        gr.add(name1, 1, 6);
+
+        gr.add(player2, 5, 4);
+        gr.add(name2, 5, 6);
+
+        gr.add(numOfShip,3, 1);
+        gr.add(shipNum, 3, 2);
+        //gr.add(themeText,1, 10);
+        //gr.add(theme,10,10);
+        gr.add(start, 3, 11);
+        gr.add(exit, 3 ,13);
+        gr.add(message, 3,7);
+
+        gr.setHalignment(player1, HPos.CENTER);
+        gr.setHalignment(name1, HPos.CENTER);
+
+        gr.setHalignment(player2, HPos.CENTER);
+        gr.setHalignment(name2, HPos.CENTER);
+
+        gr.setHalignment(numOfShip, HPos.CENTER);
+        gr.setHalignment(shipNum, HPos.CENTER);
+
+        gr.setHalignment(start, HPos.CENTER);
+        gr.setHalignment(exit, HPos.CENTER);
+        gr.setHalignment(message, HPos.CENTER);
+
+        gr.setStyle("-fx-background-color: yellow;");
+
         options = new Scene(gr);
-        
     }
-    
+
     @Override
-    public Scene getScene() {        
+    public Scene getScene() {
         return options;
     }
-    
+
     @Override
 	public void handle(ActionEvent e) {
-        
+
         if(e.getSource() == start){
-            
-            BattleshipGUI.nextScene( )
+
+            //BattleshipGUI.nextScene();
         }
-	
+
 	}
 }
