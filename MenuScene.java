@@ -11,66 +11,66 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class MenuScene implements OverScene, EventHandler<ActionEvent> {
-    
+
     private Button start, exit; // only one button in this scene
     private Label name,title; //battleship
     private Scene firstscene;
-    
-    
+
+
     public MenuScene(Stage s, Font f){
-        
+
         start = new Button();
         start.setText("START");
         start.setOnAction(this);
         start.setFont(f);
-        
+
         exit = new Button();
         exit.setText("Exit");
         exit.setOnAction(e -> s.close());
         exit.setFont(f);
-        
+
         name = new Label();
         name.setText("Team Poor Yorick");
         name.setFont(f);
-        
+
         title = new Label();
         title.setText("BattleShip");
         title.setFont(f);
-        
+
         StackPane panes =  new StackPane();
         VBox buttons = new VBox(20);
         BorderPane border = new BorderPane();
-        
-        border.setStyle("-fx-background-color: lightslategray;");
-        border.setBottom(name);       
-        
+
+        border.setStyle("-fx-background-color: lime;");
+        border.setBottom(name);
+
         buttons.getChildren().addAll(title, start, exit, name);
         buttons.setAlignment(Pos.CENTER);
-        
-        Glow g = new Glow();
-		g.setLevel(.75);		
-		title.setEffect(g);		
-		
-        panes.getChildren().addAll(border, buttons);        
+
+        //Glow g = new Glow();
+		//g.setLevel(.75);
+		//title.setEffect(g);
+
+        panes.getChildren().addAll(border, buttons);
         firstscene = new Scene(panes, 500, 500);
-        
+
     }
-    
+
     @Override
-	public Scene getScene(){            
-        return firstscene;              
+	public Scene getScene(){
+        return firstscene;
 	}
-    
+
 	@Override
 	public void handle(ActionEvent e) {
 		if(e.getSource() == start){
 			// this mess uses the static fields and methods from the Menu clas to set the next appropriate scene
 			System.out.println("working");
             BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
-		}			
+		}
 	}
-    
-    
-    
-    
+
+
+
+
 }
