@@ -2,38 +2,17 @@ import java.util.Scanner;
 
 class Game{
 
-    public Game(){
+    public Game(int numOfShips){
         Scanner input = new Scanner(System.in);
 
         GameBoard Player1 = new GameBoard();
         GameBoard Player2 = new GameBoard();
 
-        int numShips = -1;
+        
+        placeShips(input, Player2, numOfShips);
+       
 
-        System.out.println("Welcome to Battleship!");
-
-        while(numShips > 5 || numShips < 1){
-            System.out.print("How many ships would you like to have(1-5): ");
-            while(!input.hasNextInt()){
-                System.out.print("How many ships would you like to have(1-5): ");
-                input.next();
-            }
-            numShips = input.nextInt();
-        }
-
-        System.out.println(" ");
-        System.out.println("Player 1 please place your ships");
-        placeShips(input, Player1, numShips);
-        System.out.println("Player 1's board...");
-        //Player1.printBoard();
-
-        System.out.println(" ");
-        System.out.println("Player 2 please place your ships");
-        placeShips(input, Player2, numShips);
-        System.out.println("Player 2's board...");
-        //Player2.printBoard();
-
-        playGame(input, Player1, Player2);
+        //playGame(input, Player1, Player2);
 
         input.close();
     }
@@ -43,11 +22,9 @@ class Game{
             int shipLength = i;
             Ship tempShip = new Ship(shipLength);
 
-            //player.printBoard();
+            
 
             for(int j = 1; j <= shipLength; j++){
-                System.out.println(" ");
-                System.out.println("Please place piece " + j + " of " + shipLength);
 
                 int shipCol = getColumn(input);
                 int shipRow = getRow(input);
@@ -160,7 +137,7 @@ class Game{
         while(shipCol == -1){
             String shipColString;
 
-            System.out.print("Ship column(A-H): ");
+            
             shipColString = input.next().toUpperCase();
 
             switch (shipColString){

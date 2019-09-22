@@ -40,8 +40,14 @@ import javafx.scene.text.TextAlignment;
 
 import javafx.geometry.HPos;
 
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
+
+import javafx.scene.Node;
 
 
+
+//#megaclass!!!!!
 
 
 public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
@@ -53,8 +59,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     private GridPane player1, player2,gr;
     private Scene options;
     private int rows = 9, cols = 9;
+    private int x, y; //x and y coord of button that is hovered over
     
-    public BoardGUI(String gamemode, Stage s, Font f){
+    private GameBoard player1board, player2board;
+    
+    private boolean p1selecting = false, p2selecting = false;
+    
+    public BoardGUI(String gamemode, Stage s, Font f, int numOfShips){
      
         this.gamemode = gamemode;
         
@@ -178,6 +189,42 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         options = new Scene(gr, 1400, 800);
         
         
+        //The highest level backend object.
+        //Controls a majority of the game logic
+        
+        // Game game = new Game(numOfShips);
+        
+        //two player boards
+        player1board = new GameBoard();
+        player2board = new GameBoard();
+        
+        
+        
+        shipSelectionLoop();
+        
+        
+    }
+    
+    
+   private void shipSelectionLoop(){
+        
+        //selection of ships for each player in gui and connection to the backend
+        
+        //https://blog.idrsolutions.com/2014/05/tutorial-change-default-cursor-javafx/
+        //changing cursor code
+       
+       
+       Image[] ships = new Image[5];
+       for(int rep = 0; rep< 5; rep++){
+           ships[rep] = new Image("images/1x" + Integer.toString(rep+1) + ".png", 50*(rep+1), 50, true, true);
+       }
+       
+        
+       options.setCursor(new ImageCursor(ships[0],
+                                ships[0].getWidth()/2,
+                                ships[0].getHeight()/2));
+       p1selecting = true;
+      
     }
     
     @Override
@@ -188,6 +235,34 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     @Override
 	public void handle(ActionEvent e) {
         
-	
+        if(p1selecting){
+            for(int x = 0; x <cols; x++){
+                for(int y = 0; y<rows; y++){
+                    if(e.getSource() == getNodeByRowColumnIndex(x+1, y+1, player1) && player1board.isOccupied(x, y))
+                        options.setCursor(Cursor.DEFAULT);
+                        
+                }
+                
+            }
+            
+        }
+
 	}
+    
+    //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
+    public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
+        Node result = null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+
+        for (Node node : childrens) {
+            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+
+        return result;
+    }
+    
+    
 }
