@@ -1,28 +1,39 @@
 import java.util.Scanner;
 
 class Game{
-
+  /*
+  * @ pre none
+  *	@ param number of ships
+  *	@ post constuctor
+  * @ return none
+  */
     public Game(int numOfShips){
         Scanner input = new Scanner(System.in);
 
         GameBoard Player1 = new GameBoard();
         GameBoard Player2 = new GameBoard();
 
-        
+
         placeShips(input, Player2, numOfShips);
-       
+
 
         //playGame(input, Player1, Player2);
 
         input.close();
     }
 
+    /*
+  	* @ pre user picks number of ships
+  	*	@ param users input, the player, number of ships
+  	*	@ post the ships are placed
+  	* @ return none
+  	*/
     public void placeShips(Scanner input, GameBoard player, int numShips){
         for(int i = 1; i <= numShips; i++){
             int shipLength = i;
             Ship tempShip = new Ship(shipLength);
 
-            
+
 
             for(int j = 1; j <= shipLength; j++){
 
@@ -39,6 +50,12 @@ class Game{
         }
     }
 
+    /*
+  	* @ pre ships are placed
+  	*	@ param users input, the players
+  	*	@ post constuctor
+  	* @ return none
+  	*/
     public void playGame(Scanner input, GameBoard Player1, GameBoard Player2){
         while(!Player1.gameOver() && !Player2.gameOver()){
             int row, col;
@@ -131,13 +148,19 @@ class Game{
             System.out.println("Congrats Player 1, you won");
     }
 
+    /*
+  	* @ pre none
+  	*	@ param users' imput
+  	*	@ post gets the column
+  	* @ return returns the ship's column
+  	*/
     private int getColumn(Scanner input){
         int shipCol = -1;
 
         while(shipCol == -1){
             String shipColString;
 
-            
+
             shipColString = input.next().toUpperCase();
 
             switch (shipColString){
@@ -155,6 +178,12 @@ class Game{
         return shipCol;
     }
 
+    /*
+  	* @ pre none
+  	*	@ param users' input
+  	*	@ post gets the row
+  	* @ return returns the row
+  	*/
     private int getRow(Scanner input){
         int shipRow = -1;
         while(shipRow == -1){

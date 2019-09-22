@@ -63,16 +63,22 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     private int cols = 7, rows = 15;
     private Font f;
     private ComboBox<String> shipNum;
-    
 
+
+    /*
+  	* @ pre none
+  	*	@ param string, stage, and font
+  	*	@ post constuctor
+  	* @ return none
+  	*/
     public PlayerOptionsGUI(String gamemode, Stage s, Font f){
-        
-    
+
+
 
         this.gamemode = gamemode;
         this.f = f;
-        
-        
+
+
 
         //Define the variables
         player1 = new Label("Player 1");
@@ -163,23 +169,35 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         gr.setStyle("-fx-background-color: yellow;");
 
         options = new Scene(gr);
-        
+
         s.setX(0);
         s.setY(0);
-        
+
     }
 
+    /*
+  	* @ pre none
+  	*	@ param none
+  	*	@ post gets the next scene
+  	* @ return returns the next scene
+  	*/
     @Override
     public Scene getScene() {
         return options;
     }
 
+    /*
+  	* @ pre none
+  	*	@ param action event / button pressed
+  	*	@ post button pressed goes to next scene
+  	* @ return none
+  	*/
     @Override
 	public void handle(ActionEvent e) {
 
         if(e.getSource() == start){
 
-            
+
             BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue())).getScene(), 9);
         }
 
