@@ -14,7 +14,10 @@ public class Ship{
 
     public ArrayList<Point> getShipCoordinates(){ return shipCoordinates; }
 
-    public void addCoordinates(int x, int y){ shipCoordinates.add(new Point(x,y)); }
+    public void addCoordinates(int x, int y){ 
+        
+        shipCoordinates.add(new Point(x,y)); 
+    }
 
     public boolean inline(int newX, int newY){
         if(shipCoordinates.size() == 0)

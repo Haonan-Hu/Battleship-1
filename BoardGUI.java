@@ -252,30 +252,34 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     }
     
     
-    private void shipSelectionLoop(){
+    //from jace's Main.java
+    public void placeShips(GameBoard player, int x, int y, int shipLength){
+        Ship tempShip = new Ship(shipLength);
         
-        //selection of ships for each player in gui and connection to the backend
+        if( !player.isOccupied(x, y, shipLength, horizontal) )
+        {
+            for(int rep = 0; rep < shipLength; rep++){
+                
+                    if(horizontal){
+                        
+                        tempShip.addCoordinates(x+rep,y);
+                    }
+                    else if(!horizontal){
+                        tempShip.addCoordinates(x,y+rep);
+                    }
+                    
+                
+                
+            }
+        }
+                
+        System.out.println(tempShip.getShipCoordinates().toString());
+        player.addShip(tempShip);
         
-        //https://blog.idrsolutions.com/2014/05/tutorial-change-default-cursor-javafx/
-        //changing cursor code
-       
-      /* options.setCursor(new ImageCursor(ships[0],
-                                ships[0].getWidth()/2,
-                                ships[0].getHeight()/2));*/
-
-      
+    
     }
     
-    public void placeShip(GameBoard player, int shipLength, int shipCol, int shipRow){
-        
-            Ship tempShip = new Ship(shipLength);
-        
- 
-            tempShip.addCoordinates(shipRow,shipCol);
 
-
-            player.addShip(tempShip);
-    }
 
     @Override
     public Scene getScene() {        
@@ -293,19 +297,19 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
             public void handle(KeyEvent ke) {
                 if (ke.getCode() == KeyCode.R ) {
                     
-                    System.out.println("rotate");
+                    //System.out.println("rotate");
                     
                     
                     //notice the set rotate hehehe ;)
                     if(horizontal){
                         options.setCursor(new ImageCursor(shipsVert[shipSelecting],
-                                             shipsVert[shipSelecting].getWidth()/2,
-                                             shipsVert[shipSelecting].getHeight()/2));
+                                             shipsVert[shipSelecting].getWidth()/(2*shipSelecting),
+                                             shipsVert[shipSelecting].getHeight()/(2*shipSelecting)));
                     }
                     else if(!horizontal){
                         options.setCursor(new ImageCursor(ships[shipSelecting],
-                                             ships[shipSelecting].getWidth()/2,
-                                             ships[shipSelecting].getHeight()/2));
+                                             ships[shipSelecting].getWidth()/(2*shipSelecting),
+                                             ships[shipSelecting].getHeight()/(2*shipSelecting)));
                     }
                     
                     horizontal = !horizontal;
@@ -317,13 +321,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         if(p1selecting && shipSelecting < 5){
             //shipSelectionLoop();
             
-            
-            
             for(int x = 0; x <cols-1; x++){
                 for(int y = 0; y<rows-1; y++){
-                    if(e.getSource() == board1[y][x] && !player1board.isOccupied(x, y)){
+                    if(e.getSource() == board1[y][x] && shipSelecting < numOfShips && !player1board.isOccupied(x, y, shipSelecting+1, horizontal)){
                         
-                        placeShip(player1board, shipSelecting+1, x, y);
+                        placeShips(player1board, x, y, shipSelecting+1);
+                        //player1board.printBoard();
                         
                         if(horizontal){
                         
@@ -360,27 +363,31 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                         
                         //board1[y][x].setGraphic(new ImageView(ships[shipSelecting]));
                         shipSelecting++;
+                        
                         if(shipSelecting <5){
                             
                             if(horizontal){
                                 options.setCursor(new ImageCursor(ships[shipSelecting],
-                                             ships[shipSelecting].getWidth()/2,
-                                             ships[shipSelecting].getHeight()/2));
+                                             ships[shipSelecting].getWidth()/(2*shipSelecting),
+                                             ships[shipSelecting].getHeight()/(2*shipSelecting)));
                             }
                             else if(!horizontal){
                                 options.setCursor(new ImageCursor(shipsVert[shipSelecting],
-                                             shipsVert[shipSelecting].getWidth()/2,
-                                             shipsVert[shipSelecting].getHeight()/2));
-                    }
+                                             shipsVert[shipSelecting].getWidth()/(2*shipSelecting),
+                                             shipsVert[shipSelecting].getHeight()/(2*shipSelecting)));
+                            }
                         }
                         
-                        
-                        
-                        
-
+                        else if(shipSelecting == 5)
+                        {
+                            shipSelecting = 0;
+                            p1selecting = false;
+                            p2selecting = true;
+                        }
+   
                     }
                     
-                    else if(player1board.isOccupied(x,y)){
+                    else if(player1board.isOccupied(x,y, shipSelecting, horizontal)){
                         //System.out.println("Invalid Spot");
                     }        
                         
@@ -391,21 +398,5 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         }
 
 	}
-    
-    //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
-    public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
-        Node result = null;
-        ObservableList<Node> childrens = gridPane.getChildren();
-
-        for (Node node : childrens) {
-            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
-                result = node;
-                break;
-            }
-        }
-
-        return result;
-    }
-    
-    
+        
 }
