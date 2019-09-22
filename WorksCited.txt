@@ -1,6 +1,0 @@
-Works Cited
-1.	https://github.com/maxdgoad/othello-max
-2.	https://blog.idrsolutions.com/2014/05/tutorial-change-default-cursor-javafx/
-3.	https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
-4.	https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/BackgroundFill.html
-5.	https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/package-summary.html
