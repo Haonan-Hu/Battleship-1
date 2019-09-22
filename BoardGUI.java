@@ -238,8 +238,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         options.setCursor(new ImageCursor(ships[0],
                 ships[0].getWidth() / 2,
                 ships[0].getHeight() / 2));
-        p2selecting = true;
-
+        p1selecting = true;
     }
 
 
@@ -338,7 +337,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                         //board1[y][x].setGraphic(new ImageView(ships[shipSelecting]));
                         shipSelecting++;
 
-                        if (shipSelecting < 5) {
+                        if (shipSelecting < numOfShips) {
 
                             if (horizontal) {
                                 options.setCursor(new ImageCursor(ships[shipSelecting],
@@ -349,7 +348,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                         shipsVert[shipSelecting].getWidth() / (2 * shipSelecting),
                                         shipsVert[shipSelecting].getHeight() / (2 * shipSelecting)));
                             }
-                        } else if (shipSelecting == 5) {
+
+                        } else if (shipSelecting == numOfShips) {
                             shipSelecting = 0;
                             p1selecting = false;
                             p2selecting = true;
@@ -402,7 +402,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
                         shipSelecting++;
 
-                        if (shipSelecting < 5) {
+                        if (shipSelecting < numOfShips) {
 
                             if (horizontal) {
                                 options.setCursor(new ImageCursor(ships[shipSelecting],
@@ -413,10 +413,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                         shipsVert[shipSelecting].getWidth() / (2 * shipSelecting),
                                         shipsVert[shipSelecting].getHeight() / (2 * shipSelecting)));
                             }
-                        } else if (shipSelecting == 5) {
+
+                        } else if (shipSelecting == numOfShips) {
                             shipSelecting = 0;
-                            p1selecting = true;
                             p2selecting = false;
+                            options.setCursor(null);
                         }
 
                     } else if (player2board.isOccupied(x, y, shipSelecting, horizontal)) {
