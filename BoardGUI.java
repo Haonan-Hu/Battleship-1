@@ -63,7 +63,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     private Scene options;
     private int rows = 9, cols = 9;
     private int x, y; //x and y coord of button that is hovered over
-    private Image[] ships, shipsInOrder;
+    private Image[] ships, shipsInOrder, shipsVert;
     
     private int numOfShips;
     private GameBoard player1board, player2board;
@@ -78,13 +78,20 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         this.gamemode = gamemode;
         this.numOfShips = numOfShips;
         
+        //images code begin
+        
         Image image = new Image(getClass().getResourceAsStream("images/water.png"));
         
         ships = new Image[5];
         shipsInOrder = new Image[5];
+        shipsVert = new Image[5];
         
         for(int rep = 0; rep< 5; rep++){
             ships[rep] = new Image("images/1x" + Integer.toString(rep+1) + ".png", 50*(rep+1), 50, true, true);
+        }
+        
+        for(int rep = 0; rep< 5; rep++){
+            shipsVert[rep] = new Image("images/" + Integer.toString(rep+1) + "x1r.png", 50, 50*(rep+1), true, true);
         }
         
        
@@ -93,6 +100,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         shipsInOrder[2] = new Image("images/mid.png", 50, 50, true, true);
         shipsInOrder[3] = new Image("images/mid.png", 50, 50, true, true);
         shipsInOrder[4] = new Image("images/1x1.png", 50, 50, true, true);
+        
+        //image code end
     
         
         
@@ -270,24 +279,37 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         return options;
     }
     
-    //keyboard event to switch ship orientation
-    
-    public void handle(KeyEvent k) {
-        
-        if(p1selecting || p2selecting){
-            if(k.getCode() == KeyCode.LEFT){
-                horizontal = !horizontal;
-                System.out.println("rotate");
-            
-            }
-        }
-            
-        
-        
-    }
+   
     
     @Override
 	public void handle(ActionEvent e) {
+        
+        //https://www.programcreek.com/java-api-examples/?api=javafx.scene.input.KeyEvent
+        //for keyPressedEvent
+        options.getRoot().setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if (ke.getCode() == KeyCode.R ) {
+                    
+                    System.out.println("rotate");
+                    
+                    
+                    //notice the set rotate hehehe ;)
+                    if(horizontal){
+                        options.setCursor(new ImageCursor(shipsVert[shipSelecting],
+                                             shipsVert[shipSelecting].getWidth()/2,
+                                             shipsVert[shipSelecting].getHeight()/2));
+                    }
+                    else if(!horizontal){
+                        options.setCursor(new ImageCursor(ships[shipSelecting],
+                                             ships[shipSelecting].getWidth()/2,
+                                             ships[shipSelecting].getHeight()/2));
+                    }
+                    
+                    horizontal = !horizontal;
+
+                }
+            }
+        });
         
         if(p1selecting && shipSelecting < 5){
             //shipSelectionLoop();
@@ -300,8 +322,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                         
                         placeShip(player1board, shipSelecting+1, x, y);
                         
-                        if(horizontal)
-                        {
+                        if(horizontal){
                         
                             for(int rep = 0; rep<shipSelecting+1; rep++){
 
@@ -310,12 +331,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                             }
                         }
                         
-                        else if(!horizontal)
-                        {
+                        else if(!horizontal){
                             for(int rep = 0; rep<shipSelecting+1; rep++){
 
                                 board1[y+rep][x].setGraphic(new ImageView(shipsInOrder[rep]));
-                                ((ImageView) board1[y+rep][x].getGraphic()).setRotate(180);
+                                board1[y+rep][x].getGraphic().setRotate(90);
 
                             }
                             
@@ -323,12 +343,19 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                         
                         
                         //board1[y][x].setGraphic(new ImageView(ships[shipSelecting]));
-                        
+                        shipSelecting++;
                         if(shipSelecting <5){
-                            shipSelecting++;
-                            options.setCursor(new ImageCursor(ships[shipSelecting],
+                            
+                            if(horizontal){
+                                options.setCursor(new ImageCursor(ships[shipSelecting],
                                              ships[shipSelecting].getWidth()/2,
                                              ships[shipSelecting].getHeight()/2));
+                            }
+                            else if(!horizontal){
+                                options.setCursor(new ImageCursor(shipsVert[shipSelecting],
+                                             shipsVert[shipSelecting].getWidth()/2,
+                                             shipsVertm[shipSelecting].getHeight()/2));
+                    }
                         }
                         
                         
