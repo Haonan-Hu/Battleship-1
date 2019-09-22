@@ -460,7 +460,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 //add transition screen code here
                             }
                             
-                            else if(str == "sunk"){
+                            else if(str == "Sunk"){
                                 board2[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
                                 p1turn=false;
                                 p2turn = true;
