@@ -17,6 +17,7 @@ public class GameBoard{
         0 = BLANK
         1 = MISS
         2 = HIT SHIP
+        3 = SUNK SHIP
      ***                 ***/
 
     public GameBoard(){
@@ -98,8 +99,10 @@ public class GameBoard{
     public void updateOppBoard(int x, int y, String outcome){
         if(outcome == "Miss")
             oppBoard[y][x] = 1;
-        else
+        else if(outcome == "Hit")
             oppBoard[y][x] = 2;
+        else if(outcome == "Sunk")
+            oppBoard[y][x] = 3;
     }
 
     /****** remove this probably ******/

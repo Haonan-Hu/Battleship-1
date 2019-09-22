@@ -548,12 +548,19 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             if(p1turn && initFire){
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
-                        if(e.getSource() == board2[y][x]){
+                        if(e.getSource() == board2[y][x] && player1board.getOppBoard()[y][x] == 0){
                             String str = player2board.fire(x,y);
                             if(str == "Miss"){
                                 board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                                 
                                 board2ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+                                
+                                player1board.updateOppBoard(x,y,str);
+                            
+                                p1turn = false;
+                                p2turn = true;
+                            
+                                flipScreen();
                                 
                                 //you missed
                                 //add transition screen code here
@@ -562,6 +569,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
                                 
                                 board2ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+                                
+                                player1board.updateOppBoard(x,y,str);
+                            
+                                p1turn = false;
+                                p2turn = true;
+                            
+                                flipScreen();
                                 
                                 //you hit my battleship
                                 //add transition screen code here
@@ -573,21 +587,25 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 for(Point p : (s.getShipCoordinates())){
                                     board2[(int)p.getY()][(int)p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
                                     board2ref[(int)p.getY()][(int)p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                    
+                                    player1board.updateOppBoard((int)p.getX(),(int)p.getY(),str);
   
                                 }
+                                
+                               
+                            
+                                p1turn = false;
+                                p2turn = true;
+                            
+                                flipScreen();
+                            
                                 
                                     
                                
                                 //you sunk my battleship
                                 //add transition screen code here
                             }
-                            player1board.updateOppBoard(x,y,str);
-                            
-                            p1turn = false;
-                            p2turn = true;
-                            
-                            flipScreen();
-                            
+                           
                         }
                     }
                 }
@@ -597,14 +615,17 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             else if(p2turn){
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
-                        if(e.getSource() == board1[y][x]){
+                        if(e.getSource() == board1[y][x] && player2board.getOppBoard()[y][x] == 0){
                             String str = player1board.fire(x,y);
                             if(str == "Miss"){
                                 board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                                 
                                 board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                                 
-
+                                player2board.updateOppBoard(x,y,str);
+                                p1turn = true;
+                                p2turn = false;
+                                flipScreen();
                             
                                 //you missed
                                 //add transition screen code here
@@ -614,7 +635,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
                                 
                                 board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
-
+                                    
+                                player2board.updateOppBoard(x,y,str);
+                                p1turn = true;
+                                p2turn = false;
+                                flipScreen();
                                
                                 //you hit my battleship
                                 //add transition screen code here
@@ -627,18 +652,21 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                     board1[(int)p.getY()][(int)p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
                                     
                                     board1ref[(int)p.getY()][(int)p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                     player2board.updateOppBoard((int)p.getX(),(int)p.getY(),str);
                                     
                                 }
+                                
+                               
+                                p1turn = true;
+                                p2turn = false;
+                                flipScreen();
                                
                                 
                                 
                                 //you sunk my battleship
                                 //add transition screen code here
                             }
-                            player2board.updateOppBoard(x,y,str);
-                            p1turn=true;
-                            p2turn = false;
-                            flipScreen();
+                            
                             
                             
                         }
