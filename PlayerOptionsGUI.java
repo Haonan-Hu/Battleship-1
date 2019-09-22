@@ -61,10 +61,18 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     private Button exit;
     private Label message;
     private int cols = 7, rows = 15;
+    private Font f;
+    private ComboBox<String> shipNum;
+    
 
     public PlayerOptionsGUI(String gamemode, Stage s, Font f){
+        
+    
 
         this.gamemode = gamemode;
+        this.f = f;
+        
+        
 
         //Define the variables
         player1 = new Label("Player 1");
@@ -87,7 +95,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
                                             "3",
                                             "4",
                                             "5");
-        final ComboBox shipNum = new ComboBox(listOfShip);
+        shipNum = new ComboBox(listOfShip);
         shipNum.setValue("1");
 
         themeText = new Label("Choose theme:");
@@ -155,6 +163,10 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         gr.setStyle("-fx-background-color: yellow;");
 
         options = new Scene(gr);
+        
+        s.setX(0);
+        s.setY(0);
+        
     }
 
     @Override
@@ -167,7 +179,8 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
 
         if(e.getSource() == start){
 
-            //BattleshipGUI.nextScene();
+            System.out.println("working");
+            BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue())).getScene(), 9);
         }
 
 	}

@@ -55,15 +55,17 @@ public class BattleshipGUI extends Application{
 		stage1.setScene(new MenuScene(stage1, font1).getScene());
 		stage1.show();
         stage1.setAlwaysOnTop(false);
+        
 	}
     
     public static void nextScene(Scene next, int max){
+        
     	
     	stage1.setScene(next);
-    	stage1.setMaxHeight(max*300);
-    	stage1.setMaxWidth(max*300);
-    	stage1.setMinHeight(100);
-    	stage1.setMinWidth(100);    	
+    	//stage1.setMaxHeight(max*300);
+    	//stage1.setMaxWidth(max*300);
+    	//stage1.setMinHeight(100);
+    	//stage1.setMinWidth(100);    	
     	
     }
     

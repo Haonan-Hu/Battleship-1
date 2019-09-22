@@ -40,8 +40,17 @@ import javafx.scene.text.TextAlignment;
 
 import javafx.geometry.HPos;
 
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
+
+import javafx.scene.Node;
+
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 
 
+
+//#megaclass!!!!!
 
 
 public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
@@ -53,12 +62,38 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     private GridPane player1, player2,gr;
     private Scene options;
     private int rows = 9, cols = 9;
+    private int x, y; //x and y coord of button that is hovered over
+    private Image[] ships, shipsInOrder;
     
-    public BoardGUI(String gamemode, Stage s, Font f){
+    private int numOfShips;
+    private GameBoard player1board, player2board;
+    
+    private boolean p1selecting = false, p2selecting = false, horizontal = true;
+    
+    private Button[][] board1, board2;
+    private int shipSelecting = 0;
+    
+    public BoardGUI(String gamemode, Stage s, Font f, int numOfShips){
      
         this.gamemode = gamemode;
+        this.numOfShips = numOfShips;
         
         Image image = new Image(getClass().getResourceAsStream("images/water.png"));
+        
+        ships = new Image[5];
+        shipsInOrder = new Image[5];
+        
+        for(int rep = 0; rep< 5; rep++){
+            ships[rep] = new Image("images/1x" + Integer.toString(rep+1) + ".png", 50*(rep+1), 50, true, true);
+        }
+        
+       
+        shipsInOrder[0] = new Image("images/front.png", 50, 50, true, true);
+        shipsInOrder[1] = new Image("images/mid.png", 50, 50, true, true);
+        shipsInOrder[2] = new Image("images/mid.png", 50, 50, true, true);
+        shipsInOrder[3] = new Image("images/mid.png", 50, 50, true, true);
+        shipsInOrder[4] = new Image("images/1x1.png", 50, 50, true, true);
+    
         
         
         
@@ -91,21 +126,37 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         String str = "ABCDEFGH";
         String str2 = "12345678";
         
+        board1 = new Button[rows-1][cols-1];
+        board2 = new Button[rows-1][cols-1];
+        
         for(int c = 0; c < cols-1; c++){
             for(int r = 0; r < rows-1; r++){
                 
-                Button b1 = new Button();
-                Button b2 = new Button();
-                b1.setGraphic(new ImageView(image));
-                b2.setGraphic(new ImageView(image));
-                b1.setPrefSize(10,10);
-                b2.setPrefSize(10,10);
+                board1[r][c] = new Button();
+                board2[r][c] = new Button();
                 
-                player1.add(b1, c+1, r+1);
-                player2.add(b2, c+1, r+1);
+                board1[r][c].setShape(new Rectangle(50,50));
+                board2[r][c].setShape(new Rectangle(50,50));
                 
-                player1.setHalignment(b1, HPos.CENTER );
-                player2.setHalignment(b2, HPos.CENTER );
+                board1[r][c].setGraphic(new ImageView(image));
+                board2[r][c].setGraphic(new ImageView(image));
+                
+                board1[r][c].setMinSize(50,50);
+                board2[r][c].setMinSize(50,50);
+                
+                board1[r][c].setMaxSize(50,50);
+                board2[r][c].setMaxSize(50,50);
+                
+                board1[r][c].setOnAction(this);
+                board2[r][c].setOnAction(this);
+                
+                
+                
+                player1.add(board1[r][c], c+1, r+1);
+                player2.add(board2[r][c], c+1, r+1);
+                
+                player1.setHalignment(board1[r][c], HPos.CENTER );
+                player2.setHalignment(board2[r][c], HPos.CENTER );
                 
                 Text t_row1 = new Text(str2.substring(r,r+1));
                 Text t_row2 = new Text(str2.substring(r,r+1));
@@ -130,15 +181,6 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         }
         
    
-        
-        /*
-        for(int cc = 0; cc < 3; cc++){
-            ColumnConstraints c = new ColumnConstraints();
-            c.setPercentWidth(100.0/3);
-            gr.getColumnConstraints().add(c);
-        }       
-        */
-        
         ColumnConstraints c1 = new ColumnConstraints();
             c1.setPercentWidth(46);
             gr.getColumnConstraints().add(c1);
@@ -175,19 +217,152 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         
         
         gr.setStyle("-fx-background-color: lightslategray;");
-        options = new Scene(gr, 1400, 800);
+        options = new Scene(gr, 1000, 800);
         
+        
+        //The highest level backend object.
+        //Controls a majority of the game logic
+        
+        // Game game = new Game(numOfShips);
+        
+        //two player boards
+        player1board = new GameBoard();
+        player2board = new GameBoard();
+        
+        options.setCursor(new ImageCursor(ships[0],
+                                             ships[0].getWidth()/2,
+                                             ships[0].getHeight()/2));
+        p1selecting = true;
+        
+        
+      
         
     }
     
+    
+    private void shipSelectionLoop(){
+        
+        //selection of ships for each player in gui and connection to the backend
+        
+        //https://blog.idrsolutions.com/2014/05/tutorial-change-default-cursor-javafx/
+        //changing cursor code
+       
+      /* options.setCursor(new ImageCursor(ships[0],
+                                ships[0].getWidth()/2,
+                                ships[0].getHeight()/2));*/
+
+      
+    }
+    
+    public void placeShip(GameBoard player, int shipLength, int shipCol, int shipRow){
+        
+            Ship tempShip = new Ship(shipLength);
+        
+ 
+            tempShip.addCoordinates(shipRow,shipCol);
+
+
+            player.addShip(tempShip);
+    }
+
     @Override
     public Scene getScene() {        
         return options;
     }
     
+    //keyboard event to switch ship orientation
+    
+    public void handle(KeyEvent k) {
+        
+        if(p1selecting || p2selecting){
+            if(k.getCode() == KeyCode.LEFT){
+                horizontal = !horizontal;
+                System.out.println("rotate");
+            
+            }
+        }
+            
+        
+        
+    }
+    
     @Override
 	public void handle(ActionEvent e) {
         
-	
+        if(p1selecting && shipSelecting < 5){
+            //shipSelectionLoop();
+            
+            
+            
+            for(int x = 0; x <cols-1; x++){
+                for(int y = 0; y<rows-1; y++){
+                    if(e.getSource() == board1[y][x] && !player1board.isOccupied(x, y)){
+                        
+                        placeShip(player1board, shipSelecting+1, x, y);
+                        
+                        if(horizontal)
+                        {
+                        
+                            for(int rep = 0; rep<shipSelecting+1; rep++){
+
+                                board1[y][x+rep].setGraphic(new ImageView(shipsInOrder[rep]));
+
+                            }
+                        }
+                        
+                        else if(!horizontal)
+                        {
+                            for(int rep = 0; rep<shipSelecting+1; rep++){
+
+                                board1[y+rep][x].setGraphic(new ImageView(shipsInOrder[rep]));
+                                ((ImageView) board1[y+rep][x].getGraphic()).setRotate(180);
+
+                            }
+                            
+                        }
+                        
+                        
+                        //board1[y][x].setGraphic(new ImageView(ships[shipSelecting]));
+                        
+                        if(shipSelecting <5){
+                            shipSelecting++;
+                            options.setCursor(new ImageCursor(ships[shipSelecting],
+                                             ships[shipSelecting].getWidth()/2,
+                                             ships[shipSelecting].getHeight()/2));
+                        }
+                        
+                        
+                        
+                        
+
+                    }
+                    
+                    else if(player1board.isOccupied(x,y)){
+                        //System.out.println("Invalid Spot");
+                    }        
+                        
+                }
+                
+            }
+            
+        }
+
 	}
+    
+    //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
+    public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
+        Node result = null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+
+        for (Node node : childrens) {
+            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+
+        return result;
+    }
+    
+    
 }
