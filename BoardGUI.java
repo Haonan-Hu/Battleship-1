@@ -141,15 +141,6 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         }
         
    
-        
-        /*
-        for(int cc = 0; cc < 3; cc++){
-            ColumnConstraints c = new ColumnConstraints();
-            c.setPercentWidth(100.0/3);
-            gr.getColumnConstraints().add(c);
-        }       
-        */
-        
         ColumnConstraints c1 = new ColumnConstraints();
             c1.setPercentWidth(46);
             gr.getColumnConstraints().add(c1);
