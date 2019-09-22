@@ -68,7 +68,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private int numOfShips;
     private GameBoard player1board, player2board;
 
-    private boolean p1selecting = false, p2selecting = false, horizontal = true;
+    private boolean p1selecting = false, p2selecting = false, horizontal = true, p1turn = false, p2turn = false;
 
     private Button[][] board1, board2;
     private int shipSelecting = 0;
@@ -257,7 +257,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             }
         }
 
-        System.out.println(tempShip.getShipCoordinates().toString());
+        //System.out.println(tempShip.getShipCoordinates().toString());
         player.addShip(tempShip);
 
     }
@@ -276,7 +276,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         //for keyPressedEvent
         options.getRoot().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
-                if (ke.getCode() == KeyCode.R) {
+                if (ke.getCode() == KeyCode.R && (p1selecting || p2selecting)) {
 
                     //System.out.println("rotate");
 
@@ -284,10 +284,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                     if (horizontal) {
                         options.setCursor(new ImageCursor(shipsVert[shipSelecting],
                                 shipsVert[shipSelecting].getWidth() / (2 * shipSelecting),
-                                shipsVert[shipSelecting].getHeight() / (2 * shipSelecting)));
+                                shipsVert[shipSelecting].getHeight() / (2)));
                     } else if (!horizontal) {
                         options.setCursor(new ImageCursor(ships[shipSelecting],
-                                ships[shipSelecting].getWidth() / (2 * shipSelecting),
+                                ships[shipSelecting].getWidth() / (2 ),
                                 ships[shipSelecting].getHeight() / (2 * shipSelecting)));
                     }
 
@@ -342,10 +342,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             if (horizontal) {
                                 options.setCursor(new ImageCursor(ships[shipSelecting],
                                         ships[shipSelecting].getWidth() / (2 * shipSelecting),
-                                        ships[shipSelecting].getHeight() / (2 * shipSelecting)));
+                                        ships[shipSelecting].getHeight() / (2 )));
                             } else if (!horizontal) {
                                 options.setCursor(new ImageCursor(shipsVert[shipSelecting],
-                                        shipsVert[shipSelecting].getWidth() / (2 * shipSelecting),
+                                        shipsVert[shipSelecting].getWidth() / (2),
                                         shipsVert[shipSelecting].getHeight() / (2 * shipSelecting)));
                             }
 
@@ -353,6 +353,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             shipSelecting = 0;
                             p1selecting = false;
                             p2selecting = true;
+                            
+                            options.setCursor(new ImageCursor(ships[0],
+                                ships[0].getWidth() / 2,
+                                ships[0].getHeight() / 2));
+                            
                         }
 
                     } else if (player1board.isOccupied(x, y, shipSelecting, horizontal)) {
@@ -407,17 +412,20 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             if (horizontal) {
                                 options.setCursor(new ImageCursor(ships[shipSelecting],
                                         ships[shipSelecting].getWidth() / (2 * shipSelecting),
-                                        ships[shipSelecting].getHeight() / (2 * shipSelecting)));
+                                        ships[shipSelecting].getHeight() / (2)));
                             } else if (!horizontal) {
                                 options.setCursor(new ImageCursor(shipsVert[shipSelecting],
-                                        shipsVert[shipSelecting].getWidth() / (2 * shipSelecting),
+                                        shipsVert[shipSelecting].getWidth() / (2),
                                         shipsVert[shipSelecting].getHeight() / (2 * shipSelecting)));
                             }
 
                         } else if (shipSelecting == numOfShips) {
                             shipSelecting = 0;
                             p2selecting = false;
-                            options.setCursor(null);
+                            p1selecting = false;
+                            options.setCursor(Cursor.DEFAULT);
+                            p1turn = true;
+                            
                         }
 
                     } else if (player2board.isOccupied(x, y, shipSelecting, horizontal)) {
@@ -428,6 +436,78 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
             }
 
+        }
+        
+        //the game loop
+        if(!p1selecting && !p2selecting){
+            if(p1turn){
+                for (int x = 0; x < cols - 1; x++) {
+                    for (int y = 0; y < rows - 1; y++) {
+                        if(e.getSource() == board2[y][x]){
+                            String str = player2board.fire(x,y);
+                            if(str == "Miss"){
+                                board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+                                p1turn=false;
+                                p2turn = true;
+                                //you missed
+                                //add transition screen code here
+                            }
+                            else if(str == "Hit"){
+                                board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+                                p1turn=false;
+                                p2turn = true;
+                                //you hit my battleship
+                                //add transition screen code here
+                            }
+                            
+                            else if(str == "sunk"){
+                                board2[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                p1turn=false;
+                                p2turn = true;
+                                //you sunk my battleship
+                                //add transition screen code here
+                            }
+                            
+                        }
+                    }
+                }
+                
+            }
+            
+            else if(p2turn){
+                for (int x = 0; x < cols - 1; x++) {
+                    for (int y = 0; y < rows - 1; y++) {
+                        if(e.getSource() == board1[y][x]){
+                            String str = player1board.fire(x,y);
+                            if(str == "Miss"){
+                                board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+                                p1turn = true;
+                                p2turn = false;
+                                //you missed
+                                //add transition screen code here
+                            }
+                            else if(str == "Hit"){
+                                board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+                                p1turn= true;
+                                p2turn = false;
+                                //you hit my battleship
+                                //add transition screen code here
+                            }
+                            
+                            else if(str == "sunk"){
+                                board1[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                p1turn=true;
+                                p2turn = false;
+                                //you sunk my battleship
+                                //add transition screen code here
+                            }
+                            
+                        }
+                    }
+                }
+                //
+            }
+            
         }
 
     }

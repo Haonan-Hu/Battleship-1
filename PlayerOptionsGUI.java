@@ -179,7 +179,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
 
         if(e.getSource() == start){
 
-            System.out.println("working");
+            
             BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue())).getScene(), 9);
         }
 

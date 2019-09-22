@@ -41,10 +41,10 @@ public class GameBoard{
         if(x >= boardSize || y >= boardSize || x < 0 || y < 0)
             return "Error Bounds";
 
-        if(board[x][y] == 0)
+        if(board[y][x] == 0)
             return "Miss";
 
-        else if(board[x][y] == 1){
+        else if(board[y][x] == 1){
             for(Ship ship : ships){
                 if(ship.containsCoordinate(x,y)){
                     ship.hit(x,y);
