@@ -72,7 +72,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
     private boolean p1selecting = false, p2selecting = false, horizontal = true, p1turn = false, p2turn = false, initFire = false;
 
-    private Button[][] board1, board2, board1Opp, board2Opp;
+    private Button[][] board1, board2;
+    private ImageView[][] board1ref, board2ref;
     private int shipSelecting = 0;
     private Image image;
 
@@ -141,6 +142,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         board1 = new Button[rows - 1][cols - 1];
         board2 = new Button[rows - 1][cols - 1];
+        
+        board1ref = new ImageView[rows - 1][cols - 1];
+        board2ref = new ImageView[rows - 1][cols - 1];
+        
 
         for (int c = 0; c < cols - 1; c++) {
             for (int r = 0; r < rows - 1; r++) {
@@ -153,6 +158,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
                 board1[r][c].setGraphic(new ImageView(image));
                 board2[r][c].setGraphic(new ImageView(image));
+                
+                board1ref[r][c] = new ImageView(image);
+                board2ref[r][c] = new ImageView(image);
+                
+                
 
                 board1[r][c].setMinSize(50, 50);
                 board2[r][c].setMinSize(50, 50);
@@ -191,8 +201,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             player2.setHalignment(t_col2, HPos.CENTER);
         }
         
-        board1Opp = board1.clone();
-        board2Opp = board2.clone();
+        
 
         ColumnConstraints c1 = new ColumnConstraints();
         c1.setPercentWidth(46);
@@ -283,6 +292,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             for(int y = 0; y < 8; y++){
                 for(int x = 0; x < 8; x++){
                     
+                    board1[y][x].setGraphic(board1ref[y][x]);
+                    
+                    
                     if(oppBoard[y][x] == 0)
                          board2[y][x].setGraphic(new ImageView(image));
                     else if(oppBoard[y][x] == 1)
@@ -290,10 +302,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                     else if(oppBoard[y][x] == 2)
                          board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
                             
+                }
+                
+                
             }
-                
-                
-        }
                    
             
         }
@@ -305,6 +317,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             int[][] oppBoard = player2board.getOppBoard();
             for(int y = 0; y < 8; y++){
                 for(int x = 0; x < 8; x++){
+                    
+                   board2[y][x].setGraphic(board2ref[y][x]);
                     
                     if(oppBoard[y][x] == 0)
                          board1[y][x].setGraphic(new ImageView(image));
@@ -322,20 +336,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         
         
     }
-    
-    public void buttonSwap( Button[][] buttons1, Button[][] buttons2){
-        //change grid nodes with buttons graphics
-        //gint[][] oppBoard = getOppBoard
-        for(int y = 0; y < 8; y++){
-            for(int x = 0; x < 8; x++){
-                
-                
-                buttons1[y][x].setGraphic(buttons2[1][1].getGraphic());
-                
-                
-            }
-        }
-    }
+
 
 
     @Override
@@ -388,8 +389,14 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 if (rep == shipSelecting) {
                                     shipsCopy[1] = shipsInOrder[4];
                                     board1[y][x + rep].setGraphic(new ImageView(shipsInOrder[4]));
-                                } else
+                                    board1ref[y][x+rep] = new ImageView(shipsInOrder[4]);
+                                    
+                                } 
+                                
+                                else{
                                     board1[y][x + rep].setGraphic(new ImageView(shipsInOrder[rep]));
+                                    board1ref[y][x+rep] = new ImageView(shipsInOrder[rep]);
+                                }
 
                             }
                         } else if (!horizontal) {
@@ -399,9 +406,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                     shipsCopy[1] = shipsInOrder[4];
                                     board1[y + rep][x].setGraphic(new ImageView(shipsInOrder[4]));
                                     board1[y + rep][x].getGraphic().setRotate(90);
+                                    
+                                    board1ref[y+rep][x] = (new ImageView(shipsInOrder[4]));
+                                    board1ref[y+rep][x].setRotate(90);
                                 } else {
                                     board1[y + rep][x].setGraphic(new ImageView(shipsInOrder[rep]));
                                     board1[y + rep][x].getGraphic().setRotate(90);
+                                    
+                                    board1ref[y+rep][x] = (new ImageView(shipsInOrder[rep]));
+                                    board1ref[y+rep][x].setRotate(90);
                                 }
 
                             }
@@ -460,8 +473,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 if (rep == shipSelecting) {
                                     shipsCopy[1] = shipsInOrder[4];
                                     board2[y][x + rep].setGraphic(new ImageView(shipsInOrder[4]));
-                                } else
+                                    board2ref[y][x+rep] = new ImageView(shipsInOrder[4]);
+                                } 
+                                else{
+                                    
                                     board2[y][x + rep].setGraphic(new ImageView(shipsInOrder[rep]));
+                                    board2ref[y][x+rep] = new ImageView(shipsInOrder[rep]);
+                                }
 
                             }
                         } else if (!horizontal) {
@@ -471,9 +489,16 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                     shipsCopy[1] = shipsInOrder[4];
                                     board2[y + rep][x].setGraphic(new ImageView(shipsInOrder[4]));
                                     board2[y + rep][x].getGraphic().setRotate(90);
+                                    
+                                    board2ref[y + rep][x] = (new ImageView(shipsInOrder[4]));
+                                    board2ref[y + rep][x].setRotate(90);
+                                    
                                 } else {
                                     board2[y + rep][x].setGraphic(new ImageView(shipsInOrder[rep]));
                                     board2[y + rep][x].getGraphic().setRotate(90);
+                                    
+                                    board2ref[y + rep][x] = (new ImageView(shipsInOrder[rep]));
+                                    board2ref[y + rep][x].setRotate(90);
                                 }
 
                             }
@@ -501,6 +526,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             options.setCursor(Cursor.DEFAULT);
                             p1turn = true;
                             
+                            
+                            
+                            
+  
+                            
                         }
 
                     } else if (player2board.isOccupied(x, y, shipSelecting, horizontal)) {
@@ -523,7 +553,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             if(str == "Miss"){
                                 board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                                 
-                                board2Opp[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+                                board2ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                                 
                                 //you missed
                                 //add transition screen code here
@@ -531,7 +561,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             else if(str == "Hit"){
                                 board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
                                 
-                                board2Opp[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+                                board2ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
                                 
                                 //you hit my battleship
                                 //add transition screen code here
@@ -542,8 +572,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 Ship s = player2board.shipAt(x,y);
                                 for(Point p : (s.getShipCoordinates())){
                                     board2[(int)p.getY()][(int)p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
-                                    
-                                     board2Opp[(int)p.getY()][(int)p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                    board2ref[(int)p.getY()][(int)p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+  
                                 }
                                 
                                     
@@ -572,8 +602,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             if(str == "Miss"){
                                 board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                                 
-                                board1Opp[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+                                board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                                 
+
                             
                                 //you missed
                                 //add transition screen code here
@@ -582,7 +613,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             else if(str == "Hit"){
                                 board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
                                 
-                                board1Opp[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+                                board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+
                                
                                 //you hit my battleship
                                 //add transition screen code here
@@ -594,7 +626,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 for(Point p : (s.getShipCoordinates())){
                                     board1[(int)p.getY()][(int)p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
                                     
-                                    board1Opp[(int)p.getY()][(int)p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                    board1ref[(int)p.getY()][(int)p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                    
                                 }
                                
                                 
