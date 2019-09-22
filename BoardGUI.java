@@ -62,10 +62,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     private int x, y; //x and y coord of button that is hovered over
     private Image[] ships;
     
-    private numOfShips;
+    private int numOfShips;
     private GameBoard player1board, player2board;
     
     private boolean p1selecting = false, p2selecting = false;
+    
+    private Button[][] board1, board2;
     
     public BoardGUI(String gamemode, Stage s, Font f, int numOfShips){
      
@@ -109,21 +111,37 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         String str = "ABCDEFGH";
         String str2 = "12345678";
         
+        board1 = new Button[rows-1][cols-1];
+        board2 = new Button[rows-1][cols-1];
+        
         for(int c = 0; c < cols-1; c++){
             for(int r = 0; r < rows-1; r++){
                 
-                Button b1 = new Button();
-                Button b2 = new Button();
-                b1.setGraphic(new ImageView(image));
-                b2.setGraphic(new ImageView(image));
-                b1.setMinSize(50,50);
-                b2.setMinSize(50,50);
+                board1[r][c] = new Button();
+                board2[r][c] = new Button();
                 
-                player1.add(b1, c+1, r+1);
-                player2.add(b2, c+1, r+1);
+                board1[r][c].setShape(new Rectangle(50,50));
+                board2[r][c].setShape(new Rectangle(50,50));
                 
-                player1.setHalignment(b1, HPos.CENTER );
-                player2.setHalignment(b2, HPos.CENTER );
+                board1[r][c].setGraphic(new ImageView(image));
+                board2[r][c].setGraphic(new ImageView(image));
+                
+                board1[r][c].setMinSize(50,50);
+                board2[r][c].setMinSize(50,50);
+                
+                board1[r][c].setMaxSize(50,50);
+                board2[r][c].setMaxSize(50,50);
+                
+                board1[r][c].setOnAction(this);
+                board2[r][c].setOnAction(this);
+                
+                
+                
+                player1.add(board1[r][c], c+1, r+1);
+                player2.add(board2[r][c], c+1, r+1);
+                
+                player1.setHalignment(board1[r][c], HPos.CENTER );
+                player2.setHalignment(board2[r][c], HPos.CENTER );
                 
                 Text t_row1 = new Text(str2.substring(r,r+1));
                 Text t_row2 = new Text(str2.substring(r,r+1));
@@ -197,14 +215,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         player2board = new GameBoard();
         
         
-        
-        shipSelectionLoop();
-        
+        p1selecting = true;
+      
         
     }
     
     
-   private void shipSelectionLoop(){
+    private void shipSelectionLoop(){
         
         //selection of ships for each player in gui and connection to the backend
         
@@ -214,26 +231,19 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
       /* options.setCursor(new ImageCursor(ships[0],
                                 ships[0].getWidth()/2,
                                 ships[0].getHeight()/2));*/
-       p1selecting = true;
-       
-       while(p1selecting){
-           
-           for(int rep=0; rep<numOfShips; rep++){
+
                
-               options.setCurson(newCursorImage(ships[rep],ships[rep].getWidth()/2,ships[rep].getHeight()/2));
+        
                
-           }
-           
-       }
+  
       
     }
     
-     public void placeShip(GameBoard player, int numShips, int shipCol, int shipRow){
+    public void placeShip(GameBoard player, int numShips, int shipCol, int shipRow){
         for(int i = 1; i <= numShips; i++){
             int shipLength = i;
             Ship tempShip = new Ship(shipLength);
 
-            
 
             for(int j = 1; j <= shipLength; j++){
 
@@ -241,7 +251,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                     tempShip.addCoordinates(shipRow,shipCol);
                 else
                     j--;
-            }
+            }   
 
             player.addShip(tempShip);
         }
@@ -256,12 +266,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
 	public void handle(ActionEvent e) {
         
         if(p1selecting){
-            for(int x = 0; x <cols; x++){
-                for(int y = 0; y<rows; y++){
-                    if(e.getSource() == getNodeByRowColumnIndex(x+1, y+1, player1) && !player1board.isOccupied(x, y)){
+            //shipSelectionLoop();
+            
+            for(int x = 0; x <cols-1; x++){
+                for(int y = 0; y<rows-1; y++){
+                    if(e.getSource() == board1[y][x] && !player1board.isOccupied(x, y)){
                      
                         //options.setCursor(Cursor.DEFAULT);
                         placeShip(player1board, numOfShips, x, y);
+                        board1[y][x].setGraphic(new ImageView(ships[0]));
                         
                     }
                         
@@ -269,6 +282,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                 }
                 
             }
+            
             
         }
 

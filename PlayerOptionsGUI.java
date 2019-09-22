@@ -166,7 +166,6 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         
         s.setX(0);
         s.setY(0);
-        s.setFullScreen(true);
         
     }
 
