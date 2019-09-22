@@ -11,6 +11,10 @@ public class Ship{
         this.shipSize = size;
         this.shipPieces = size;
     }
+    
+    public int getSize(){
+        return shipSize;
+    }
 
     public ArrayList<Point> getShipCoordinates(){ return shipCoordinates; }
 

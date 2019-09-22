@@ -49,6 +49,8 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 
+import java.awt.Point;
+
 
 //#megaclass!!!!!
 
@@ -461,7 +463,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             }
                             
                             else if(str == "Sunk"){
+                                //need to change every texture of the ship
+                                Ship s = player2board.shipAt(x,y);
+                                for(Point p : (s.getShipCoordinates())){
+                                    board2[(int)p.getY()][(int)p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                }
                                 board2[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                    
                                 p1turn=false;
                                 p2turn = true;
                                 //you sunk my battleship
@@ -494,8 +502,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 //add transition screen code here
                             }
                             
-                            else if(str == "sunk"){
+                            else if(str == "Sunk"){
+                                //need to change every texture of the ship
+                                Ship s = player1board.shipAt(x,y);
+                                for(Point p : (s.getShipCoordinates())){
+                                    board1[(int)p.getY()][(int)p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                }
                                 board1[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                
+                                
                                 p1turn=true;
                                 p2turn = false;
                                 //you sunk my battleship
@@ -505,7 +520,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                         }
                     }
                 }
-                //
+                
             }
             
         }

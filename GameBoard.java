@@ -66,6 +66,15 @@ public class GameBoard{
         }
         return true;
     }
+    
+    public Ship shipAt(int x, int y){
+        for(Ship s : ships){
+            if(s.getShipCoordinates().contains(new Point(x,y))){
+                return s;
+            }
+        }
+        return null;
+    }
 
     public boolean isOccupied(int x, int y, int size, boolean horizontal){
         for(int rep = 0; rep<size; rep++)
