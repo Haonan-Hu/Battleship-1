@@ -70,7 +70,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private int numOfShips;
     private GameBoard player1board, player2board;
 
-    private boolean p1selecting = false, p2selecting = false, horizontal = true, p1turn = false, p2turn = false;
+    private boolean p1selecting = false, p2selecting = false, horizontal = true, p1turn = false, p2turn = false, initFire = false;
 
     private Button[][] board1, board2, board1Opp, board2Opp;
     private int shipSelecting = 0;
@@ -289,10 +289,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                         board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                     else if(oppBoard[y][x] == 2)
                          board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
-                        
-                
-                
+                            
             }
+                
+                
         }
                    
             
@@ -311,7 +311,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                     else if(oppBoard[y][x] == 1)
                         board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                     else if(oppBoard[y][x] == 2)
-                         board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+                         board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
                         
                 }
                 
@@ -325,7 +325,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     
     public void buttonSwap( Button[][] buttons1, Button[][] buttons2){
         //change grid nodes with buttons graphics
-        //int[][] oppBoard = getOppBoard
+        //gint[][] oppBoard = getOppBoard
         for(int y = 0; y < 8; y++){
             for(int x = 0; x < 8; x++){
                 
@@ -514,8 +514,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         }
         
         //the game loop
-        if(!p1selecting && !p2selecting){
-            if(p1turn){
+        if(!p1selecting && !p2selecting ){
+            if(p1turn && initFire){
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if(e.getSource() == board2[y][x]){
@@ -613,8 +613,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                 }
                 
             }
+            initFire = true;
             
         }
+        
 
     }
   
