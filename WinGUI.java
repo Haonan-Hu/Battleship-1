@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /*
 
@@ -34,8 +35,16 @@ public class WinGUI implements OverScene, EventHandler<ActionEvent>{
     private Button playAgain, exit;
     private Label winner;
     private Scene win;
+    private Scene scene;
 
-    // Implementation influenced from https://github.com/maxdgoad/othello-max/blob/master/Win.java
+    // Implementation influenced from https://github.com/maxdgoad/othello-max/
+
+    /*
+    * @ pre none
+    *	@ param stage, font, number of ships for each players, and two strings
+    *	@ post constuctor
+    * @ return none
+    */
     public WinGUI(Stage s, Font f, int p1NumOfShips, int p2NumOfShips, String p1, String p2){
 
         s.centerOnScreen();
@@ -83,9 +92,21 @@ public class WinGUI implements OverScene, EventHandler<ActionEvent>{
 
     }
 
+    /*
+  	* @ pre none
+  	*	@ param none
+  	*	@ post Gets the scene
+  	* @ return the win screen
+  	*/
     @Override
     public Scene getScene(){ return win; }
 
+    /*
+  	* @ pre game ended
+  	*	@ param action event / click a button
+  	*	@ post play again = starts new game
+  	* @ return none
+  	*/
     @Override
     public void handle(ActionEvent e) {
         if(e.getSource() == playAgain){
@@ -94,5 +115,5 @@ public class WinGUI implements OverScene, EventHandler<ActionEvent>{
             BattleshipGUI.nextScene(new PlayerOptionsGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
         }
     }
-    
+
 }
