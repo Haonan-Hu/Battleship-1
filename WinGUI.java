@@ -40,18 +40,16 @@ public class WinGUI implements OverScene, EventHandler<ActionEvent>{
 
         s.centerOnScreen();
 
-        VBox scene = new VBox();
-
         f = new Font(f.getName(), 50);
 
-        if(p1NumOfShips == 0){
+        if(p2NumOfShips == 0 && p1NumOfShips > 0){
             winner = new Label(p1 + " wins");
             winner.setFont(f);
             scene.getChildren().add(winner);
             scene.setAlignment(Pos.CENTER);
         }
 
-        else if (p2NumOfShips == 0){
+        else if (p1NumOfShips == 0 && p2NumOfShips > 0){
             winner = new Label(p2 + " wins");
             winner.setFont(f);
             scene.getChildren().add(winner);
@@ -86,9 +84,7 @@ public class WinGUI implements OverScene, EventHandler<ActionEvent>{
     }
 
     @Override
-    public Scene getScene(){
-        return win;
-    }
+    public Scene getScene(){ return win; }
 
     @Override
     public void handle(ActionEvent e) {
