@@ -525,6 +525,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             p1selecting = false;
                             options.setCursor(Cursor.DEFAULT);
                             p1turn = true;
+                            flipScreen();
                             
                             
                             
