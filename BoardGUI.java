@@ -60,7 +60,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     private Scene options;
     private int rows = 9, cols = 9;
     private int x, y; //x and y coord of button that is hovered over
+    private Image[] ships;
     
+    private numOfShips;
     private GameBoard player1board, player2board;
     
     private boolean p1selecting = false, p2selecting = false;
@@ -68,9 +70,14 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     public BoardGUI(String gamemode, Stage s, Font f, int numOfShips){
      
         this.gamemode = gamemode;
+        this.numOfShips = numOfShips;
         
         Image image = new Image(getClass().getResourceAsStream("images/water.png"));
         
+        ships = new Image[5];
+       for(int rep = 0; rep< 5; rep++){
+           ships[rep] = new Image("images/1x" + Integer.toString(rep+1) + ".png", 50*(rep+1), 50, true, true);
+       }
         
         
         //Define their placement in the grid
@@ -204,20 +211,42 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         //https://blog.idrsolutions.com/2014/05/tutorial-change-default-cursor-javafx/
         //changing cursor code
        
-       
-       Image[] ships = new Image[5];
-       for(int rep = 0; rep< 5; rep++){
-           ships[rep] = new Image("images/1x" + Integer.toString(rep+1) + ".png", 50*(rep+1), 50, true, true);
-       }
-       
-        
-       options.setCursor(new ImageCursor(ships[0],
+      /* options.setCursor(new ImageCursor(ships[0],
                                 ships[0].getWidth()/2,
-                                ships[0].getHeight()/2));
+                                ships[0].getHeight()/2));*/
        p1selecting = true;
+       
+       while(p1selecting){
+           
+           for(int rep=0; rep<numOfShips; rep++){
+               
+               options.setCurson(newCursorImage(ships[rep],ships[rep].getWidth()/2,ships[rep].getHeight()/2));
+               
+           }
+           
+       }
       
     }
     
+     public void placeShip(GameBoard player, int numShips, int shipCol, int shipRow){
+        for(int i = 1; i <= numShips; i++){
+            int shipLength = i;
+            Ship tempShip = new Ship(shipLength);
+
+            
+
+            for(int j = 1; j <= shipLength; j++){
+
+                if(tempShip.inline(shipRow, shipCol) && !player.isOccupied(shipRow, shipCol) && !tempShip.containsCoordinate(shipRow, shipCol))
+                    tempShip.addCoordinates(shipRow,shipCol);
+                else
+                    j--;
+            }
+
+            player.addShip(tempShip);
+        }
+    }
+
     @Override
     public Scene getScene() {        
         return options;
@@ -229,8 +258,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         if(p1selecting){
             for(int x = 0; x <cols; x++){
                 for(int y = 0; y<rows; y++){
-                    if(e.getSource() == getNodeByRowColumnIndex(x+1, y+1, player1) && player1board.isOccupied(x, y))
-                        options.setCursor(Cursor.DEFAULT);
+                    if(e.getSource() == getNodeByRowColumnIndex(x+1, y+1, player1) && !player1board.isOccupied(x, y)){
+                     
+                        //options.setCursor(Cursor.DEFAULT);
+                        placeShip(player1board, numOfShips, x, y);
+                        
+                    }
+                        
                         
                 }
                 
