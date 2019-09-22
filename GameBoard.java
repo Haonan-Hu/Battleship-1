@@ -31,7 +31,7 @@ public class GameBoard{
         for(Point cords : shipCords){
             int x = (int)cords.getX();
             int y = (int)cords.getY();
-            board[x][y] = 1;
+            board[y][x] = 1;
         }
 
         ships.add(newShip);
@@ -41,10 +41,10 @@ public class GameBoard{
         if(x >= boardSize || y >= boardSize || x < 0 || y < 0)
             return "Error Bounds";
 
-        if(board[x][y] == 0)
+        if(board[y][x] == 0)
             return "Miss";
 
-        else if(board[x][y] == 1){
+        else if(board[y][x] == 1){
             for(Ship ship : ships){
                 if(ship.containsCoordinate(x,y)){
                     ship.hit(x,y);
@@ -58,6 +58,8 @@ public class GameBoard{
     }
 
     public int[][] getBoard(){ return board; }
+    
+    public int[][] getOppBoard(){return oppBoard;}
 
     public boolean gameOver(){
         for(Ship ship : ships){
@@ -66,19 +68,38 @@ public class GameBoard{
         }
         return true;
     }
+    
+    public Ship shipAt(int x, int y){
+        for(Ship s : ships){
+            if(s.getShipCoordinates().contains(new Point(x,y))){
+                return s;
+            }
+        }
+        return null;
+    }
 
-    public boolean isOccupied(int x, int y){
-        if(board[x][y] == 0)
-            return false;
-        else
-            return true;
+    public boolean isOccupied(int x, int y, int size, boolean horizontal){
+        for(int rep = 0; rep<size; rep++)
+        {
+            if(horizontal){
+                if(x+rep > 7  || board[y][x+rep] == 1)
+                    return true;      
+            }
+            else if(!horizontal){
+                if(y+rep > 7 || board[y+rep][x] == 1)
+                    return true;   
+            }
+            
+        }   
+        
+        return false;
     }
 
     public void updateOppBoard(int x, int y, String outcome){
         if(outcome == "Miss")
-            oppBoard[x][y] = 1;
+            oppBoard[y][x] = 1;
         else
-            oppBoard[x][y] = 2;
+            oppBoard[y][x] = 2;
     }
 
     /****** remove this probably ******/

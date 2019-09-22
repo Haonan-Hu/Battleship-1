@@ -19,22 +19,36 @@ public class Ship{
     /*
   	* @ pre none
   	*	@ param none
-  	*	@ post gets ships' coordinates
-  	* @ return returns a specific coordinate of a ship
+  	*	@ post gets ship's size
+  	* @ return returns ships size
   	*/
-    public ArrayList<Point> getShipCoordinates(){ return shipCoordinates; }
+    public int getSize(){
+        return shipSize;
+    }
     /*
   	* @ pre none
-  	*	@ param the x and y values of the grid
-  	*	@ post adds coordinates at a specific x and y value on the grid
+  	*	@ param none
+  	*	@ post gets ships coordinates
+  	* @ return returns ship's coordinates
+  	*/
+    public ArrayList<Point> getShipCoordinates(){ return shipCoordinates; }
+
+    /*
+  	* @ pre none
+  	*	@ param x and y values of the grid
+  	*	@ post adds new coordinates of the ship
   	* @ return none
   	*/
-    public void addCoordinates(int x, int y){ shipCoordinates.add(new Point(x,y)); }
+    public void addCoordinates(int x, int y){
+
+        shipCoordinates.add(new Point(x,y));
+    }
+
     /*
   	* @ pre none
   	*	@ param new x and y values of the grid
   	*	@ post none
-  	* @ return returns true or false, whether or not the ship is in line or not
+  	* @ return returns true or false on whether or not the ships are in line
   	*/
     public boolean inline(int newX, int newY){
         if(shipCoordinates.size() == 0)
