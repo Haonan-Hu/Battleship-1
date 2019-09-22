@@ -58,6 +58,8 @@ public class GameBoard{
     }
 
     public int[][] getBoard(){ return board; }
+    
+    public int[][] getOppBoard(){return oppBoard;}
 
     public boolean gameOver(){
         for(Ship ship : ships){
