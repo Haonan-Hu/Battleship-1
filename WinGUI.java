@@ -1,5 +1,3 @@
-
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -11,7 +9,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 
 /*
 
@@ -35,14 +32,31 @@ Meet Kapadia
 public class WinGUI implements OverScene, EventHandler<ActionEvent>{
 
     private Button playAgain, exit;
-    private Label playerName;
-    private Scene lastScene;
+    private Label winner;
+    private Scene win;
 
-    public WinGUI(Stage s, Font f){
+    // Implementation influenced from https://github.com/maxdgoad/othello-max/blob/master/Win.java
+    public WinGUI(Stage s, Font f, int p1NumOfShips, int p2NumOfShips, String p1, String p2){
 
         s.centerOnScreen();
 
+        VBox scene = new VBox();
+
         f = new Font(f.getName(), 50);
+
+        if(p1NumOfShips == 0){
+            winner = new Label(p1 + " wins");
+            winner.setFont(f);
+            scene.getChildren().add(winner);
+            scene.setAlignment(Pos.CENTER);
+        }
+
+        else if (p2NumOfShips == 0){
+            winner = new Label(p2 + " wins");
+            winner.setFont(f);
+            scene.getChildren().add(winner);
+            scene.setAlignment(Pos.CENTER);
+        }
 
         playAgain = new Button();
         playAgain.setText("Play Again");
@@ -54,28 +68,26 @@ public class WinGUI implements OverScene, EventHandler<ActionEvent>{
         exit.setOnAction(e -> s.close());
         exit.setFont(f);
 
-        playerName = new Label();
-        playerName.setText("Player _ wins"); // will call a method that retrieves winning player's name from the previous scene
-        playerName.setFont(f);
-
         StackPane panes =  new StackPane();
         VBox buttons = new VBox(20);
         BorderPane border = new BorderPane();
 
+        Glow g = new Glow();
+        g.setLevel(.5);
+        scene.setEffect(g);
         border.setStyle("-fx-background-color: lime;");
-        border.setTop(playerName);
 
-        buttons.getChildren().addAll(playAgain, exit, playerName);
+        buttons.getChildren().addAll(playAgain, exit);
         buttons.setAlignment(Pos.CENTER);
 
         panes.getChildren().addAll(border, buttons);
-        lastScene = new Scene(panes, 500, 500);
+        win = new Scene(panes, 500, 500);
 
     }
 
     @Override
     public Scene getScene(){
-        return lastScene;
+        return win;
     }
 
     @Override
