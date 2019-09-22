@@ -63,7 +63,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
     private Scene options;
     private int rows = 9, cols = 9;
     private int x, y; //x and y coord of button that is hovered over
-    private Image[] ships, shipsInOrder, shipsVert;
+    private Image[] ships, shipsInOrder, shipsVert, shipsCopy;
     
     private int numOfShips;
     private GameBoard player1board, player2board;
@@ -100,7 +100,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
         shipsInOrder[2] = new Image("images/mid.png", 50, 50, true, true);
         shipsInOrder[3] = new Image("images/mid.png", 50, 50, true, true);
         shipsInOrder[4] = new Image("images/1x1.png", 50, 50, true, true);
-        
+
+
+        shipsCopy = shipsInOrder.clone();
+
         //image code end
     
         
@@ -326,7 +329,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                         
                             for(int rep = 0; rep<shipSelecting+1; rep++){
 
-                                board1[y][x+rep].setGraphic(new ImageView(shipsInOrder[rep]));
+                                if(rep == shipSelecting) {
+                                    shipsCopy[1] = shipsInOrder[4];
+                                    board1[y][x+rep].setGraphic(new ImageView(shipsInOrder[4]));
+                                }
+                                else {
+                                    board1[y][x+rep].setGraphic(new ImageView(shipsInOrder[rep]));
+                                }
 
                             }
                         }
@@ -334,8 +343,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                         else if(!horizontal){
                             for(int rep = 0; rep<shipSelecting+1; rep++){
 
-                                board1[y+rep][x].setGraphic(new ImageView(shipsInOrder[rep]));
-                                board1[y+rep][x].getGraphic().setRotate(90);
+                                if(rep == shipSelecting) {
+                                    shipsCopy[1] = shipsInOrder[4];
+                                    board1[y+rep][x].setGraphic(new ImageView(shipsInOrder[4]));
+                                    board1[y+rep][x].getGraphic().setRotate(90);
+                                }
+                                else {
+                                    board1[y+rep][x].setGraphic(new ImageView(shipsInOrder[rep]));
+                                    board1[y+rep][x].getGraphic().setRotate(90);
+                                }
 
                             }
                             
@@ -354,7 +370,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>{
                             else if(!horizontal){
                                 options.setCursor(new ImageCursor(shipsVert[shipSelecting],
                                              shipsVert[shipSelecting].getWidth()/2,
-                                             shipsVertm[shipSelecting].getHeight()/2));
+                                             shipsVert[shipSelecting].getHeight()/2));
                     }
                         }
                         
