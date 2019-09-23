@@ -52,6 +52,16 @@ import javafx.scene.input.KeyCode;
 import java.awt.Point;
 
 
+import javafx.stage.Popup;
+
+import javafx.scene.layout.TilePane;
+
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+
+
+
+
 //#megaclass!!!!!
 
 
@@ -70,17 +80,19 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private int numOfShips;
     private GameBoard player1board, player2board;
 
-    private boolean p1selecting = false, p2selecting = false, horizontal = true, p1turn = false, p2turn = false, initFire = false;
+    private boolean p1selecting = false, p2selecting = false, horizontal = true, p1turn = false, p2turn = false, initFire = false, popupActive = false;
 
     private Button[][] board1, board2;
     private ImageView[][] board1ref, board2ref;
     private int shipSelecting = 0;
     private Image image;
+    private Stage s;
 
     public BoardGUI(String gamemode, Stage s, Font f, int numOfShips) {
 
         this.gamemode = gamemode;
         this.numOfShips = numOfShips;
+        this.s = s;
 
         //images code begin
 
@@ -278,14 +290,68 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     }
     
     
+    
     public void flipScreen(){
         //this changes the screen to the other players view
         //i.e. blocks the ship locations from the other persons pov
         
+        //https://www.geeksforgeeks.org/javafx-popup-class/
+        //popup code
+        
+        //clear boards inbetween turns!!!!
+        for(int y = 0; y < 8; y++){
+                for(int x = 0; x < 8; x++){
+                    board1[y][x].setGraphic(new ImageView(image));
+                    board2[y][x].setGraphic(new ImageView(image));
+                }
+        }
+        
+        Label close = new Label("ready");
+        
+        Stage stage = new Stage();
+        if(p1turn)
+            close.setText("Player 1 turn in 5 seconds");
+        else if(p2turn)
+            close.setText("Player 2 turn in 5 seconds");
+        Popup pop = new Popup();
+        TilePane tilepane = new TilePane(); 
+        
+        
+
+        tilepane.getChildren().add(close); 
+
+        // create a scene 
+        Scene scene = new Scene(tilepane, 200, 100);
+
+        stage.setScene(scene);
+        stage.show();
+        popupActive = true;
+        
+        //https://stackoverflow.com/questions/26454149/make-javafx-wait-and-continue-with-code/26454506
+        //sleep thread code
+        
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                    pop.hide(); 
+                    stage.hide();
+                    popupActive = false;
+        
+        
+        
         if(p1turn){
             //transition screen code
-            
-            
             //buttonSwap( board2, board2Opp);
             
             int[][] oppBoard = player1board.getOppBoard();
@@ -333,6 +399,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             
         
         }
+        
+                  }
+        });
+        
+        new Thread(sleeper).start();
         
         
     }
@@ -545,7 +616,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         }
         
         //the game loop
-        if(!p1selecting && !p2selecting ){
+        if(!p1selecting && !p2selecting  && !popupActive){
             if(p1turn && initFire){
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {

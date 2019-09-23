@@ -32,7 +32,7 @@ public class transitionScreen {
                 progressBar.setValue(counter);
                 if (counter == 5) {
                     timer.stop();
-                    System.exit(0);
+                    
                 }
             }
         };
@@ -41,11 +41,5 @@ public class transitionScreen {
         JOptionPane.showMessageDialog(null, progressBar, "Get Ready", JOptionPane.DEFAULT_OPTION);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater( new Runnable() {
-            public void run() {
-                transitionScreen transition = new transitionScreen();
-            }
-        });
-    }
+    
 }
