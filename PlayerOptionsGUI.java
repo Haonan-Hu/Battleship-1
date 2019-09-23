@@ -52,7 +52,7 @@ Meet Kapadia
 public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
 
     //Declare variables for the labels and text fields
-    private Label player1, player2, numOfShip, themeText;
+    private Label player1, player2, numOfShip, themeText, versus;
     private TextField name1, name2;
     private Button start;
     private String gamemode;
@@ -84,13 +84,44 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         player1 = new Label("Player 1");
         player1.setFont(f);
         name1 = new TextField("Player 1 Name");
+        
 
         player2 = new Label("Player 2");
         player2.setFont(f);
         name2 = new TextField("Player 2 Name");
+        
+        //https://stackoverflow.com/questions/31370478/how-get-an-event-when-text-in-a-textfield-changes-javafx/31370556
+        //textfield listeners
+        
+        name1.textProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable,
+            String oldValue, String newValue) {
+
+               player1.setText(newValue);
+            }
+        });
+        
+        name2.textProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable,
+            String oldValue, String newValue) {
+
+               player2.setText(newValue);
+            }
+        });
+        
+        
+        
+        
+        
+        
 
         numOfShip = new Label("# of ships:");
         numOfShip.setFont(f);
+        
+        versus = new Label("versus");
+        versus.setFont(f);
 
         message = new Label("We love Gibbons");
         message.setFont(f);
@@ -151,7 +182,8 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         //gr.add(theme,10,10);
         gr.add(start, 3, 11);
         gr.add(exit, 3 ,13);
-        gr.add(message, 3,7);
+        gr.add(versus,3,5);
+        gr.add(message, 3,14);
 
         gr.setHalignment(player1, HPos.CENTER);
         gr.setHalignment(name1, HPos.CENTER);
@@ -165,6 +197,8 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         gr.setHalignment(start, HPos.CENTER);
         gr.setHalignment(exit, HPos.CENTER);
         gr.setHalignment(message, HPos.CENTER);
+        
+        gr.setHalignment(versus, HPos.CENTER);
 
         gr.setStyle("-fx-background-color: yellow;");
 
@@ -194,6 +228,14 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
   	*/
     @Override
 	public void handle(ActionEvent e) {
+        
+        if(e.getSource() == name1){
+            player1.setText(name1.getText());
+        }
+        
+        if(e.getSource() == name2){
+            player2.setText(name2.getText());
+        }
 
         if(e.getSource() == start){
 

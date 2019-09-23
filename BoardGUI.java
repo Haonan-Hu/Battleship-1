@@ -266,6 +266,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                 ships[0].getWidth() / 2,
                 ships[0].getHeight() / 2));
         p1selecting = true;
+        flipScreen();
     }
 
 
@@ -313,6 +314,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             close.setText("Player 1 turn in 5 seconds");
         else if(p2turn)
             close.setText("Player 2 turn in 5 seconds");
+        else if(p1selecting)
+            close.setText("Player 1 selecting ships in 5 seconds");
+        else if(p2selecting)
+            close.setText("Player 2 selecting ships in 5 seconds");
         Popup pop = new Popup();
         TilePane tilepane = new TilePane(); 
         
@@ -321,7 +326,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         tilepane.getChildren().add(close); 
 
         // create a scene 
-        Scene scene = new Scene(tilepane, 200, 100);
+        Scene scene = new Scene(tilepane, 250, 100);
 
         stage.setScene(scene);
         stage.show();
@@ -350,7 +355,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         
         
         
-        if(p1turn){
+        if(p1turn || p1selecting){
             //transition screen code
             //buttonSwap( board2, board2Opp);
             
@@ -375,7 +380,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                    
             
         }
-        else if(p2turn){
+        else if(p2turn || p2selecting){
             
             //transition screen code
             //buttonSwap( board1, board1Opp);        
@@ -512,6 +517,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             shipSelecting = 0;
                             p1selecting = false;
                             p2selecting = true;
+                            flipScreen();
                             
                             options.setCursor(new ImageCursor(ships[0],
                                 ships[0].getWidth() / 2,
