@@ -350,6 +350,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         Label close = new Label("ready");
         
         Stage stage = new Stage();
+        
+        
+        
         if(p1turn)
             close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 5 seconds");
         else if(p2turn)
@@ -360,6 +363,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         }
         else if(p2selecting)
             close.setText(this.player2name.getText() + " selecting ships in 5 seconds");
+        if(messageToPlayer.contains("wins"))
+            close.setText(messageToPlayer + "\n" + "closing game in 5 seconds");
         
         
         Popup pop = new Popup();
@@ -395,6 +400,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
+                    if(close.getText().contains("wins"))
+                        System.exit(0);
                     pop.hide(); 
                     stage.hide();
                     popupActive = false;
@@ -673,6 +680,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             p1selecting = false;
                             options.setCursor(Cursor.DEFAULT);
                             p1turn = true;
+                            
+                            
                             status.setText(player1name.getText() + "'s Turn");
                             flipScreen("");
                             
@@ -709,9 +718,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             
                                 p1turn = false;
                                 p2turn = true;
-                                status.setText(player2name.getText() + "'s Turn");
+                                if(player2board.gameOver()){
+                                    flipScreen(player1name.getText() + " wins!");
+                                }
+                                else{
+                                    status.setText(player2name.getText() + "'s Turn");
+                                    flipScreen("MISSED!");
+                                }
+                                
                             
-                                flipScreen("MISSED!");
                                 
                                 //you missed
                                 //add transition screen code here
@@ -725,9 +740,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             
                                 p1turn = false;
                                 p2turn = true;
-                                status.setText(player2name.getText() + "'s Turn");
+                                if(player2board.gameOver()){
+                                    flipScreen(player1name.getText() + " wins!");
+                                }
+                                else{
+                                    status.setText(player2name.getText() + "'s Turn");
+                                    flipScreen("HIT!");
+                                }
                             
-                                flipScreen("HIT!");
+                                
                                 
                                 //you hit my battleship
                                 //add transition screen code here
@@ -748,9 +769,16 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             
                                 p1turn = false;
                                 p2turn = true;
-                                status.setText(player2name.getText() + "'s Turn");
-                            
-                                flipScreen("YOU SUNK MY BATTLESHIP");
+                                
+                                
+                                if(player2board.gameOver()){
+                                    flipScreen(player1name.getText() + " wins!");
+                                }
+                                else{
+                                    status.setText(player2name.getText() + "'s Turn");
+                                    flipScreen("YOU SUNK MY BATTLESHIP");
+                                }
+                                
                             
                                 
                                     
@@ -758,6 +786,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 //you sunk my battleship
                                 //add transition screen code here
                             }
+                            
+                            
                            
                         }
                     }
@@ -778,8 +808,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 player2board.updateOppBoard(x,y,str);
                                 p1turn = true;
                                 p2turn = false;
-                                status.setText(player1name.getText() + "'s Turn");
-                                flipScreen("MISSED!");
+                               
+                                
+                                if(player1board.gameOver()){
+                                    flipScreen(player2name.getText() + " wins!");
+                                }
+                                else{
+                                    status.setText(player1name.getText() + "'s Turn");
+                                    flipScreen("MISSED!");
+                                }
                             
                                 //you missed
                                 //add transition screen code here
@@ -793,8 +830,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 player2board.updateOppBoard(x,y,str);
                                 p1turn = true;
                                 p2turn = false;
-                                status.setText(player1name.getText() + "'s Turn");
-                                flipScreen("HIT!");
+                                if(player1board.gameOver()){
+                                    flipScreen(player2name.getText() + " wins!");
+                                }
+                                else{
+                                    status.setText(player1name.getText() + "'s Turn");
+                                    flipScreen("HIT!");
+                                }
                                
                                 //you hit my battleship
                                 //add transition screen code here
@@ -814,8 +856,16 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                
                                 p1turn = true;
                                 p2turn = false;
-                                status.setText(player1name.getText() + "'s Turn");
-                                flipScreen("YOU SUNK MY BATTLESHIP!");
+                                
+                                if(player1board.gameOver()){
+                                    flipScreen(player2name.getText() + " wins!");
+                                }
+                                else{
+                                    status.setText(player1name.getText() + "'s Turn");
+                                    flipScreen("YOU SUNK MY BATTLESHIP!");
+                                }
+                                
+                                
                                
                                 
                                 
