@@ -88,7 +88,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private Image image;
     private Stage s;
     
-    private Label player1name, player2name, status;
+    private Label player1name, player2name, status, rotateInstr;
 
     public BoardGUI(String gamemode, Stage s, Font f, int numOfShips, String player1name, String player2name) {
 
@@ -98,12 +98,14 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         
         this.player1name = new Label(player1name);
         this.player2name = new Label(player2name);
-        status = new Label(this.player1name.getText() + " selecting");
+        status = new Label(this.player1name.getText() + " selecting ships");
         status.setWrapText(true);
+        rotateInstr = new Label("Press R to rotate piece");
         
         
         this.player1name.setFont(f);
         this.player2name.setFont(f);
+        rotateInstr.setFont(f);
         status.setFont(f);
 
         //images code begin
@@ -266,6 +268,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         gr.setHalignment(this.player2name, HPos.CENTER);
         gr.add(status, 1,2);
         gr.setHalignment(status, HPos.RIGHT);
+        gr.add(rotateInstr, 0,0);
+        gr.setHalignment(rotateInstr, HPos.LEFT);
 
 
         gr.setStyle("-fx-background-color: lightslategray;");
@@ -283,7 +287,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         
         p1selecting = true;
-        flipScreen();
+        flipScreen("");
+        
     }
 
 
@@ -309,9 +314,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     
     
     
-    public void flipScreen(){
+    public void flipScreen(String messageToPlayer){
         //this changes the screen to the other players view
         //i.e. blocks the ship locations from the other persons pov
+        //also handles the popup menu in between
         
         //https://www.geeksforgeeks.org/javafx-popup-class/
         //popup code
@@ -328,15 +334,17 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         
         Stage stage = new Stage();
         if(p1turn)
-            close.setText("Player 1 turn in 5 seconds");
+            close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 5 seconds");
         else if(p2turn)
-            close.setText("Player 2 turn in 5 seconds");
+            close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 5 seconds");
         else if(p1selecting){
-            close.setText("Player 1 selecting ships in 5 seconds");
+            close.setText(this.player1name.getText() + " selecting ships in 5 seconds");
             System.out.println("player 1 selecting");
         }
         else if(p2selecting)
-            close.setText("Player 2 selecting ships in 5 seconds");
+            close.setText(this.player2name.getText() + " selecting ships in 5 seconds");
+        
+        
         Popup pop = new Popup();
         TilePane tilepane = new TilePane(); 
         
@@ -348,6 +356,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         Scene scene = new Scene(tilepane, 250, 100);
 
         stage.setScene(scene);
+        
+        stage.setAlwaysOnTop(true);
         stage.show();
         popupActive = true;
         
@@ -374,7 +384,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         
         
         
-        if(p1turn || p1selecting){
+        if(p1turn){
+            
             //transition screen code
             //buttonSwap( board2, board2Opp);
             
@@ -391,6 +402,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                         board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                     else if(oppBoard[y][x] == 2)
                          board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+                    else if(oppBoard[y][x] == 3)
+                         board2[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
                             
                 }
                 
@@ -399,7 +412,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                    
             
         }
-        else if(p2turn || p2selecting){
+        else if(p2turn){
             
             //transition screen code
             //buttonSwap( board1, board1Opp);        
@@ -416,6 +429,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                         board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
                     else if(oppBoard[y][x] == 2)
                          board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+                    else if(oppBoard[y][x] == 3)
+                         board1[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
                         
                 }
                 
@@ -423,12 +438,14 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             
         
         }
-                if(p2selecting)
+                if(p2selecting || p1selecting)
                     options.setCursor(new ImageCursor(ships[0],
                                 ships[0].getWidth() / 2,
                                 ships[0].getHeight() / 2));
         
                   }
+            
+                
         });
         
         new Thread(sleeper).start();
@@ -458,12 +475,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                     //notice the set rotate hehehe ;)
                     if (horizontal) {
                         options.setCursor(new ImageCursor(shipsVert[shipSelecting],
-                                shipsVert[shipSelecting].getWidth() / (2 * shipSelecting),
+                                shipsVert[shipSelecting].getWidth() / (2 * (shipSelecting+1)),
                                 shipsVert[shipSelecting].getHeight() / (2)));
                     } else if (!horizontal) {
                         options.setCursor(new ImageCursor(ships[shipSelecting],
                                 ships[shipSelecting].getWidth() / (2 ),
-                                ships[shipSelecting].getHeight() / (2 * shipSelecting)));
+                                ships[shipSelecting].getHeight() / (2 * (shipSelecting+1))));
                     }
 
                     horizontal = !horizontal;
@@ -472,7 +489,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             }
         });
 
-        if (p1selecting && shipSelecting < 5) {
+        if (p1selecting && shipSelecting < 5 && !popupActive) {
+            
 
             for (int x = 0; x < cols - 1; x++) {
                 for (int y = 0; y < rows - 1; y++) {
@@ -540,9 +558,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             shipSelecting = 0;
                             p1selecting = false;
                             p2selecting = true;
+                            status.setText(player2name.getText() + " selecting ships");
                             
                             
-                            flipScreen();
+                            flipScreen("");
                             
                             
                             
@@ -558,7 +577,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         }
 
-        if (p2selecting && shipSelecting < 5) {
+        if (p2selecting && shipSelecting < 5 && !popupActive) {
 
             for (int x = 0; x < cols - 1; x++) {
                 for (int y = 0; y < rows - 1; y++) {
@@ -625,7 +644,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             p1selecting = false;
                             options.setCursor(Cursor.DEFAULT);
                             p1turn = true;
-                            flipScreen();
+                            status.setText(player1name.getText() + "'s Turn");
+                            flipScreen("");
                             
                             
                             
@@ -646,7 +666,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         
         //the game loop
         if(!p1selecting && !p2selecting  && !popupActive){
-            if(p1turn && initFire){
+            if(p1turn){
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if(e.getSource() == board2[y][x] && player1board.getOppBoard()[y][x] == 0){
@@ -660,8 +680,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             
                                 p1turn = false;
                                 p2turn = true;
+                                status.setText(player2name.getText() + "'s Turn");
                             
-                                flipScreen();
+                                flipScreen("MISSED!");
                                 
                                 //you missed
                                 //add transition screen code here
@@ -675,8 +696,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             
                                 p1turn = false;
                                 p2turn = true;
+                                status.setText(player2name.getText() + "'s Turn");
                             
-                                flipScreen();
+                                flipScreen("HIT!");
                                 
                                 //you hit my battleship
                                 //add transition screen code here
@@ -697,8 +719,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             
                                 p1turn = false;
                                 p2turn = true;
+                                status.setText(player2name.getText() + "'s Turn");
                             
-                                flipScreen();
+                                flipScreen("YOU SUNK MY BATTLESHIP");
                             
                                 
                                     
@@ -726,7 +749,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 player2board.updateOppBoard(x,y,str);
                                 p1turn = true;
                                 p2turn = false;
-                                flipScreen();
+                                status.setText(player1name.getText() + "'s Turn");
+                                flipScreen("MISSED!");
                             
                                 //you missed
                                 //add transition screen code here
@@ -740,7 +764,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                 player2board.updateOppBoard(x,y,str);
                                 p1turn = true;
                                 p2turn = false;
-                                flipScreen();
+                                status.setText(player1name.getText() + "'s Turn");
+                                flipScreen("HIT!");
                                
                                 //you hit my battleship
                                 //add transition screen code here
@@ -760,7 +785,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                                
                                 p1turn = true;
                                 p2turn = false;
-                                flipScreen();
+                                status.setText(player1name.getText() + "'s Turn");
+                                flipScreen("YOU SUNK MY BATTLESHIP!");
                                
                                 
                                 
