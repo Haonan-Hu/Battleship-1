@@ -4,3 +4,7 @@ Works Cited
 3.	https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 4.	https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/BackgroundFill.html
 5.	https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/package-summary.html
+6.      https://stackoverflow.com/questions/26454149/make-javafx-wait-and-continue-with-code/26454506
+7.      https://www.geeksforgeeks.org/javafx-popup-class/
+8.      https://www.programcreek.com/java-api-examples/?api=javafx.scene.input.KeyEvent
+9.      https://stackoverflow.com/questions/31370478/how-get-an-event-when-text-in-a-textfield-changes-javafx/31370556
