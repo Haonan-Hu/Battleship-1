@@ -87,12 +87,24 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private int shipSelecting = 0;
     private Image image;
     private Stage s;
+    
+    private Label player1name, player2name, status;
 
-    public BoardGUI(String gamemode, Stage s, Font f, int numOfShips) {
+    public BoardGUI(String gamemode, Stage s, Font f, int numOfShips, String player1name, String player2name) {
 
         this.gamemode = gamemode;
         this.numOfShips = numOfShips;
         this.s = s;
+        
+        this.player1name = new Label(player1name);
+        this.player2name = new Label(player2name);
+        status = new Label(this.player1name.getText() + " selecting");
+        status.setWrapText(true);
+        
+        
+        this.player1name.setFont(f);
+        this.player2name.setFont(f);
+        status.setFont(f);
 
         //images code begin
 
@@ -219,7 +231,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         c1.setPercentWidth(46);
         gr.getColumnConstraints().add(c1);
         ColumnConstraints c2 = new ColumnConstraints();
-        c2.setPercentWidth(8);
+        c2.setPercentWidth(12);
         gr.getColumnConstraints().add(c2);
         ColumnConstraints c3 = new ColumnConstraints();
         c3.setPercentWidth(46);
@@ -247,6 +259,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         gr.getChildren().add(player1);
         gr.getChildren().add(player2);
+        
+        gr.add(this.player1name, 0,2);
+        gr.setHalignment(this.player1name, HPos.CENTER);
+        gr.add(this.player2name, 2,2);
+        gr.setHalignment(this.player2name, HPos.CENTER);
+        gr.add(status, 1,2);
+        gr.setHalignment(status, HPos.RIGHT);
 
 
         gr.setStyle("-fx-background-color: lightslategray;");
@@ -262,9 +281,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         player1board = new GameBoard();
         player2board = new GameBoard();
 
-        options.setCursor(new ImageCursor(ships[0],
-                ships[0].getWidth() / 2,
-                ships[0].getHeight() / 2));
+        
         p1selecting = true;
         flipScreen();
     }
@@ -314,8 +331,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             close.setText("Player 1 turn in 5 seconds");
         else if(p2turn)
             close.setText("Player 2 turn in 5 seconds");
-        else if(p1selecting)
+        else if(p1selecting){
             close.setText("Player 1 selecting ships in 5 seconds");
+            System.out.println("player 1 selecting");
+        }
         else if(p2selecting)
             close.setText("Player 2 selecting ships in 5 seconds");
         Popup pop = new Popup();
@@ -404,6 +423,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             
         
         }
+                if(p2selecting)
+                    options.setCursor(new ImageCursor(ships[0],
+                                ships[0].getWidth() / 2,
+                                ships[0].getHeight() / 2));
         
                   }
         });
@@ -505,23 +528,23 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
                             if (horizontal) {
                                 options.setCursor(new ImageCursor(ships[shipSelecting],
-                                        ships[shipSelecting].getWidth() / (2 * shipSelecting),
+                                        ships[shipSelecting].getWidth() / (2 * (shipSelecting+1)),
                                         ships[shipSelecting].getHeight() / (2 )));
                             } else if (!horizontal) {
                                 options.setCursor(new ImageCursor(shipsVert[shipSelecting],
                                         shipsVert[shipSelecting].getWidth() / (2),
-                                        shipsVert[shipSelecting].getHeight() / (2 * shipSelecting)));
+                                        shipsVert[shipSelecting].getHeight() / (2 * (shipSelecting+1))));
                             }
 
                         } else if (shipSelecting == numOfShips) {
                             shipSelecting = 0;
                             p1selecting = false;
                             p2selecting = true;
+                            
+                            
                             flipScreen();
                             
-                            options.setCursor(new ImageCursor(ships[0],
-                                ships[0].getWidth() / 2,
-                                ships[0].getHeight() / 2));
+                            
                             
                         }
 
@@ -588,12 +611,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
                             if (horizontal) {
                                 options.setCursor(new ImageCursor(ships[shipSelecting],
-                                        ships[shipSelecting].getWidth() / (2 * shipSelecting),
+                                        ships[shipSelecting].getWidth() / (2 * (shipSelecting+1)),
                                         ships[shipSelecting].getHeight() / (2)));
                             } else if (!horizontal) {
                                 options.setCursor(new ImageCursor(shipsVert[shipSelecting],
                                         shipsVert[shipSelecting].getWidth() / (2),
-                                        shipsVert[shipSelecting].getHeight() / (2 * shipSelecting)));
+                                        shipsVert[shipSelecting].getHeight() / (2 * (shipSelecting+1))));
                             }
 
                         } else if (shipSelecting == numOfShips) {
