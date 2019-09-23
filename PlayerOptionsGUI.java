@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.ArrayList;
+
 import javafx.collections.*;
 import javafx.collections.FXCollections;
 import javafx.scene.layout.ColumnConstraints;
@@ -47,9 +48,7 @@ Meet Kapadia
 //This class serves as a the executive class of Battleship as well as making basic gui elements.
 
 
-
-
-public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
+public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent> {
 
     //Declare variables for the labels and text fields
     private Label player1, player2, numOfShip, themeText, versus;
@@ -66,60 +65,53 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
 
 
     /*
-  	* @ pre none
-  	*	@ param string, stage, and font
-  	*	@ post constuctor
-  	* @ return none
-  	*/
-    public PlayerOptionsGUI(String gamemode, Stage s, Font f){
-
+     * @ pre none
+     *	@ param string, stage, and font
+     *	@ post constuctor
+     * @ return none
+     */
+    public PlayerOptionsGUI(String gamemode, Stage s, Font f) {
 
 
         this.gamemode = gamemode;
         this.f = f;
 
 
-
         //Define the variables
         player1 = new Label("Player 1");
         player1.setFont(f);
         name1 = new TextField("Player 1 Name");
-        
+
 
         player2 = new Label("Player 2");
         player2.setFont(f);
         name2 = new TextField("Player 2 Name");
-        
+
         //https://stackoverflow.com/questions/31370478/how-get-an-event-when-text-in-a-textfield-changes-javafx/31370556
         //textfield listeners
-        
+
         name1.textProperty().addListener(new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observable,
-            String oldValue, String newValue) {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                                String oldValue, String newValue) {
 
-               player1.setText(newValue);
+                player1.setText(newValue);
             }
         });
-        
+
         name2.textProperty().addListener(new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observable,
-            String oldValue, String newValue) {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                                String oldValue, String newValue) {
 
-               player2.setText(newValue);
+                player2.setText(newValue);
             }
         });
-        
-        
-        
-        
-        
-        
+
 
         numOfShip = new Label("# of ships:");
         numOfShip.setFont(f);
-        
+
         versus = new Label("versus");
         versus.setFont(f);
 
@@ -127,34 +119,34 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         message.setFont(f);
 
         ObservableList<String> listOfShip = FXCollections.observableArrayList(
-                                            "1",
-                                            "2",
-                                            "3",
-                                            "4",
-                                            "5");
+                "1",
+                "2",
+                "3",
+                "4",
+                "5");
         shipNum = new ComboBox(listOfShip);
         shipNum.setValue("1");
 
         themeText = new Label("Choose theme:");
-        ObservableList<String> themeList  = FXCollections.observableArrayList(
-                                            "Default",
-                                            "Temp 2",
-                                            "Temp 3",
-                                            "Star Wars");
+        ObservableList<String> themeList = FXCollections.observableArrayList(
+                "Default",
+                "Temp 2",
+                "Temp 3",
+                "Star Wars");
         final ComboBox theme = new ComboBox(themeList);
         theme.setValue("Default");
 
         gr = new GridPane();
-        for(int x = 0; x<cols; x++){
-          ColumnConstraints c = new ColumnConstraints();
-          c.setPercentWidth(100.0/cols);
-          gr.getColumnConstraints().add(c);
+        for (int x = 0; x < cols; x++) {
+            ColumnConstraints c = new ColumnConstraints();
+            c.setPercentWidth(100.0 / cols);
+            gr.getColumnConstraints().add(c);
         }
 
-        for(int y = 0; y<rows; y++){
-         RowConstraints r = new RowConstraints();
-          r.setPercentHeight(100.0/rows);
-          gr.getRowConstraints().add(r);
+        for (int y = 0; y < rows; y++) {
+            RowConstraints r = new RowConstraints();
+            r.setPercentHeight(100.0 / rows);
+            gr.getRowConstraints().add(r);
         }
 
         start = new Button("Start");
@@ -170,20 +162,20 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         //Define their placement in the grid
 
 
-        gr.add(player1 ,1, 4);
+        gr.add(player1, 1, 4);
         gr.add(name1, 1, 6);
 
         gr.add(player2, 5, 4);
         gr.add(name2, 5, 6);
 
-        gr.add(numOfShip,3, 1);
+        gr.add(numOfShip, 3, 1);
         gr.add(shipNum, 3, 2);
         //gr.add(themeText,1, 10);
         //gr.add(theme,10,10);
         gr.add(start, 3, 11);
-        gr.add(exit, 3 ,13);
-        gr.add(versus,3,5);
-        gr.add(message, 3,14);
+        gr.add(exit, 3, 13);
+        gr.add(versus, 3, 5);
+        gr.add(message, 3, 14);
 
         gr.setHalignment(player1, HPos.CENTER);
         gr.setHalignment(name1, HPos.CENTER);
@@ -197,7 +189,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
         gr.setHalignment(start, HPos.CENTER);
         gr.setHalignment(exit, HPos.CENTER);
         gr.setHalignment(message, HPos.CENTER);
-        
+
         gr.setHalignment(versus, HPos.CENTER);
 
         gr.setStyle("-fx-background-color: yellow;");
@@ -210,38 +202,33 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>{
     }
 
     /*
-  	* @ pre none
-  	*	@ param none
-  	*	@ post gets the next scene
-  	* @ return returns the next scene
-  	*/
+     * @ pre none
+     *	@ param none
+     *	@ post gets the next scene
+     * @ return returns the next scene
+     */
     @Override
     public Scene getScene() {
         return options;
     }
 
     /*
-  	* @ pre none
-  	*	@ param action event / button pressed
-  	*	@ post button pressed goes to next scene
-  	* @ return none
-  	*/
+     * @ pre none
+     *	@ param action event / button pressed
+     *	@ post button pressed goes to next scene
+     * @ return none
+     */
     @Override
-	public void handle(ActionEvent e) {
-        
-        if(e.getSource() == name1){
+    public void handle(ActionEvent e) {
+
+        if (e.getSource() == name1)
             player1.setText(name1.getText());
-        }
-        
-        if(e.getSource() == name2){
+
+        if (e.getSource() == name2)
             player2.setText(name2.getText());
-        }
 
-        if(e.getSource() == start){
-
-
+        if (e.getSource() == start)
             BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue()), name1.getText(), name2.getText()).getScene(), 9);
-        }
 
-	}
+    }
 }
