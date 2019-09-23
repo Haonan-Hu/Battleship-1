@@ -90,6 +90,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     
     private Label player1name, player2name, status, rotateInstr;
 
+    /*
+  	* @ pre none
+  	*	@ param string, stage, font, number of ships, players' names
+  	*	@ post constuctor
+  	* @ return none
+  	*/
     public BoardGUI(String gamemode, Stage s, Font f, int numOfShips, String player1name, String player2name) {
 
         this.gamemode = gamemode;
@@ -292,6 +298,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     }
 
 
+    /*
+  	* @ pre none
+  	*	@ param Player, x and y coordinate of the grid, lenght of the ship
+  	*	@ post places the ships
+  	* @ return none
+  	*/
     //from jace's Main.java
     public void placeShips(GameBoard player, int x, int y, int shipLength) {
         Ship tempShip = new Ship(shipLength);
@@ -313,7 +325,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     }
     
     
-    
+        /*
+  	* @ pre none
+  	*	@ param a message 
+  	*	@ post flips the screen
+  	* @ return none
+  	*/
     public void flipScreen(String messageToPlayer){
         //this changes the screen to the other players view
         //i.e. blocks the ship locations from the other persons pov
@@ -454,6 +471,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     }
 
 
+    /*
+  	* @ pre none
+  	*	@ param none
+  	*	@ post gets the next scene
+  	* @ return returns next scene
+  	*/
 
     @Override
     public Scene getScene() {
@@ -461,6 +484,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     }
 
 
+    /*
+  	* @ pre none
+  	*	@ param action event / button pressed
+  	*	@ post every time you click a button or press a key it reacts 
+  	* @ return none
+  	*/
     @Override
     public void handle(ActionEvent e) {
 
