@@ -18,7 +18,12 @@ public class transitionScreen {
     Timer timer;
     JProgressBar progressBar;
     private Scene transition;
-
+    /*
+  	* @ pre none
+  	*	@ param none
+  	*	@ post makes the transition screen
+  	* @ return none
+  	*/
     public transitionScreen() {
 
         progressBar = new JProgressBar(JProgressBar.HORIZONTAL, 0, 5);
