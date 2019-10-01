@@ -9,7 +9,7 @@ CLASSES = \
     PlayerOptionsGUI.java \
     MenuScene.java \
     OverScene.java \
-   
+
 
 
 default: classes
@@ -20,4 +20,4 @@ clean:
 	$(RM) *.class
 
 run:
-	java BattleShip
+	java BattleshipGUI

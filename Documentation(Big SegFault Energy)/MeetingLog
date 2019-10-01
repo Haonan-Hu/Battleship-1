@@ -7,3 +7,29 @@ Agenda:
   *Nuke on hit streak
   *UAV(probably)
 *Trying to solve Compilor Error
+
+Meeting 0:
+Location: Eaton Hall Lawr2
+09/30/2019 @ 11:35 to 11:50
+All in attendance
+Agenda:
+*Fixed compile Error(Thanks to Markus)
+  *Approaches that solves compile Error(For Macbook)
+    *First Step(Removing all your java form your Macbook)
+      *Type in those commands in your terminal:
+       sudo rm -fr /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin
+       sudo rm -fr /Library/PreferencePanes/JavaControlPanel.prefPane
+       sudo rm -fr ~/Library/Application\ Support/Oracle/Java
+      *Type in: echo $JAVA_HOME (copy JAVA_HOME Path, something like /Library/Java/JavaVirtualMachines)
+      *Then type in the path you copied: cd /Library/Java/JavaVirtualMachines
+      *Type in: sudo rm -fr /Library/Java/JavaVirtualMachines/jdkXXXX.jdk(deleating path, if you have multiple jdk version installed,
+       use commands to delete them all and make sure there is nothing left in /Library/Java/JavaVirtualMachines)
+    *Second Step(install JDK8)
+      *Link is here: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+      *Type in: open ~/.bash_profile
+        *Add export JAVA_HOME=$(/usr/libexec/java_home) (Manually set up Path)
+        *Save and close file
+      *Type in: source ~/.bash_profile (Activate your new Path)
+      *Type in: echo $JAVA_HOME (Now you should see your new path, something like /Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home)
+    *Now try to compile
+*Scheduled for next meeting(10/2 Wednesday)
