@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 
 public class MenuScene implements OverScene, EventHandler<ActionEvent> {
 
-    private Button start, exit; // only one button in this scene
+    private Button startPVP, exit; // only one button in this scene
+    private Button startAI;
     private Label name, title; //battleship
     private Scene firstscene;
 
@@ -27,10 +28,15 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
 
         f = new Font(f.getName(), 50);
 
-        start = new Button();
-        start.setText("START");
-        start.setOnAction(this);
-        start.setFont(f);
+        startPVP = new Button();
+        startPVP.setText("VERSUS PLAYER");
+        startPVP.setOnAction(this);
+        startPVP.setFont(f);
+
+        startAI = new Button();
+        startAI.setText("VERSUS AI");
+        startAI.setOnAction(this);
+        startAI.setFont(f);
 
         exit = new Button();
         exit.setText("Exit");
@@ -52,7 +58,7 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
         border.setStyle("-fx-background-color: lime;");
         border.setBottom(name);
 
-        buttons.getChildren().addAll(title, start, exit, name);
+        buttons.getChildren().addAll(title, startPVP, startAI, exit, name);
         buttons.setAlignment(Pos.CENTER);
 
         panes.getChildren().addAll(border, buttons);
@@ -79,9 +85,13 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent e) {
-        if (e.getSource() == start)
-            // this mess uses the static fields and methods from the Menu clas to set the next appropriate scene
+        if (e.getSource() == startPVP)
+            // this mess uses the static fields and methods from the Menu class to set the next appropriate scene
             BattleshipGUI.nextScene(new PlayerOptionsGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
+        else if(e.getSource() == startAI) //TODO have this take you to the ship setup scene for just player versus AI.
+        {
+          BattleshipGUI.nextScene(new PlayerOptionsGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
+        }
     }
 
 
