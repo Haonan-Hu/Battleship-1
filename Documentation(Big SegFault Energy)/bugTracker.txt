@@ -3,3 +3,4 @@ Bugs
  to be placed is colliding with the two on it's sides.
 -Still printing "Press R to rotate" when game starts
 -Player1 cannot rotate his first ship
+-IMPORTANT! When you rotate a ship while placing it, the middle of the ship becomes the placement point.

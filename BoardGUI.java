@@ -129,6 +129,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         }
 
 
+        //These are to set each array index to an image depending on the length of the ship
+        //The 1x1 just uses the 1x1 image, the 1x3 uses a combination of a front, mid, and 1x1 image
+        //When we place our ships, they use the full image for 1x4 or whichever ship
+        //Notice that the longer ships look fine when using the mouse to move them around the board,
+        //But when you place the ship, it looks more broken up because the images occupy the grid individually
         shipsInOrder[0] = new Image("images/front.png", 50, 50, true, true);
         shipsInOrder[1] = new Image("images/mid.png", 50, 50, true, true);
         shipsInOrder[2] = new Image("images/mid.png", 50, 50, true, true);
