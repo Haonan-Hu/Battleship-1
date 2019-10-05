@@ -1,0 +1,4 @@
+Bugs
+-Cannot place ships in between two ships, even for valid locations at certain times. Seems like it thinks the ship
+ to be placed is colliding with the two on it's sides.
+-
