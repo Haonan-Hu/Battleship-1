@@ -192,7 +192,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent> {
 
         gr.setHalignment(versus, HPos.CENTER);
 
-        gr.setStyle("-fx-background-color: yellow;");
+        gr.setStyle("-fx-background-color: lightslategray;");
 
         options = new Scene(gr);
 
