@@ -33,3 +33,12 @@ Agenda:
       *Type in: echo $JAVA_HOME (Now you should see your new path, something like /Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home)
     *Now try to compile
 *Scheduled for next meeting(10/2 Wednesday)
+
+Meeting 2:
+Location: LEEP2 1328
+10/05/2019 @ 12:00 to
+Haonan, Chance, Thomas
+Agenda:
+*Class diagram for the project
+*Bug fixes
+*Get program ready for implementing extra features
