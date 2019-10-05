@@ -43,6 +43,17 @@ Jace Bayless
 Tri Pham
 Apurva Rai
 Meet Kapadia
+
+
+Team Name:
+BigSegfaultEnergy
+
+Team members:
+Chance Penner
+Haonan Hu
+Markus Becerra
+Thomas Gardner
+Sarah Scott
 */
 
 //This class serves as a the executive class of Battleship as well as making basic gui elements.
