@@ -296,7 +296,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
     /*
      * @ pre none
-     *	@ param Player, x and y coordinate of the grid, lenght of the ship
+     *	@ param Player, x and y coordinate of the grid, length of the ship
      *	@ post places the ships
      * @ return none
      */
@@ -367,7 +367,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         tilepane.getChildren().add(close);
 
-        // create a scene 
+        // create a scene
         Scene scene = new Scene(tilepane, 250, 100);
 
         stage.setScene(scene);
