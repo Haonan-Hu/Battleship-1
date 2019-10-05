@@ -502,12 +502,16 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                     //notice the set rotate hehehe ;)
                     if (horizontal) {
                         options.setCursor(new ImageCursor(shipsVert[shipSelecting],
-                                shipsVert[shipSelecting].getWidth() / (2 * (shipSelecting + 1)),
-                                shipsVert[shipSelecting].getHeight() / (2)));
+                                // shipsVert[shipSelecting].getWidth() / (2 * (shipSelecting + 1)),
+                                // shipsVert[shipSelecting].getHeight() / (2)));
+                                shipsVert[shipSelecting].getHeight() / (2 * (shipSelecting + 1)),
+                                shipsVert[shipSelecting].getWidth() / (2)));
                     } else if (!horizontal) {
                         options.setCursor(new ImageCursor(ships[shipSelecting],
-                                ships[shipSelecting].getWidth() / (2),
-                                ships[shipSelecting].getHeight() / (2 * (shipSelecting + 1))));
+                                // ships[shipSelecting].getWidth() / (2),
+                                // ships[shipSelecting].getHeight() / (2 * (shipSelecting + 1))));
+                                ships[shipSelecting].getHeight() / (2),
+                                ships[shipSelecting].getWidth() / (2 * (shipSelecting + 1))));
                     }
 
                     horizontal = !horizontal;
