@@ -4,3 +4,5 @@ Bugs
 -Still printing "Press R to rotate" when game starts
 -Player1 cannot rotate his first ship
 -IMPORTANT! When you rotate a ship while placing it, the middle of the ship becomes the placement point.
+-Once 2 players placed their ships, player2's board has a highlighted block shows player2's ship location,
+it desappears next turn

@@ -105,8 +105,20 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent> {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
+                                  String newStr = " ";
+                                  if(newValue.length() > 15)
+                                  {
 
-                player1.setText(newValue);
+                                    for(int i = 0;i < 15;i++)
+                                    {
+                                      newStr = newStr + newValue.charAt(i);
+                                    }
+                                    player1.setText(newStr);
+                                  }
+                                  else
+                                  {
+                                    player1.setText(newValue);
+                                  }
             }
         });
 
@@ -114,8 +126,19 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent> {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
-
-                player2.setText(newValue);
+                                  String newStr = " ";
+                                  if(newValue.length() > 15)
+                                  {
+                                    for(int i = 0;i < 15;i++)
+                                    {
+                                      newStr = newStr + newValue.charAt(i);
+                                    }
+                                    player2.setText(newStr);
+                                  }
+                                  else
+                                  {
+                                    player2.setText(newValue);
+                                  }
             }
         });
 
@@ -239,7 +262,7 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent> {
             player2.setText(name2.getText());
 
         if (e.getSource() == start)
-            BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue()), name1.getText(), name2.getText()).getScene(), 9);
+            BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue()), player1.getText(),player2.getText()).getScene(), 9);
 
     }
 }
