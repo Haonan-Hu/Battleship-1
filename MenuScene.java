@@ -65,6 +65,7 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
 
         panes.getChildren().addAll(border, buttons);
         firstscene = new Scene(panes, 500, 500);
+      //  AIscene = new Scene(panes, 500, 500);
 
     }
 
@@ -77,6 +78,7 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
     @Override
     public Scene getScene() {
         return firstscene;
+        //return AIscene;
     }
 
     /*
@@ -92,7 +94,7 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
             BattleshipGUI.nextScene(new PlayerOptionsGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
         else if(e.getSource() == startAI) //TODO have this take you to the ship setup scene for just player versus AI.
         {
-          BattleshipGUI.nextScene(new PlayerOptionsGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
+          BattleshipGUI.nextScene(new VersusAIGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont()).getScene(), 9);
         }
     }
 

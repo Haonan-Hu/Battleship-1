@@ -7,6 +7,7 @@ JC = javac
 CLASSES = \
     BattleshipGUI.java \
     PlayerOptionsGUI.java \
+		VersusAIGUI.java \
     MenuScene.java \
     OverScene.java \
 
