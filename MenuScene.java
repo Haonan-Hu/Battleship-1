@@ -8,6 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 
 public class MenuScene implements OverScene, EventHandler<ActionEvent> {
@@ -26,33 +28,33 @@ public class MenuScene implements OverScene, EventHandler<ActionEvent> {
     public MenuScene(Stage s, Font f) {
         s.centerOnScreen();
 
-        f = new Font(f.getName(), 50);
+        // f = new Font(f.getName(), 50);
 
         startPVP = new Button();
         startPVP.setText("VERSUS PLAYER");
         startPVP.setOnAction(this);
-        startPVP.setFont(f);
+        startPVP.setFont(Font.font ("Verdana", 25));
 
         startAI = new Button();
         startAI.setText("VERSUS AI");
         startAI.setOnAction(this);
-        startAI.setFont(f);
+        startAI.setFont(Font.font ("Verdana", 25));
 
         exit = new Button();
         exit.setText("Exit");
         exit.setOnAction(e -> s.close());
-        exit.setFont(f);
+        exit.setFont(Font.font ("Verdana", 25));
 
         name = new Label();
-        name.setText("Team Poor Yorick");
-        name.setFont(f);
+        name.setText("Team Poor Yorick\nTeam BigSegfaultEnergy");
+        name.setFont(Font.font ("Verdana", 25));
 
         title = new Label();
         title.setText("Battleship");
-        title.setFont(f);
+        title.setFont(Font.font ("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 75));
 
         StackPane panes = new StackPane();
-        VBox buttons = new VBox(20);
+        VBox buttons = new VBox(25);
         BorderPane border = new BorderPane();
 
         border.setStyle("-fx-background-color: lime;");
