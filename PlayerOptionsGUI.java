@@ -90,12 +90,12 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent> {
 
         //Define the variables
         player1 = new Label("Player 1");
-        player1.setFont(f);
+        player1.setFont(Font.font ("Verdana", 20));
         name1 = new TextField("Player 1 Name");
 
 
         player2 = new Label("Player 2");
-        player2.setFont(f);
+        player2.setFont(Font.font ("Verdana", 20));
         name2 = new TextField("Player 2 Name");
 
         //https://stackoverflow.com/questions/31370478/how-get-an-event-when-text-in-a-textfield-changes-javafx/31370556
@@ -121,13 +121,13 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent> {
 
 
         numOfShip = new Label("# of ships:");
-        numOfShip.setFont(f);
+        numOfShip.setFont(Font.font ("Verdana", 20));
 
         versus = new Label("versus");
-        versus.setFont(f);
+        versus.setFont(Font.font ("Verdana", 20));
 
-        message = new Label("We love Gibbons");
-        message.setFont(f);
+        message = new Label("Prepare for Battle!");
+        message.setFont(Font.font ("Verdana", 20));
 
         ObservableList<String> listOfShip = FXCollections.observableArrayList(
                 "1",
@@ -161,11 +161,11 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent> {
         }
 
         start = new Button("Start");
-        start.setFont(f);
+        start.setFont(Font.font ("Verdana", 20));
 
         exit = new Button("Exit");
         exit.setOnAction(e -> s.close());
-        exit.setFont(f);
+        exit.setFont(Font.font ("Verdana", 20));
 
         start.setOnAction(this);
 
