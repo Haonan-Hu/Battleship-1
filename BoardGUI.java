@@ -528,19 +528,27 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     //for AI choosing ship placement. Needs to be outside of EventHandler since AI isn't actually pressing a button
     public void AIturn()
     {
+//for(int i = shipSelecting; i< numOfShips;)
+//{
+System.out.println("AIturn");
 
       //AI PLAYER
       // if (p2selecting && shipSelecting < 5 && !popupActive && versusAI) {
       if (p2selecting && shipSelecting < 5 && versusAI) {
-        yAI = ThreadLocalRandom.current().nextInt(0, 9);
-        xAI = ThreadLocalRandom.current().nextInt(0, 9);
+        yAI = ThreadLocalRandom.current().nextInt(0, 8);
+        xAI = ThreadLocalRandom.current().nextInt(0, 8);
+        System.out.println("yAI then xAI");
+        System.out.println(yAI);
+        System.out.println(xAI);
+        //works cited https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
 
-        System.out.println("AI Turn");
+        System.out.println("Inside AIturn");
 
           for (int x = 0; x < cols - 1; x++) {
               for (int y = 0; y < rows - 1; y++) {
                   if (board2[yAI][xAI] == board2[y][x] && shipSelecting < numOfShips && !player2board.isOccupied(x, y, shipSelecting + 1, horizontal)) {
 
+                    System.out.println("INSIDE DOUBLE FOR LOOP");
                       placeShips(player2board, x, y, shipSelecting + 1);
 
                       if (horizontal) {
@@ -597,6 +605,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
                       } else if (shipSelecting == numOfShips) {
                           shipSelecting = 0;
+                          System.out.println("p2selecting = false");
                           p2selecting = false;
                           p1selecting = false;
                           options.setCursor(Cursor.DEFAULT);
@@ -608,9 +617,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
 
                       }
+                      else
+                      {
+                        AIturn();
+                      }
 
-                  } else if (player2board.isOccupied(x, y, shipSelecting, horizontal)) {
+                  } else if (player2board.isOccupied(x, y, shipSelecting +1, horizontal)) {
                       System.out.println("Invalid Spot");
+                      System.out.println(yAI);
+                      System.out.println(xAI);
                       AIturn();
                   }
 
@@ -619,6 +634,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
           }
 
       }
+
+  //  }
+  System.out.println("returning AIturn");
+  return;
     }
 
     /*
@@ -733,6 +752,11 @@ System.out.println("key pressed");
 
                             flipScreen("");
 
+                            if(versusAI)
+                            {
+                              System.out.println("calling versusAI");
+                              AIturn();
+                            }
 
                         }
 
@@ -743,11 +767,7 @@ System.out.println("key pressed");
                 }
 
             }
-            if(versusAI)
-            {
-              System.out.println("calling versusAI");
-              AIturn();
-            }
+
         }
 
         //REAL PERSON PLAYER2
@@ -914,7 +934,7 @@ System.out.println("Real Player 2 Turn");
                 }
 
             } else if (p2turn && versusAI) {
-              System.out.println("AI line 909");
+              System.out.println("AI line 930ish");
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if (board2[yAI][xAI] == board2[y][x] && player1board.getOppBoard()[y][x] == 0) {
