@@ -88,6 +88,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
     private Label player1name, player2name, status, rotateInstr;
 
+    private boolean versusAI = false;
+
     /*
      * @ pre none
      *	@ param string, stage, font, number of ships, players' names
@@ -102,6 +104,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         this.player1name = new Label(player1name);
         this.player2name = new Label(player2name);
+
+        if(player2name == "AI")
+        {
+          versusAI = true;
+        }
+
         status = new Label(this.player1name.getText() + " selecting ships");
         status.setWrapText(true);
         rotateInstr = new Label("Press R to rotate piece");
@@ -352,21 +360,38 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         Stage stage = new Stage();
 
+        if(versusAI)
+        {
+          if (p1turn)
+              close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 2 seconds");
+          else if (p2turn)
+              close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 2 seconds");
+          else if (p1selecting) {
+              close.setText(this.player1name.getText() + " selecting ships in 2 seconds");
+              System.out.println("player 1 selecting");
+          } else if (p2selecting)
+              close.setText(this.player2name.getText() + " selecting ships in 2 seconds");
+          if (messageToPlayer.contains("wins"))
+              close.setText(messageToPlayer + "\n" + "closing game in 2 seconds");
+        }
+        else
+        {
+          if (p1turn)
+              close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 5 seconds");
+          else if (p2turn)
+              close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 5 seconds");
+          else if (p1selecting) {
+              close.setText(this.player1name.getText() + " selecting ships in 5 seconds");
+              System.out.println("player 1 selecting");
+          } else if (p2selecting)
+              close.setText(this.player2name.getText() + " selecting ships in 5 seconds");
+          if (messageToPlayer.contains("wins"))
+              close.setText(messageToPlayer + "\n" + "closing game in 5 seconds");
+        }
 
-        if (p1turn)
-            close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 5 seconds");
-        else if (p2turn)
-            close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 5 seconds");
-        else if (p1selecting) {
-            close.setText(this.player1name.getText() + " selecting ships in 5 seconds");
-            System.out.println("player 1 selecting");
-        } else if (p2selecting)
-            close.setText(this.player2name.getText() + " selecting ships in 5 seconds");
-        if (messageToPlayer.contains("wins"))
-            close.setText(messageToPlayer + "\n" + "closing game in 5 seconds");
 
 
-        Popup pop = new Popup();
+       Popup pop = new Popup();
         TilePane tilepane = new TilePane();
 
 
@@ -388,7 +413,14 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             @Override
             protected Void call() throws Exception {
                 try {
-                    Thread.sleep(5000);
+                    if(versusAI)
+                    {
+                      Thread.sleep(2000);
+                    }
+                    else
+                    {
+                      Thread.sleep(5000);
+                    }
                 } catch (InterruptedException e) {
                 }
                 return null;
