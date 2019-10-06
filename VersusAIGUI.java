@@ -62,7 +62,7 @@ Sarah Scott
 public class VersusAIGUI implements OverScene, EventHandler<ActionEvent> {
 
     //Declare variables for the labels and text fields
-    private Label player1, player2, numOfShip, themeText, versus;
+    private Label player1, player2, numOfShip, difficulty, themeText, versus;
     private TextField name1, name2;
     private Button start;
     private String gamemode;
@@ -73,6 +73,7 @@ public class VersusAIGUI implements OverScene, EventHandler<ActionEvent> {
     private int cols = 7, rows = 15;
     private Font f;
     private ComboBox<String> shipNum;
+    private ComboBox<String> difficultySelection;
 
 
     /*
@@ -96,8 +97,8 @@ public class VersusAIGUI implements OverScene, EventHandler<ActionEvent> {
 
 
         player2 = new Label("Player 2");
-        player2.setFont(Font.font ("Verdana", 20));
-        name2 = new TextField("Player 2 Name");
+        // player2.setFont(Font.font ("Verdana", 20));
+        // name2 = new TextField("Player 2 Name");
 
         //https://stackoverflow.com/questions/31370478/how-get-an-event-when-text-in-a-textfield-changes-javafx/31370556
         //textfield listeners
@@ -123,31 +124,34 @@ public class VersusAIGUI implements OverScene, EventHandler<ActionEvent> {
             }
         });
 
-        name2.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable,
-                                String oldValue, String newValue) {
-                                  String newStr = " ";
-                                  if(newValue.length() > 15)
-                                  {
-                                    for(int i = 0;i < 15;i++)
-                                    {
-                                      newStr = newStr + newValue.charAt(i);
-                                    }
-                                    player2.setText(newStr);
-                                  }
-                                  else
-                                  {
-                                    player2.setText(newValue);
-                                  }
-            }
-        });
+        // name2.textProperty().addListener(new ChangeListener<String>() {
+        //     @Override
+        //     public void changed(ObservableValue<? extends String> observable,
+        //                         String oldValue, String newValue) {
+        //                           String newStr = " ";
+        //                           if(newValue.length() > 15)
+        //                           {
+        //                             for(int i = 0;i < 15;i++)
+        //                             {
+        //                               newStr = newStr + newValue.charAt(i);
+        //                             }
+        //                             player2.setText(newStr);
+        //                           }
+        //                           else
+        //                           {
+        //                             player2.setText(newValue);
+        //                           }
+        //     }
+        // });
 
 
         numOfShip = new Label("# of ships:");
         numOfShip.setFont(Font.font ("Verdana", 20));
 
-        versus = new Label("versus");
+        difficulty = new Label("Difficulty");
+        difficulty.setFont(Font.font ("Verdana", 20));
+
+        versus = new Label("versus AI");
         versus.setFont(Font.font ("Verdana", 20));
 
         message = new Label("Prepare for Battle!");
@@ -161,6 +165,13 @@ public class VersusAIGUI implements OverScene, EventHandler<ActionEvent> {
                 "5");
         shipNum = new ComboBox(listOfShip);
         shipNum.setValue("1");
+
+        ObservableList<String> listOfDifficulties = FXCollections.observableArrayList(
+                "Easy",
+                "Medium",
+                "Hard");
+        difficultySelection = new ComboBox(listOfDifficulties);
+        difficultySelection.setValue("Easy");
 
         themeText = new Label("Choose theme:");
         ObservableList<String> themeList = FXCollections.observableArrayList(
@@ -197,29 +208,35 @@ public class VersusAIGUI implements OverScene, EventHandler<ActionEvent> {
         //Define their placement in the grid
 
 
-        gr.add(player1, 1, 4);
-        gr.add(name1, 1, 6);
+        gr.add(player1, 3, 6);
+        gr.add(name1, 3, 7);
 
-        gr.add(player2, 5, 4);
-        gr.add(name2, 5, 6);
+        // gr.add(player2, 5, 4);
+        // gr.add(name2, 5, 6);
 
         gr.add(numOfShip, 3, 1);
         gr.add(shipNum, 3, 2);
+
+        gr.add(difficulty, 3, 3);
+        gr.add(difficultySelection, 3, 4);
         //gr.add(themeText,1, 10);
         //gr.add(theme,10,10);
         gr.add(start, 3, 11);
         gr.add(exit, 3, 13);
-        gr.add(versus, 3, 5);
+        gr.add(versus, 3, 8);
         gr.add(message, 3, 14);
 
         gr.setHalignment(player1, HPos.CENTER);
         gr.setHalignment(name1, HPos.CENTER);
 
-        gr.setHalignment(player2, HPos.CENTER);
-        gr.setHalignment(name2, HPos.CENTER);
+        // gr.setHalignment(player2, HPos.CENTER);
+        // gr.setHalignment(name2, HPos.CENTER);
 
         gr.setHalignment(numOfShip, HPos.CENTER);
         gr.setHalignment(shipNum, HPos.CENTER);
+
+        gr.setHalignment(difficulty, HPos.CENTER);
+        gr.setHalignment(difficultySelection, HPos.CENTER);
 
         gr.setHalignment(start, HPos.CENTER);
         gr.setHalignment(exit, HPos.CENTER);
@@ -259,8 +276,9 @@ public class VersusAIGUI implements OverScene, EventHandler<ActionEvent> {
         if (e.getSource() == name1)
             player1.setText(name1.getText());
 
-        if (e.getSource() == name2)
-            player2.setText(name2.getText());
+        // if (e.getSource() == name2)
+            // player2.setText(name2.getText());
+            player2.setText("AI");
 
         if (e.getSource() == start)
             BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue()), player1.getText(),player2.getText()).getScene(), 9);
