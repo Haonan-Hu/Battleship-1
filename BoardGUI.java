@@ -60,6 +60,9 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 
 
+
+import java.util.concurrent.ThreadLocalRandom;  //for random numbers
+
 //#megaclass!!!!!
 
 
@@ -89,6 +92,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private Label player1name, player2name, status, rotateInstr;
 
     private boolean versusAI = false;
+    private int xAI, yAI;
+
 
     /*
      * @ pre none
@@ -188,7 +193,6 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         board1ref = new ImageView[rows - 1][cols - 1];
         board2ref = new ImageView[rows - 1][cols - 1];
-
 
         for (int c = 0; c < cols - 1; c++) {
             for (int r = 0; r < rows - 1; r++) {
@@ -368,7 +372,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
               close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 2 seconds");
           else if (p1selecting) {
               close.setText(this.player1name.getText() + " selecting ships in 2 seconds");
-              System.out.println("player 1 selecting");
+              //System.out.println("player 1 selecting");
           } else if (p2selecting)
               close.setText(this.player2name.getText() + " selecting ships in 2 seconds");
           if (messageToPlayer.contains("wins"))
@@ -416,6 +420,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                     if(versusAI)
                     {
                       Thread.sleep(2000);
+
                     }
                     else
                     {
@@ -435,7 +440,6 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                 pop.hide();
                 stage.hide();
                 popupActive = false;
-
 
                 if (p1turn) {
 
@@ -465,6 +469,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
 
                 } else if (p2turn) {
+
 
                     //transition screen code
                     //buttonSwap( board1, board1Opp);
@@ -503,6 +508,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         new Thread(sleeper).start();
 
 
+
     }
 
 
@@ -519,6 +525,102 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     }
 
 
+    //for AI choosing ship placement. Needs to be outside of EventHandler since AI isn't actually pressing a button
+    public void AIturn()
+    {
+
+      //AI PLAYER
+      // if (p2selecting && shipSelecting < 5 && !popupActive && versusAI) {
+      if (p2selecting && shipSelecting < 5 && versusAI) {
+        yAI = ThreadLocalRandom.current().nextInt(0, 9);
+        xAI = ThreadLocalRandom.current().nextInt(0, 9);
+
+        System.out.println("AI Turn");
+
+          for (int x = 0; x < cols - 1; x++) {
+              for (int y = 0; y < rows - 1; y++) {
+                  if (board2[yAI][xAI] == board2[y][x] && shipSelecting < numOfShips && !player2board.isOccupied(x, y, shipSelecting + 1, horizontal)) {
+
+                      placeShips(player2board, x, y, shipSelecting + 1);
+
+                      if (horizontal) {
+
+                          for (int rep = 0; rep < shipSelecting + 1; rep++) {
+
+                              if (rep == shipSelecting) {
+                                  shipsCopy[1] = shipsInOrder[4];
+                                  board2[y][x + rep].setGraphic(new ImageView(shipsInOrder[4]));
+                                  board2ref[y][x + rep] = new ImageView(shipsInOrder[4]);
+                              } else {
+
+                                  board2[y][x + rep].setGraphic(new ImageView(shipsInOrder[rep]));
+                                  board2ref[y][x + rep] = new ImageView(shipsInOrder[rep]);
+                              }
+
+                          }
+                      } else if (!horizontal) {
+                          for (int rep = 0; rep < shipSelecting + 1; rep++) {
+
+                              if (rep == shipSelecting) {
+                                  shipsCopy[1] = shipsInOrder[4];
+                                  board2[y + rep][x].setGraphic(new ImageView(shipsInOrder[4]));
+                                  board2[y + rep][x].getGraphic().setRotate(90);
+
+                                  board2ref[y + rep][x] = (new ImageView(shipsInOrder[4]));
+                                  board2ref[y + rep][x].setRotate(90);
+
+                              } else {
+                                  board2[y + rep][x].setGraphic(new ImageView(shipsInOrder[rep]));
+                                  board2[y + rep][x].getGraphic().setRotate(90);
+
+                                  board2ref[y + rep][x] = (new ImageView(shipsInOrder[rep]));
+                                  board2ref[y + rep][x].setRotate(90);
+                              }
+
+                          }
+
+                      }
+
+                      shipSelecting++;
+
+                      if (shipSelecting < numOfShips) {
+
+                          if (horizontal) {
+                              options.setCursor(new ImageCursor(ships[shipSelecting],
+                                      ships[shipSelecting].getWidth() / (2 * (shipSelecting + 1)),
+                                      ships[shipSelecting].getHeight() / (2)));
+                          } else if (!horizontal) {
+                              options.setCursor(new ImageCursor(shipsVert[shipSelecting],
+                                      shipsVert[shipSelecting].getWidth() / (2),
+                                      shipsVert[shipSelecting].getHeight() / (2 * (shipSelecting + 1))));
+                          }
+
+                      } else if (shipSelecting == numOfShips) {
+                          shipSelecting = 0;
+                          p2selecting = false;
+                          p1selecting = false;
+                          options.setCursor(Cursor.DEFAULT);
+                          p1turn = true;
+
+
+                          status.setText(player1name.getText() + "'s Turn");
+                          flipScreen("");
+
+
+                      }
+
+                  } else if (player2board.isOccupied(x, y, shipSelecting, horizontal)) {
+                      System.out.println("Invalid Spot");
+                      AIturn();
+                  }
+
+              }
+
+          }
+
+      }
+    }
+
     /*
      * @ pre none
      *	@ param action event / button pressed
@@ -527,11 +629,13 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent e) {
-
+System.out.println("key pressed");
         //https://www.programcreek.com/java-api-examples/?api=javafx.scene.input.KeyEvent
         //for keyPressedEvent
         options.getRoot().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
+
+
                 if (ke.getCode() == KeyCode.R && (p1selecting || p2selecting)) {
 
                     //System.out.println("rotate");
@@ -639,11 +743,16 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                 }
 
             }
-
+            if(versusAI)
+            {
+              System.out.println("calling versusAI");
+              AIturn();
+            }
         }
 
-        if (p2selecting && shipSelecting < 5 && !popupActive) {
-
+        //REAL PERSON PLAYER2
+        if (p2selecting && shipSelecting < 5 && !popupActive && !versusAI) {
+System.out.println("Real Player 2 Turn");
             for (int x = 0; x < cols - 1; x++) {
                 for (int y = 0; y < rows - 1; y++) {
                     if (e.getSource() == board2[y][x] && shipSelecting < numOfShips && !player2board.isOccupied(x, y, shipSelecting + 1, horizontal)) {
@@ -717,7 +826,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                         }
 
                     } else if (player2board.isOccupied(x, y, shipSelecting, horizontal)) {
-                        //System.out.println("Invalid Spot");
+                        // System.out.println("Invalid Spot");
                     }
 
                 }
@@ -804,7 +913,84 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                     }
                 }
 
-            } else if (p2turn) {
+            } else if (p2turn && versusAI) {
+              System.out.println("AI line 909");
+                for (int x = 0; x < cols - 1; x++) {
+                    for (int y = 0; y < rows - 1; y++) {
+                        if (board2[yAI][xAI] == board2[y][x] && player1board.getOppBoard()[y][x] == 0) {
+                            String str = player1board.fire(x, y);
+                            if (str == "Miss") {
+                                board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+
+                                board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+
+                                player2board.updateOppBoard(x, y, str);
+                                p1turn = true;
+                                p2turn = false;
+
+
+                                if (player1board.gameOver()) {
+                                    flipScreen(player2name.getText() + " wins!");
+                                } else {
+                                    status.setText(player1name.getText() + "'s Turn");
+                                    flipScreen("MISSED!");
+                                }
+
+                                //you missed
+                                //add transition screen code here
+
+                            } else if (str == "Hit") {
+                                board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+
+                                board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+
+                                player2board.updateOppBoard(x, y, str);
+                                p1turn = true;
+                                p2turn = false;
+                                if (player1board.gameOver()) {
+                                    flipScreen(player2name.getText() + " wins!");
+                                } else {
+                                    status.setText(player1name.getText() + "'s Turn");
+                                    flipScreen("HIT!");
+                                }
+
+                                //you hit my battleship
+                                //add transition screen code here
+                            } else if (str == "Sunk") {
+                                //need to change every texture of the ship
+                                Ship s = player1board.shipAt(x, y);
+                                for (Point p : (s.getShipCoordinates())) {
+                                    board1[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+
+                                    board1ref[(int) p.getY()][(int) p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+                                    player2board.updateOppBoard((int) p.getX(), (int) p.getY(), str);
+
+                                }
+
+
+                                p1turn = true;
+                                p2turn = false;
+
+                                if (player1board.gameOver()) {
+                                    flipScreen(player2name.getText() + " wins!");
+                                } else {
+                                    status.setText(player1name.getText() + "'s Turn");
+                                    flipScreen("YOU SUNK MY BATTLESHIP!");
+                                }
+
+
+                                //you sunk my battleship
+                                //add transition screen code here
+                            }
+
+
+                        }
+                    }
+                }
+
+            }
+
+            else if (p2turn && !versusAI) {
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if (e.getSource() == board1[y][x] && player2board.getOppBoard()[y][x] == 0) {
