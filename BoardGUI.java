@@ -91,8 +91,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
     private Label player1name, player2name, status, rotateInstr;
 
-    private boolean versusAI = false;
-    private int xAI, yAI;
+    private boolean versusAI = false; //set to true if playing again AI
+    private int xAI, yAI; //to randomly select coordinates for placing and shooting
+    private int randomHorizontal; //used to randomly place ship horizontal or vertical
 
 
     /*
@@ -549,7 +550,17 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         do{
           yAI = ThreadLocalRandom.current().nextInt(0, 8);
           xAI = ThreadLocalRandom.current().nextInt(0, 8);
+          randomHorizontal = ThreadLocalRandom.current().nextInt(0,2); //randomly chooses 0 or 1, hence false or true.
+          if(randomHorizontal == 0)
+          {
+            horizontal = false;
+          }
+          else
+          {
+            horizontal = true;
+          }
         }while(!(shipSelecting < numOfShips && !player2board.isOccupied(xAI, yAI, shipSelecting + 1, horizontal)));
+
 
         // yAI = ThreadLocalRandom.current().nextInt(0, 8);
         // xAI = ThreadLocalRandom.current().nextInt(0, 8);
@@ -670,7 +681,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 //when we want the AI to shoot. Needs to be outside of EventHandler since AI isn't actually pressing a button
 public void AIshoot()
 {
-  
+
 
   if(p2turn && versusAI) {
     System.out.println("AI line 674ish");
