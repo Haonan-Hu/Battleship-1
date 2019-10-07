@@ -685,16 +685,50 @@ public void AIshoot()
 
   if(p2turn && versusAI) {
     System.out.println("AI line 674ish");
-      // for (int x = 0; x < cols - 1; x++) {
-      //     for (int y = 0; y < rows - 1; y++) {
+
 
       yAI = 9;  //reinitialize to value outside of range
       xAI = 9;  //reinitialize to value outside of range
       //run until random values are within bounds and also do not result in collision
-      do{
-        yAI = ThreadLocalRandom.current().nextInt(0, 8);
-        xAI = ThreadLocalRandom.current().nextInt(0, 8);
-      }while(player2board.getOppBoard()[yAI][xAI] != 0);
+
+      // randomly shooting
+      if(gamemode == "Easy")  //TODO SET UP TO GET GAMEMODE VALUE WHEN PASSED IN TO CONSTRUCTOR
+      {
+        System.out.println("SHOOTING EASY");
+        do{
+          yAI = ThreadLocalRandom.current().nextInt(0, 8);
+          xAI = ThreadLocalRandom.current().nextInt(0, 8);
+        }while(player2board.getOppBoard()[yAI][xAI] != 0);
+      }
+
+      if(gamemode == "Hard")
+      {
+        System.out.println("SHOOTING HARD");
+          for(int xvalue=0;xvalue<cols-1;xvalue++)
+          {
+            for(int yvalue=0;yvalue<rows-1;yvalue++)
+            {
+
+              xAI = xvalue;
+              yAI = yvalue;
+              System.out.println("In hard mode");
+              System.out.println("yAI = " + yAI);
+              System.out.println("xAI = " + xAI);
+              if(player1board.getBoard()[yAI][xAI] == 1 && player2board.getOppBoard()[yAI][xAI] == 0)
+              {
+                break;  //breaks out of this for loop if yAI and xAI represent a location that is a ship and hasn't been shot at yet
+              }
+            }
+            if(player1board.getBoard()[yAI][xAI] == 1 && player2board.getOppBoard()[yAI][xAI] == 0)
+            {
+              break;  //breaks out of the final for loop if yAI and xAI represent a location that is a ship and hasn't been shot at yet
+                      //need two breaks so that we can break out of the double for loop.
+            }
+          }
+      }
+
+
+
       System.out.println("within AIshoot()");
       System.out.println("yAI = " + yAI);
       System.out.println("xAI = " + xAI);
@@ -771,9 +805,7 @@ public void AIshoot()
                   }
 
 
-              //}
-      //     }
-      // }
+
 
   }
 }

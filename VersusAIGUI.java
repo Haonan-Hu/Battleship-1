@@ -278,10 +278,10 @@ public class VersusAIGUI implements OverScene, EventHandler<ActionEvent> {
 
         // if (e.getSource() == name2)
             // player2.setText(name2.getText());
-            player2.setText("AI");
+            player2.setText("AI");  //Set player2 name to "AI". This is used in BoardGUI to check if playing versus AI or not
 
         if (e.getSource() == start)
-            BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue()), player1.getText(),player2.getText()).getScene(), 9);
+            BattleshipGUI.nextScene(new BoardGUI(difficultySelection.getValue(), BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue()), player1.getText(),player2.getText()).getScene(), 9);
 
     }
 }
