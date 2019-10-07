@@ -528,27 +528,48 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     //for AI choosing ship placement. Needs to be outside of EventHandler since AI isn't actually pressing a button
     public void AIturn()
     {
+
+      for(int i = shipSelecting;i<numOfShips;i++)
+      {
+
+
 //for(int i = shipSelecting; i< numOfShips;)
 //{
 System.out.println("AIturn");
+System.out.println(Thread.currentThread());
+
 
       //AI PLAYER
       // if (p2selecting && shipSelecting < 5 && !popupActive && versusAI) {
       if (p2selecting && shipSelecting < 5 && versusAI) {
-        yAI = ThreadLocalRandom.current().nextInt(0, 8);
-        xAI = ThreadLocalRandom.current().nextInt(0, 8);
+
+        yAI = 9;  //reinitialize to value outside of range
+        xAI = 9;  //reinitialize to value outside of range
+        //run until random values are within bounds and also do not result in collision
+        do{
+          yAI = ThreadLocalRandom.current().nextInt(0, 8);
+          xAI = ThreadLocalRandom.current().nextInt(0, 8);
+        }while(!(shipSelecting < numOfShips && !player2board.isOccupied(xAI, yAI, shipSelecting + 1, horizontal)));
+
+        // yAI = ThreadLocalRandom.current().nextInt(0, 8);
+        // xAI = ThreadLocalRandom.current().nextInt(0, 8);
         System.out.println("yAI then xAI");
         System.out.println(yAI);
         System.out.println(xAI);
         //works cited https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
 
         System.out.println("Inside AIturn");
+        System.out.println(Thread.currentThread());
+int x = xAI;
+int y = yAI;
 
-          for (int x = 0; x < cols - 1; x++) {
-              for (int y = 0; y < rows - 1; y++) {
-                  if (board2[yAI][xAI] == board2[y][x] && shipSelecting < numOfShips && !player2board.isOccupied(x, y, shipSelecting + 1, horizontal)) {
+          // for (int x = 0; x < cols - 1; x++) {
+          //     for (int y = 0; y < rows - 1; y++) {
+                  // if (board2[yAI][xAI] == board2[y][x] && shipSelecting < numOfShips && !player2board.isOccupied(x, y, shipSelecting + 1, horizontal)) {
 
                     System.out.println("INSIDE DOUBLE FOR LOOP");
+                    System.out.println("shipSelecting = " + shipSelecting);
+
                       placeShips(player2board, x, y, shipSelecting + 1);
 
                       if (horizontal) {
@@ -619,26 +640,31 @@ System.out.println("AIturn");
                       }
                       else
                       {
-                        AIturn();
+                        System.out.println("else statement for whem shipSelecting != numOfShip");
+                      //  AIturn();
                       }
 
-                  } else if (player2board.isOccupied(x, y, shipSelecting +1, horizontal)) {
-                      System.out.println("Invalid Spot");
-                      System.out.println(yAI);
-                      System.out.println(xAI);
-                      AIturn();
-                  }
+                  // } else if (player2board.isOccupied(x, y, shipSelecting +1, horizontal)) {
+                  //     System.out.println("Invalid Spot");
+                  //     System.out.println("shipSelecting = " + shipSelecting);
+                  //     System.out.println(yAI);
+                  //     System.out.println(xAI);
+                  //     System.out.println(Thread.currentThread());
+                  //     //AIturn();
+                  // }
 
               }
 
           }
 
-      }
+
+
+
 
   //  }
   System.out.println("returning AIturn");
   return;
-    }
+}
 
     /*
      * @ pre none
@@ -858,6 +884,7 @@ System.out.println("Real Player 2 Turn");
         //the game loop
         if (!p1selecting && !p2selecting && !popupActive) {
             if (p1turn) {
+              System.out.println("P1 TURN TO SHOOT");
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if (e.getSource() == board2[y][x] && player1board.getOppBoard()[y][x] == 0) {
@@ -937,7 +964,13 @@ System.out.println("Real Player 2 Turn");
               System.out.println("AI line 930ish");
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
-                        if (board2[yAI][xAI] == board2[y][x] && player1board.getOppBoard()[y][x] == 0) {
+
+
+
+
+                      //here, instead randomly select xAI and yAI until they represent a location that hasn't been shot at before
+                      
+                      if (e.getSource() == board1[y][x] && player2board.getOppBoard()[y][x] == 0) {
                             String str = player1board.fire(x, y);
                             if (str == "Miss") {
                                 board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
