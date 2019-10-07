@@ -533,10 +533,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
       {
 
 
-//for(int i = shipSelecting; i< numOfShips;)
-//{
-System.out.println("AIturn");
-System.out.println(Thread.currentThread());
+      //for(int i = shipSelecting; i< numOfShips;)
+      //{
+      System.out.println("AIturn");
+      System.out.println(Thread.currentThread());
 
 
       //AI PLAYER
@@ -560,8 +560,9 @@ System.out.println(Thread.currentThread());
 
         System.out.println("Inside AIturn");
         System.out.println(Thread.currentThread());
-int x = xAI;
-int y = yAI;
+        
+        int x = xAI;
+        int y = yAI;
 
           // for (int x = 0; x < cols - 1; x++) {
           //     for (int y = 0; y < rows - 1; y++) {
@@ -969,7 +970,7 @@ System.out.println("Real Player 2 Turn");
 
 
                       //here, instead randomly select xAI and yAI until they represent a location that hasn't been shot at before
-                      
+
                       if (e.getSource() == board1[y][x] && player2board.getOppBoard()[y][x] == 0) {
                             String str = player1board.fire(x, y);
                             if (str == "Miss") {
