@@ -788,7 +788,9 @@ public void AIshoot()
         if(shootRandomly) //if there were no HITs on the screen, that means we can shoot randomly until there is a HIT
         {
           shootUP = true; //since we are back to shooting randomly, we reinitialize this to true so that next HIT we start by shooting vertically from it
-          shootLEFT = false; //need to reinitialize this to false since leftmost would be the last location of a ship to be shot at, so
+          shootLEFT = false;
+          shootRIGHT = false;
+          shootDOWN = false; //need to reinitialize this to false since leftmost would be the last location of a ship to be shot at, so
                             //if the leftmost part of a ship is destroyed and there are no more HITs, then the else statement in the left section won't run and set itself back to false
 
           do{
@@ -829,15 +831,15 @@ public void AIshoot()
             {
 
               //SHOOTING UP
-
-              if(enclosedVertically())
-              {
-                shootUP = false;
-                shootDOWN = false;
-                shootRIGHT = true;  //if the vertical HITs are enclosed by either MISSES or SUNKS, then that means these vertical HITs
-                                    //are part of horizontal ships, so to prevent a looping of going up and down repeatedly, we start shooting right now
-              }
-              else if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
+              //
+              // if(enclosedVertically())
+              // {
+              //   shootUP = false;
+              //   shootDOWN = false;
+              //   shootRIGHT = true;  //if the vertical HITs are enclosed by either MISSES or SUNKS, then that means these vertical HITs
+              //                       //are part of horizontal ships, so to prevent a looping of going up and down repeatedly, we start shooting right now
+              // }
+              if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
               {
                 System.out.println("SHOOT UP else if SUNK");
                 xFirstHit = xCurrentCoordinate;
