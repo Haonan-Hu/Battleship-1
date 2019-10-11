@@ -373,55 +373,84 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             }
         }
 
-        Label close = new Label("ready");
-
+        Label close = new Label();
         Stage stage = new Stage();
 
         if(versusAI)
         {
           if (p1turn)
-              close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 2 seconds");
+          {
+            close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 2 seconds");
+          }
           else if (p2turn)
-              close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 2 seconds");
-          else if (p1selecting) {
+          {
+            close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 2 seconds");
+          }
+          else if (p1selecting)
+          {
               close.setText(this.player1name.getText() + " selecting ships in 2 seconds");
               //System.out.println("player 1 selecting");
-          } else if (p2selecting)
-              close.setText(this.player2name.getText() + " selecting ships in 2 seconds");
+          }
+          else if (p2selecting)
+          {
+            close.setText(this.player2name.getText() + " selecting ships in 2 seconds");
+          }
           if (messageToPlayer.contains("wins"))
-              close.setText(messageToPlayer + "\n" + "closing game in 2 seconds");
+          {
+            close.setText(messageToPlayer + "\n" + "closing game in 2 seconds");
+          }
         }
         else
         {
           if (p1turn)
-              close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 5 seconds");
+          {
+            close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 5 seconds");
+          }
           else if (p2turn)
-              close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 5 seconds");
+          {
+            close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 5 seconds");
+          }
           else if (p1selecting) {
               close.setText(this.player1name.getText() + " selecting ships in 5 seconds");
               System.out.println("player 1 selecting");
-          } else if (p2selecting)
-              close.setText(this.player2name.getText() + " selecting ships in 5 seconds");
+          }
+          else if (p2selecting)
+          {
+            close.setText(this.player2name.getText() + " selecting ships in 5 seconds");
+          }
           if (messageToPlayer.contains("wins"))
-              close.setText(messageToPlayer + "\n" + "closing game in 5 seconds");
+          {
+            close.setText(messageToPlayer + "\n" + "closing game in 5 seconds");
+          }
         }
 
 
 
-       Popup pop = new Popup();
-        TilePane tilepane = new TilePane();
-
-
-        tilepane.getChildren().add(close);
+        Popup pop = new Popup();              //creating a basic popup
+        TilePane tilepane = new TilePane();   //creating a tilepane to hold that popup
+        tilepane.getChildren().add(close);    //adding the popup, close to a tilepane
 
         // create a scene
-        Scene scene = new Scene(tilepane, 250, 100);
+        Scene scene = new Scene(tilepane, 250, 100);  //THIS IS WHERE THE ACTUAL POPUP IS CREATED!!!!
 
         stage.setScene(scene);
 
-        stage.setAlwaysOnTop(true);
-        stage.show();
-        popupActive = true;
+        if(versusAI && p2turn || p2selecting)   //if the AI active and is its turn
+        {
+
+          stage.setX(599);      //set the x and y coordinate of the pop up to below the player 1 pop up
+          stage.setY(500);
+
+          stage.setAlwaysOnTop(true);   //the popup always appears on top of the other scenes
+          stage.show();                 //show the popup
+          popupActive = true;
+        }
+        else
+        {
+          stage.setAlwaysOnTop(true);   //the popup always appears on top of the other scenes
+          stage.show();                 //show the popup
+          popupActive = true;
+        }
 
         //https://stackoverflow.com/questions/26454149/make-javafx-wait-and-continue-with-code/26454506
         //sleep thread code
@@ -433,7 +462,6 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                     if(versusAI)
                     {
                       Thread.sleep(2000);
-
                     }
                     else
                     {
@@ -448,9 +476,11 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
-                if (close.getText().contains("wins"))
-                    System.exit(0);
-                pop.hide();
+                if (close.getText().contains("wins"))       //if the text in a popup reads "wins" end the program, basically
+                {
+                  System.exit(0);
+                }
+                pop.hide();         //this line and the two following it happen after every turn
                 stage.hide();
                 popupActive = false;
 
@@ -518,7 +548,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         });
 
-        new Thread(sleeper).start();
+        new Thread(sleeper).start();      //this is where the popup is called
 
 
 
@@ -830,7 +860,7 @@ public void AIshoot()
             //if the origin is a sunk ship spot then change origin to any hit spot
             if(player2board.getOppBoard()[yFirstHit][xFirstHit] == 3)
             {
-              for(int xvalue=0;xvalue<cols-1;xvalue++)  
+              for(int xvalue=0;xvalue<cols-1;xvalue++)
               {
                 for(int yvalue=0;yvalue<rows-1;yvalue++)
                 {
@@ -896,7 +926,7 @@ public void AIshoot()
 
                 xCurrentCoordinate = xFirstHit; //we exhausted all up moves, so go back to origin and try going right and left
                 yCurrentCoordinate = yFirstHit;
-                
+
                 shootUP = false;  //we will now shoot down next time
                 shootRIGHT = false;
                 shootLEFT = false;
