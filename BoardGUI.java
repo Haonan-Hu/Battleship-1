@@ -95,6 +95,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private int xAI, yAI; //to randomly select coordinates for placing and shooting
     private int randomHorizontal; //used to randomly place ship horizontal or vertical
 
+    private int hitsInaRow = 0;
+    private int hitsInaRowAi = 0;
     private boolean shootRandomly = true;
     private int xFirstHit = 0;
     private int yFirstHit = 0;
@@ -830,7 +832,7 @@ public void AIshoot()
             //if the origin is a sunk ship spot then change origin to any hit spot
             if(player2board.getOppBoard()[yFirstHit][xFirstHit] == 3)
             {
-              for(int xvalue=0;xvalue<cols-1;xvalue++)  
+              for(int xvalue=0;xvalue<cols-1;xvalue++)
               {
                 for(int yvalue=0;yvalue<rows-1;yvalue++)
                 {
@@ -896,7 +898,7 @@ public void AIshoot()
 
                 xCurrentCoordinate = xFirstHit; //we exhausted all up moves, so go back to origin and try going right and left
                 yCurrentCoordinate = yFirstHit;
-                
+
                 shootUP = false;  //we will now shoot down next time
                 shootRIGHT = false;
                 shootLEFT = false;
@@ -929,7 +931,7 @@ public void AIshoot()
                 shootLEFT = false;
                 shootDOWN = false;
 
-                xCurrentCoordinate = xFirstHit; 
+                xCurrentCoordinate = xFirstHit;
                 yCurrentCoordinate = yFirstHit;
               }
               else if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 2)  //traverse vertically DOWN until to a location that isn't a HIT
@@ -977,7 +979,7 @@ public void AIshoot()
                 shootLEFT = true;
                 shootDOWN = false;
 
-                xCurrentCoordinate = xFirstHit; 
+                xCurrentCoordinate = xFirstHit;
                 yCurrentCoordinate = yFirstHit;
               }
               else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate+1] == 2)  //traverse horizontally RIGHT until to a location that isn't a HIT
@@ -1023,7 +1025,7 @@ public void AIshoot()
                 shootLEFT = false;
                 shootDOWN = false;
 
-                xCurrentCoordinate = xFirstHit; 
+                xCurrentCoordinate = xFirstHit;
                 yCurrentCoordinate = yFirstHit;
               }
               else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate-1] == 2)  //traverse horizontally LEFT until to a location that isn't a HIT
@@ -1398,14 +1400,21 @@ System.out.println("Real Player 2 Turn");
         //the game loop
         if (!p1selecting && !p2selecting && !popupActive) {
             if (p1turn) {
+              if(hitsInaRow == 3)
+              {
+                e.getSource();
+                System.out.println("P1 USE THE NUKE!");
+                nukeExecute(x,y);
+              }
+            else{
               System.out.println("P1 TURN TO SHOOT");
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if (e.getSource() == board2[y][x] && player1board.getOppBoard()[y][x] == 0) {
                             String str = player2board.fire(x, y);
                             if (str == "Miss") {
+                              hitsInaRow = 0;
                                 board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
-
                                 board2ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
 
                                 player1board.updateOppBoard(x, y, str);
@@ -1418,6 +1427,7 @@ System.out.println("Real Player 2 Turn");
                                     status.setText(player2name.getText() + "'s Turn");
                                     flipScreen("MISSED!");
 
+
                                     if(versusAI)  //when we want the AI to then shoot next
                                     {
                                       System.out.println("calling AIshoot");
@@ -1429,6 +1439,7 @@ System.out.println("Real Player 2 Turn");
                                 //you missed
                                 //add transition screen code here
                             } else if (str == "Hit") {
+                              hitsInaRow++;
                                 board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
 
                                 board2ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
@@ -1454,6 +1465,7 @@ System.out.println("Real Player 2 Turn");
                                 //you hit my battleship
                                 //add transition screen code here
                             } else if (str == "Sunk") {
+                              hitsInaRow++;
                                 //need to change every texture of the ship
                                 Ship s = player2board.shipAt(x, y);
                                 for (Point p : (s.getShipCoordinates())) {
@@ -1493,7 +1505,7 @@ System.out.println("Real Player 2 Turn");
                 }
 
             }
-
+          }
             else if (p2turn && !versusAI) {
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
@@ -1576,5 +1588,86 @@ System.out.println("Real Player 2 Turn");
 
     }
 
+public void Nuke(int x, int y)
+{
+  String str = player1board.fire(x, y);
+  if (str == "Miss") {
+      board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
 
+      board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+
+      player2board.updateOppBoard(x, y, str);
+      p1turn = true;
+      p2turn = false;
+
+
+      if (player1board.gameOver()) {
+          flipScreen(player2name.getText() + " wins!");
+      } else {
+          status.setText(player1name.getText() + "'s Turn");
+          flipScreen("MISSED!");
+      }
+
+      //you missed
+      //add transition screen code here
+
+  } else if (str == "Hit") {
+      board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+
+      board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+
+      player2board.updateOppBoard(x, y, str);
+      p1turn = true;
+      p2turn = false;
+      if (player1board.gameOver()) {
+          flipScreen(player2name.getText() + " wins!");
+      } else {
+          status.setText(player1name.getText() + "'s Turn");
+          flipScreen("HIT!");
+      }
+
+      //you hit my battleship
+      //add transition screen code here
+  } else if (str == "Sunk") {
+      //need to change every texture of the ship
+      Ship s = player1board.shipAt(x, y);
+      for (Point p : (s.getShipCoordinates())) {
+          board1[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+
+          board1ref[(int) p.getY()][(int) p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+          player2board.updateOppBoard((int) p.getX(), (int) p.getY(), str);
+
+      }
+
+
+      p1turn = true;
+      p2turn = false;
+
+      if (player1board.gameOver()) {
+          flipScreen(player2name.getText() + " wins!");
+      } else {
+          status.setText(player1name.getText() + "'s Turn");
+          flipScreen("YOU SUNK MY BATTLESHIP!");
+      }
+
+
+      //you sunk my battleship
+      //add transition screen code here
+  }
+
+
+}
+
+public void nukeExecute(int x, int y)
+{
+  Nuke(x,y);
+  Nuke(x+1,y);
+  Nuke(x-1,y);
+  Nuke(x-1,y+1);
+  Nuke(x,y+1);
+  Nuke(x+1,y+1);
+  Nuke(x,y-1);
+  Nuke(x-1,y-1);
+  Nuke(x+1,y-1);
+}
 }
