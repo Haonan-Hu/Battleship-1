@@ -825,6 +825,7 @@ public void AIshoot()
             System.out.println(yCurrentCoordinate);
             System.out.println("xCurrentCoordinate = ");
             System.out.println(xCurrentCoordinate);
+
             if(player2board.getOppBoard()[yFirstHit][xFirstHit] == 3)
             {
               for(int xvalue=0;xvalue<cols-1;xvalue++)  
@@ -833,6 +834,10 @@ public void AIshoot()
                 {
                   if(player2board.getOppBoard()[yvalue][xvalue] == 2)
                   {
+                    shootUP = true;
+                    shootDOWN = false;
+                    shootLEFT = false;
+                    shootRIGHT = false;
                     yFirstHit = yvalue;
                     xFirstHit = xvalue;
                   }
@@ -899,13 +904,13 @@ public void AIshoot()
               //  shootRIGHT = true;  //if the vertical HITs are enclosed by either MISSES or SUNKS, then that means these vertical HITs
                                     //are part of horizontal ships, so to prevent a looping of going up and down repeatedly, we start shooting right now
               //}
-              if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
-              {
-                System.out.println("SHOOT DOWN else if SUNK");
-                xFirstHit = xCurrentCoordinate;
-                yFirstHit = yCurrentCoordinate;
-              }
-              else if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 2)  //traverse vertically DOWN until to a location that isn't a HIT
+              //if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
+              //{
+              //  System.out.println("SHOOT DOWN else if SUNK");
+              //  xFirstHit = xCurrentCoordinate;
+              //  yFirstHit = yCurrentCoordinate;
+              //}
+              if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 2)  //traverse vertically DOWN until to a location that isn't a HIT
               {
                 System.out.println("Else-If 2 Statement DOWN");
                 yCurrentCoordinate++; //starts traversing down now
@@ -955,12 +960,12 @@ public void AIshoot()
                 System.out.println("Else-If 0 Statement RIGHT");
                 letsShootNow = true;  //kick out of while-loop
               }
-              else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate+1] == 3)  //if the next location is a sunk ship, then make this location the origin
-              {
-                System.out.println("SHOOT RIGHT else if SUNK");
-                xFirstHit = xCurrentCoordinate;
-                yFirstHit = yCurrentCoordinate;
-              }
+              //else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate+1] == 3)  //if the next location is a sunk ship, then make this location the origin
+              //{
+              //  System.out.println("SHOOT RIGHT else if SUNK");
+              //  xFirstHit = xCurrentCoordinate;
+              //  yFirstHit = yCurrentCoordinate;
+              //}
               else
               {
                 System.out.println("RIGHT");
@@ -991,12 +996,12 @@ public void AIshoot()
                 System.out.println("Else-If 0 Statement LEFT");
                 letsShootNow = true;  //kick out of while-loop
               }
-              else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate-1] == 3)  //if the next location is a sunk ship, then make this location the origin
-              {
-                System.out.println("SHOOT LEFT else if SUNK");
-                xFirstHit = xCurrentCoordinate;
-                yFirstHit = yCurrentCoordinate;
-              }
+              //else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate-1] == 3)  //if the next location is a sunk ship, then make this location the origin
+              //{
+              //  System.out.println("SHOOT LEFT else if SUNK");
+              //  xFirstHit = xCurrentCoordinate;
+              //  yFirstHit = yCurrentCoordinate;
+              //}
               else
               {
 
