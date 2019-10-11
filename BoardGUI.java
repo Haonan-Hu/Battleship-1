@@ -701,6 +701,43 @@ public void AIshoot()
         }while(player2board.getOppBoard()[yAI][xAI] != 0);
       }
 
+
+      if(gamemode == "Medium")
+      {
+        boolean shootRandom = true;
+        System.out.println("SHOOTING MEDIUM");
+        for(int xvalue=0;xvalue<cols-1;xvalue++)
+        {
+          for(int yvalue=0;yvalue<rows-1;yvalue++)
+          {
+            if(player1board.getBoard()[yvalue][xvalue] == 2)
+            {
+              shootRandom = false;
+            }
+          }
+        }
+        if (shootRandom)
+        {
+          do{
+            yAI = ThreadLocalRandom.current().nextInt(0,8);
+            xAI = ThreadLocalRandom.current().nextInt(0,8);
+          }while(player2board.getOppBoard()[yAI][xAI] != 0);
+        }
+        else
+        {
+          //set yAI and xAI to ogHitY and ogHitX, but how/where to save those
+          //do{
+          //   yAI++;
+          //   if(player___board.get___Board()[yAI][xAI] == 0)
+          //   {
+          //     boolean shootNow = true;
+          //   }
+
+          //}while(player___board.get___Board()[yAI][xAI] == 2);
+        }
+      }	
+
+
       if(gamemode == "Hard")
       {
         System.out.println("SHOOTING HARD");
