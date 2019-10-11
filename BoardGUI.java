@@ -789,7 +789,8 @@ public void AIshoot()
         {
           shootUP = true; //since we are back to shooting randomly, we reinitialize this to true so that next HIT we start by shooting vertically from it
           shootLEFT = false; //need to reinitialize this to false since leftmost would be the last location of a ship to be shot at, so
-                            //if the leftmost part of a ship is destroyed and there are no more HITs, then the else statement in the left section won't run and set itself back to false
+          shootDOWN = false;
+          shootRIGHT = false;                  //if the leftmost part of a ship is destroyed and there are no more HITs, then the else statement in the left section won't run and set itself back to false
 
           do{
             yAI = ThreadLocalRandom.current().nextInt(0, 8);
@@ -824,26 +825,40 @@ public void AIshoot()
             System.out.println(yCurrentCoordinate);
             System.out.println("xCurrentCoordinate = ");
             System.out.println(xCurrentCoordinate);
+            if(player2board.getOppBoard()[yFirstHit][xFirstHit] == 3)
+            {
+              for(int xvalue=0;xvalue<cols-1;xvalue++)  
+              {
+                for(int yvalue=0;yvalue<rows-1;yvalue++)
+                {
+                  if(player2board.getOppBoard()[yvalue][xvalue] == 2)
+                  {
+                    yFirstHit = yvalue;
+                    xFirstHit = xvalue;
+                  }
+                }
+              }
+            }
 
             if(shootUP) //TODO make sure to account for out of bounds shooting. TODO account for sunk ships
             {
 
               //SHOOTING UP
 
-              if(enclosedVertically())
-              {
-                shootUP = false;
-                shootDOWN = false;
-                shootRIGHT = true;  //if the vertical HITs are enclosed by either MISSES or SUNKS, then that means these vertical HITs
-                                    //are part of horizontal ships, so to prevent a looping of going up and down repeatedly, we start shooting right now
-              }
-              else if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
-              {
-                System.out.println("SHOOT UP else if SUNK");
-                xFirstHit = xCurrentCoordinate;
-                yFirstHit = yCurrentCoordinate;
-              }
-              else if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 2) //traverse vertically UP until to a location that isn't a HIT
+              //if(enclosedVertically())
+              //{
+              //  shootUP = false;
+              //  shootDOWN = false;
+              //  shootRIGHT = true;  //if the vertical HITs are enclosed by either MISSES or SUNKS, then that means these vertical HITs
+              //                      //are part of horizontal ships, so to prevent a looping of going up and down repeatedly, we start shooting right now
+              //}
+              //else if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
+              //{
+              //  System.out.println("SHOOT UP else if SUNK");
+              //  xFirstHit = xCurrentCoordinate;
+              //  yFirstHit = yCurrentCoordinate;
+              //}
+              if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 2) //traverse vertically UP until to a location that isn't a HIT
               {
                 yCurrentCoordinate--;
               }
@@ -862,10 +877,12 @@ public void AIshoot()
               {
                 System.out.println("ELSE UP");
 
-                // xCurrentCoordinate = xFirstHit; //we exhausted all up moves, so go back to origin and try going right and left
-                // yCurrentCoordinate = yFirstHit;
-
+                xCurrentCoordinate = xFirstHit; //we exhausted all up moves, so go back to origin and try going right and left
+                yCurrentCoordinate = yFirstHit;
+                
                 shootUP = false;  //we will now shoot down next time
+                shootRIGHT = false;
+                shootLEFT = false;
                 shootDOWN = true;
               }
 
@@ -875,14 +892,14 @@ public void AIshoot()
 
               //SHOOTING DOWN
 
-              if(enclosedVertically())
-              {
-                shootUP = false;
-                shootDOWN = false;
-                shootRIGHT = true;  //if the vertical HITs are enclosed by either MISSES or SUNKS, then that means these vertical HITs
+              //if(enclosedVertically())
+              //{
+              //  shootUP = false;
+              //  shootDOWN = false;
+              //  shootRIGHT = true;  //if the vertical HITs are enclosed by either MISSES or SUNKS, then that means these vertical HITs
                                     //are part of horizontal ships, so to prevent a looping of going up and down repeatedly, we start shooting right now
-              }
-              else if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
+              //}
+              if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
               {
                 System.out.println("SHOOT DOWN else if SUNK");
                 xFirstHit = xCurrentCoordinate;
@@ -913,9 +930,12 @@ public void AIshoot()
                 // xCurrentCoordinate = xFirstHit; //we exhausted all down moves, so go back to origin and try going right and left since we know the ship cannot be a vertical one
                 // yCurrentCoordinate = yFirstHit;
                 //this is bad because it can create a loop.
-
+                xCurrentCoordinate = xFirstHit; //we exhausted all up moves, so go back to origin and try going right and left
+                yCurrentCoordinate = yFirstHit;
                 shootDOWN = false;
                 shootRIGHT = true; //we will now shoot right next time
+                shootUP = false;
+                shootLEFT = false;
               }
             }
             else if(shootRIGHT)
@@ -945,11 +965,13 @@ public void AIshoot()
               {
                 System.out.println("RIGHT");
 
-                // xCurrentCoordinate = xFirstHit; //we exhausted all right moves, so go back to origin and try going right and left
-                // yCurrentCoordinate = yFirstHit;
+                xCurrentCoordinate = xFirstHit; //we exhausted all right moves, so go back to origin and try going right and left
+                yCurrentCoordinate = yFirstHit;
 
                 shootRIGHT = false;
                 shootLEFT = true; //we will now shoot left next time
+                shootUP = false;
+                shootDOWN = false;
               }
             }
             else if(shootLEFT)
@@ -985,6 +1007,8 @@ public void AIshoot()
 
                 shootLEFT = false;
                 shootUP = true; //we will now shoot UP next time
+                shootRIGHT = false;
+                shootDOWN = false;
               }
             }
 
