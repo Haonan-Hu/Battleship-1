@@ -826,6 +826,8 @@ public void AIshoot()
             System.out.println("xCurrentCoordinate = ");
             System.out.println(xCurrentCoordinate);
 
+
+            //if the origin is a sunk ship spot then change origin to any hit spot
             if(player2board.getOppBoard()[yFirstHit][xFirstHit] == 3)
             {
               for(int xvalue=0;xvalue<cols-1;xvalue++)
@@ -863,7 +865,17 @@ public void AIshoot()
               //  xFirstHit = xCurrentCoordinate;
               //  yFirstHit = yCurrentCoordinate;
               //}
-              if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 2) //traverse vertically UP until to a location that isn't a HIT
+              if(yCurrentCoordinate-1 < 0)
+              {
+                shootUP = false;  //we will now shoot down next time
+                shootRIGHT = false;
+                shootLEFT = false;
+                shootDOWN = true;
+
+                xCurrentCoordinate = xFirstHit; //we exhausted all up moves, so go back to origin and try going right and left
+                yCurrentCoordinate = yFirstHit;
+              }
+              else if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 2) //traverse vertically UP until to a location that isn't a HIT
               {
                 yCurrentCoordinate--;
               }
@@ -910,7 +922,17 @@ public void AIshoot()
               //  xFirstHit = xCurrentCoordinate;
               //  yFirstHit = yCurrentCoordinate;
               //}
-              if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 2)  //traverse vertically DOWN until to a location that isn't a HIT
+              if(yCurrentCoordinate+1 >= 8)
+              {
+                shootUP = false;
+                shootRIGHT = true;
+                shootLEFT = false;
+                shootDOWN = false;
+
+                xCurrentCoordinate = xFirstHit; 
+                yCurrentCoordinate = yFirstHit;
+              }
+              else if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 2)  //traverse vertically DOWN until to a location that isn't a HIT
               {
                 System.out.println("Else-If 2 Statement DOWN");
                 yCurrentCoordinate++; //starts traversing down now
@@ -948,7 +970,17 @@ public void AIshoot()
               //SHOOTING RIGHT
 
 
-              if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate+1] == 2)  //traverse horizontally RIGHT until to a location that isn't a HIT
+              if(xCurrentCoordinate+1 >= 8)
+              {
+                shootUP = false;
+                shootRIGHT = false;
+                shootLEFT = true;
+                shootDOWN = false;
+
+                xCurrentCoordinate = xFirstHit; 
+                yCurrentCoordinate = yFirstHit;
+              }
+              else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate+1] == 2)  //traverse horizontally RIGHT until to a location that isn't a HIT
               {
                 System.out.println("Else-If 2 Statement RIGHT");
                 xCurrentCoordinate++; //starts traversing down now
@@ -984,7 +1016,17 @@ public void AIshoot()
               //SHOOTING LEFT
 
 
-              if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate-1] == 2)  //traverse horizontally LEFT until to a location that isn't a HIT
+              if(xCurrentCoordinate+1 < 0)
+              {
+                shootUP = true;
+                shootRIGHT = false;
+                shootLEFT = false;
+                shootDOWN = false;
+
+                xCurrentCoordinate = xFirstHit; 
+                yCurrentCoordinate = yFirstHit;
+              }
+              else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate-1] == 2)  //traverse horizontally LEFT until to a location that isn't a HIT
               {
                 System.out.println("Else-If 2 Statement LEFT");
                 xCurrentCoordinate--; //starts traversing down now
