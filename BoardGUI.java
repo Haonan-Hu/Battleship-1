@@ -746,7 +746,14 @@ public boolean enclosedVertically()
 public void AIshoot()
 {
 
+  try {
 
+        Thread.sleep(5000);
+
+  } catch (InterruptedException e)
+  {
+    
+  }
   if(p2turn && versusAI) {
     System.out.println("AI line 674ish");
 
@@ -929,7 +936,7 @@ public void AIshoot()
                 shootLEFT = false;
                 shootDOWN = false;
 
-                xCurrentCoordinate = xFirstHit; 
+                xCurrentCoordinate = xFirstHit;
                 yCurrentCoordinate = yFirstHit;
               }
               else if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 2)  //traverse vertically DOWN until to a location that isn't a HIT
@@ -977,7 +984,7 @@ public void AIshoot()
                 shootLEFT = true;
                 shootDOWN = false;
 
-                xCurrentCoordinate = xFirstHit; 
+                xCurrentCoordinate = xFirstHit;
                 yCurrentCoordinate = yFirstHit;
               }
               else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate+1] == 2)  //traverse horizontally RIGHT until to a location that isn't a HIT
@@ -1023,7 +1030,7 @@ public void AIshoot()
                 shootLEFT = false;
                 shootDOWN = false;
 
-                xCurrentCoordinate = xFirstHit; 
+                xCurrentCoordinate = xFirstHit;
                 yCurrentCoordinate = yFirstHit;
               }
               else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate-1] == 2)  //traverse horizontally LEFT until to a location that isn't a HIT
