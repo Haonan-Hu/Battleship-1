@@ -882,7 +882,7 @@ public void AIshoot()
               {
                 System.out.println("ELSE UP");
 
-                xCurrentCoordinate = xFirstHit; //we exhausted all up moves, so go back to origin and try going right and left
+                xCurrentCoordinate = xFirstHit; //we exhausted all up moves, so go back to origin and try going down
                 yCurrentCoordinate = yFirstHit;
 
                 shootUP = false;  //we will now shoot down next time
