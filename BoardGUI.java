@@ -128,7 +128,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
           versusAI = true;
         }
 
-        status = new Label(this.player1name.getText() + " selecting ships");
+        status = new Label(this.player1name.getText() + " selecting ships\n");
         status.setWrapText(true);
         rotateInstr = new Label("Press R to rotate piece");
 
@@ -380,7 +380,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         {
           if (p1turn)
           {
-            close.setText(messageToPlayer + this.player1name.getText() + "'s turn in 2 seconds'");
+            close.setText(messageToPlayer + this.player1name.getText() + "'s turn in 2 seconds\n");
           }
           else if (p2turn)
           {
@@ -388,7 +388,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
           }
           else if (p1selecting)
           {
-              close.setText(this.player1name.getText() + " selecting ships in 2 seconds");
+              close.setText(this.player1name.getText() + " selecting ships in 2 seconds\n");
               //System.out.println("player 1 selecting");
           }
           else if (p2selecting)
@@ -404,14 +404,14 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         {
           if (p1turn)
           {
-            close.setText(messageToPlayer + "\n" + this.player1name.getText() + "'s turn in 5 seconds");
+            close.setText(messageToPlayer + this.player1name.getText() + "'s turn in 5 seconds\n");
           }
           else if (p2turn)
           {
             close.setText(messageToPlayer + "\n" + this.player2name.getText() + "'s turn in 5 seconds");
           }
           else if (p1selecting) {
-              close.setText(this.player1name.getText() + " selecting ships in 5 seconds");
+              close.setText(this.player1name.getText() + " selecting ships in 5 seconds\n");
               System.out.println("player 1 selecting\n");
           }
           else if (p2selecting)
@@ -687,7 +687,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                           p1turn = true;
 
 
-                          status.setText(player1name.getText() + "'s Turn");
+                          status.setText(player1name.getText() + "'s Turn\n");
                           flipScreen("");
 
 
@@ -1153,8 +1153,8 @@ public void AIshoot()
                       if (player1board.gameOver()) {
                           flipScreen(player2name.getText() + " wins!");
                       } else {
-                          status.setText(player1name.getText() + "'s Turn");
-                          flipScreen("AI MISSED YOUR SHIPS!");
+                          status.setText(player1name.getText() + "'s Turn\n");
+                          flipScreen("AI MISSED YOUR SHIPS!\n");
                       }
 
                       //you missed
@@ -1171,8 +1171,8 @@ public void AIshoot()
                       if (player1board.gameOver()) {
                           flipScreen(player2name.getText() + " wins!");
                       } else {
-                          status.setText(player1name.getText() + "'s Turn");
-                          flipScreen("AI HIT ONE OF YOUR SHIPS!");
+                          status.setText(player1name.getText() + "'s Turn\n");
+                          flipScreen("AI HIT ONE OF YOUR SHIPS!\n");
                       }
 
                       //you hit my battleship
@@ -1195,8 +1195,8 @@ public void AIshoot()
                       if (player1board.gameOver()) {
                           flipScreen(player2name.getText() + " wins!");
                       } else {
-                          status.setText(player1name.getText() + "'s Turn");
-                          flipScreen("AI SUNK YOUR BATTLESHIP!");
+                          status.setText(player1name.getText() + "'s Turn\n");
+                          flipScreen("AI SUNK YOUR BATTLESHIP!\n");
                       }
 
 
@@ -1409,7 +1409,7 @@ System.out.println("key pressed");
                             p1turn = true;
 
 
-                            status.setText(player1name.getText() + "'s Turn");
+                            status.setText(player1name.getText() + "'s Turn\n");
                             flipScreen("");
 
 
@@ -1443,10 +1443,10 @@ System.out.println("key pressed");
                                 p1turn = false;
                                 p2turn = true;
                                 if (player2board.gameOver()) {
-                                    flipScreen(player1name.getText() + " wins!");
+                                    flipScreen(player1name.getText() + " wins!\n");
                                 } else {
                                     status.setText(player2name.getText() + "'s Turn");
-                                    flipScreen("MISSED!");
+                                    flipScreen("YOU MISSED!");
 
                                     if(versusAI)  //when we want the AI to then shoot next
                                     {
@@ -1468,7 +1468,7 @@ System.out.println("key pressed");
                                 p1turn = false;
                                 p2turn = true;
                                 if (player2board.gameOver()) {
-                                    flipScreen(player1name.getText() + " wins!");
+                                    flipScreen(player1name.getText() + " wins!\n");
                                 } else {
                                     status.setText(player2name.getText() + "'s Turn");
                                     flipScreen("HIT!");
@@ -1500,7 +1500,7 @@ System.out.println("key pressed");
 
 
                                 if (player2board.gameOver()) {
-                                    flipScreen(player1name.getText() + " wins!");
+                                    flipScreen(player1name.getText() + " wins!\n");
                                 } else {
                                     status.setText(player2name.getText() + "'s Turn");
                                     flipScreen("YOU SUNK AN AI SHIP!");     //when you sink an AI ship
@@ -1542,7 +1542,7 @@ System.out.println("key pressed");
                                 if (player1board.gameOver()) {
                                     flipScreen(player2name.getText() + " wins!");
                                 } else {
-                                    status.setText(player1name.getText() + "'s Turn");
+                                    status.setText(player1name.getText() + "'s Turn\n");
                                     flipScreen("MISSED!");
                                 }
 
@@ -1560,7 +1560,7 @@ System.out.println("key pressed");
                                 if (player1board.gameOver()) {
                                     flipScreen(player2name.getText() + " wins!");
                                 } else {
-                                    status.setText(player1name.getText() + "'s Turn");
+                                    status.setText(player1name.getText() + "'s Turn\n");
                                     flipScreen("HIT!");
                                 }
 
@@ -1584,7 +1584,7 @@ System.out.println("key pressed");
                                 if (player1board.gameOver()) {
                                     flipScreen(player2name.getText() + " wins!");
                                 } else {
-                                    status.setText(player1name.getText() + "'s Turn");
+                                    status.setText(player1name.getText() + "'s Turn\n");
                                     flipScreen("YOU SUNK MY BATTLESHIP!");
                                 }
 
