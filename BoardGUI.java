@@ -1478,7 +1478,7 @@ System.out.println("key pressed");
                                     flipScreen(player1name.getText() + " wins!\n");
                                 } else {
                                     status.setText(player2name.getText() + "'s Turn");
-                                    flipScreen("HIT!\n");
+                                    flipScreen(player1name.getText() + " HIT AN ENEMY SHIP!\n");
 
                                     if(versusAI)  //when we want the AI to then shoot next
                                     {
@@ -1554,7 +1554,7 @@ System.out.println("key pressed");
 
 
                                 if (player1board.gameOver()) {
-                                    flipScreen(player2name.getText() + " wins!");
+                                    flipScreen(player2name.getText() + " wins!\n");
                                 } else {
                                     status.setText(player1name.getText() + "'s Turn\n");
                                     flipScreen(player2name.getText() + " MISSED!\n");
@@ -1572,7 +1572,7 @@ System.out.println("key pressed");
                                 p1turn = true;
                                 p2turn = false;
                                 if (player1board.gameOver()) {
-                                    flipScreen(player2name.getText() + " wins!");
+                                    flipScreen(player2name.getText() + " wins!\n");
                                 } else {
                                     status.setText(player1name.getText() + "'s Turn\n");
                                     if(versusAI)
@@ -1603,7 +1603,7 @@ System.out.println("key pressed");
                                 p2turn = false;
 
                                 if (player1board.gameOver()) {
-                                    flipScreen(player2name.getText() + " wins!");
+                                    flipScreen(player2name.getText() + " wins!\n");
                                 } else {
                                     status.setText(player1name.getText() + "'s Turn\n");
                                     flipScreen(player2name.getText() + " SUNK AN ENEMY SHIP!\n");
