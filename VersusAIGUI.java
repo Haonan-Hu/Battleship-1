@@ -9,7 +9,8 @@ TeamName: BigSegFaultEnergy
   * \Author: Haonan Hu
   * \File:	 VersusAIGUI.java
   * \Date:   10/14/2019
-  * \Brief:  File is java file
+  * \Brief:  This class serves as a the executive class of
+             Battleship as well as making basic gui elements.
 
 KU EECS 448 project 1
 TeamName: Poor Yorick
@@ -18,9 +19,11 @@ TeamName: Poor Yorick
   * \Author: Tri Pham
   * \Author: Apurva Rai
   * \Author: Meet Kapadia
-  * \Brief:  File is java file
+  * \Brief:  This class serves as a the executive class of
+             Battleship as well as making basic gui elements.
 */
 
+//Here are erternal classes that need to be imported
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -83,9 +86,10 @@ public class VersusAIGUI implements OverScene, EventHandler<ActionEvent>
     player1 = new Label("Player 1");
     player1.setFont(Font.font ("Verdana", 20));
     name1 = new TextField("Player 1 Name");
-    player2 = new Label("Player 2"); /* Work cited:
-                                        https://stackoverflow.com/questions/31370478/how-get-an-event-when-text-in-a-textfield-changes-javafx/31370556textfield listeners
-                                      */
+    player2 = new Label("Player 2");
+
+    /* https://stackoverflow.com/questions/31370478/how-get-an-event-when-text-in-a-textfield-changes-javafx/31370556 */
+    /* Textfield listeners */
     name1.textProperty().addListener(new ChangeListener<String>()
     {
       @Override
