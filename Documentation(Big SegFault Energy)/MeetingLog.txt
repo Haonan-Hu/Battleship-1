@@ -59,9 +59,19 @@ Agenda:
 *Help group members have a good understanding of the classes function
 
 Meeting 5:
-Location: LEEP2 1322, Leep2 Ground Floor
+Location: LEEP2 1324, Leep2 Ground Floor
 10/11/2019 @ 9:00 AM to 10:50PM
 All in attendance
 Agenda:
 *Fixed median difficulty AI would stack on while loop if you put three horizontal battleships together
 *
+
+Meeting 6:
+Location: LEEP2 1324, Leep2 Ground Floor
+10/12/2019 @ 2:30 AM to 5:02 PM
+Thomas
+Chance
+
+Agenda:
+*Fixed popups for all gamemodes
+*Attempted to fix button highlight bug

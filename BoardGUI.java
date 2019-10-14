@@ -1564,6 +1564,7 @@ System.out.println("Real Player 2 Turn");
                                 //you hit my battleship
                                 //add transition screen code here
                             } else if (str == "Sunk") {
+                              hitsInaRowP2++;
                                 //need to change every texture of the ship
                                 Ship s = player1board.shipAt(x, y);
                                 for (Point p : (s.getShipCoordinates())) {
