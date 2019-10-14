@@ -98,6 +98,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private int hitsInaRowP1 = 0;
     private int hitsInaRowP2 = 0;
     private int hitsInaRowAi = 0;
+    private boolean p1canNuke = true;	//so the players can only nuke one time per game
+    private boolean p2canNuke = true;
     private boolean shootRandomly = true;
     private int xFirstHit = 0;
     private int yFirstHit = 0;
@@ -1435,7 +1437,7 @@ System.out.println("key pressed");
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if (e.getSource() == board2[y][x] && player1board.getOppBoard()[y][x] == 0) {
-                          if(hitsInaRowP1 == 3)
+                          if(hitsInaRowP1 == 3 && p1canNuke)
                           {
                             System.out.println("P1 USE THE NUKE!");
                             nukeExecute(x,y);
@@ -1566,7 +1568,7 @@ System.out.println("key pressed");
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if (e.getSource() == board1[y][x] && player2board.getOppBoard()[y][x] == 0) {
-                          if(hitsInaRowP2 == 3)
+                          if(hitsInaRowP2 == 3 && p2canNuke)
                      {
                        System.out.println("P2 USE THE NUKE!");
                        nukeExecute(x,y);
@@ -1664,6 +1666,7 @@ System.out.println("key pressed");
     {
       if(p2turn)
       {
+      p2canNuke = false;
       String str = player1board.fire(x, y);
       if (str == "Miss") {
           board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
@@ -1726,6 +1729,7 @@ System.out.println("key pressed");
     }
   }
   else{
+    p1canNuke = false;   
     String str = player2board.fire(x, y);
     if (str == "Miss") {
       hitsInaRowP1 = 0;
