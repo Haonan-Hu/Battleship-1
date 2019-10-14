@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 public class Ship
 {
+  //Declare variables for the ship coordinates, ship size
   private ArrayList<Point> shipCoordinates = new ArrayList<Point>();
   private int shipSize;
   private int shipPieces;
