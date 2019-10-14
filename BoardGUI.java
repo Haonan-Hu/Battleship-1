@@ -1511,7 +1511,7 @@ System.out.println("Real Player 2 Turn");
                 }
 
             }
-
+}
             else if (p2turn && !versusAI) {
               if(hitsInaRowP2 == 3)
          {
@@ -1604,87 +1604,85 @@ System.out.println("Real Player 2 Turn");
 
     }
 
+    public void Nuke(int x, int y)
+    {
+      String str = player1board.fire(x, y);
+      if (str == "Miss") {
+          board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
 
-}
+          board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
 
-public void Nuke(int x, int y)
-{
-  String str = player1board.fire(x, y);
-  if (str == "Miss") {
-      board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
-
-      board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
-
-      player2board.updateOppBoard(x, y, str);
-      p1turn = true;
-      p2turn = false;
+          player2board.updateOppBoard(x, y, str);
+          p1turn = true;
+          p2turn = false;
 
 
-      if (player1board.gameOver()) {
-          flipScreen(player2name.getText() + " wins!");
-      } else {
-          status.setText(player1name.getText() + "'s Turn");
-          flipScreen("MISSED!");
-      }
-      //you missed
-   //add transition screen code here
+          if (player1board.gameOver()) {
+              flipScreen(player2name.getText() + " wins!");
+          } else {
+              status.setText(player1name.getText() + "'s Turn");
+              flipScreen("MISSED!");
+          }
+          //you missed
+       //add transition screen code here
 
-} else if (str == "Hit") {
-   board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+    } else if (str == "Hit") {
+       board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
 
-   board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+       board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
 
-   player2board.updateOppBoard(x, y, str);
-   p1turn = true;
-   p2turn = false;
-   if (player1board.gameOver()) {
-       flipScreen(player2name.getText() + " wins!");
-   } else {
-       status.setText(player1name.getText() + "'s Turn");
-       flipScreen("HIT!");
-   }
+       player2board.updateOppBoard(x, y, str);
+       p1turn = true;
+       p2turn = false;
+       if (player1board.gameOver()) {
+           flipScreen(player2name.getText() + " wins!");
+       } else {
+           status.setText(player1name.getText() + "'s Turn");
+           flipScreen("HIT!");
+       }
 
-   //you hit my battleship
-   //add transition screen code here
-} else if (str == "Sunk") {
-   //need to change every texture of the ship
-   Ship s = player1board.shipAt(x, y);
-   for (Point p : (s.getShipCoordinates())) {
-       board1[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+       //you hit my battleship
+       //add transition screen code here
+    } else if (str == "Sunk") {
+       //need to change every texture of the ship
+       Ship s = player1board.shipAt(x, y);
+       for (Point p : (s.getShipCoordinates())) {
+           board1[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
 
-       board1ref[(int) p.getY()][(int) p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
-       player2board.updateOppBoard((int) p.getX(), (int) p.getY(), str);
+           board1ref[(int) p.getY()][(int) p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+           player2board.updateOppBoard((int) p.getX(), (int) p.getY(), str);
 
-   }
-
-
-   p1turn = true;
-   p2turn = false;
-
-   if (player1board.gameOver()) {
-       flipScreen(player2name.getText() + " wins!");
-   } else {
-       status.setText(player1name.getText() + "'s Turn");
-       flipScreen("YOU SUNK MY BATTLESHIP!");
-   }
+       }
 
 
-   //you sunk my battleship
-   //add transition screen code here
-}
+       p1turn = true;
+       p2turn = false;
+
+       if (player1board.gameOver()) {
+           flipScreen(player2name.getText() + " wins!");
+       } else {
+           status.setText(player1name.getText() + "'s Turn");
+           flipScreen("YOU SUNK MY BATTLESHIP!");
+       }
 
 
-}
+       //you sunk my battleship
+       //add transition screen code here
+    }
 
-public void nukeExecute(int x, int y)
-{
-Nuke(x,y);
-Nuke(x+1,y);
-Nuke(x-1,y);
-Nuke(x-1,y+1);
-Nuke(x,y+1);
-Nuke(x+1,y+1);
-Nuke(x,y-1);
-Nuke(x-1,y-1);
-Nuke(x+1,y-1);
+
+    }
+
+    public void nukeExecute(int x, int y)
+    {
+    Nuke(x,y);
+    Nuke(x+1,y);
+    Nuke(x-1,y);
+    Nuke(x-1,y+1);
+    Nuke(x,y+1);
+    Nuke(x+1,y+1);
+    Nuke(x,y-1);
+    Nuke(x-1,y-1);
+    Nuke(x+1,y-1);
+    }
 }
