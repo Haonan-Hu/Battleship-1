@@ -6,6 +6,8 @@ TODO
 -Once 2 players placed their ships, player2's board has a highlighted block shows player2's ship location,
 it disappears next turn
 -When playing against the AI, the popup for what you just shot at appears immediately behind the popup for the AI
+-Wrong player name being printed when player 2 shoots
+- Nuke popups (9 popups behind each other)
 
 
 finished
