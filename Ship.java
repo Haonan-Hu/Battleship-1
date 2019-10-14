@@ -9,7 +9,8 @@ TeamName: BigSegFaultEnergy
   * \Author: Haonan Hu
   * \File:	 Ship.java
   * \Date:   10/14/2019
-  * \Brief:  File is java file
+  * \Brief:  This class serves as a the executive class of
+             Battleship
 
 KU EECS 448 project 1
 TeamName: Poor Yorick
@@ -19,7 +20,8 @@ TeamName: Poor Yorick
   * \Author: Apurva Rai
   * \Author: Meet Kapadia
   * \File:	 Ship.java
-  * \Brief:  File is java file
+  * \Brief:  This class serves as a the executive class of
+             Battleship
 */
 
 //Here are erternal classes that need to be imported
@@ -35,8 +37,8 @@ public class Ship
 
   /*
    * @ pre none
-   *	@ param Ships' size
-   *	@ post constuctor
+   * @ param Ships' size
+   * @ post constuctor
    * @ return none
    */
   public Ship(int size)
@@ -47,8 +49,8 @@ public class Ship
 
   /*
    * @ pre none
-   *	@ param none
-   *	@ post gets ship's size
+   * @ param none
+   * @ post gets ship's size
    * @ return returns ships size
    */
   public int getSize()
@@ -58,8 +60,8 @@ public class Ship
 
   /*
    * @ pre none
-   *	@ param none
-   *	@ post gets ships coordinates
+   * @ param none
+   * @ post gets ships coordinates
    * @ return returns ship's coordinates
    */
   public ArrayList<Point> getShipCoordinates() {
@@ -68,8 +70,8 @@ public class Ship
 
   /*
    * @ pre none
-   *	@ param x and y values of the grid
-   *	@ post adds new coordinates of the ship
+   * @ param x and y values of the grid
+   * @ post adds new coordinates of the ship
    * @ return none
    */
   public void addCoordinates(int x, int y)
@@ -79,8 +81,8 @@ public class Ship
 
   /*
    * @ pre none
-   *	@ param new x and y values of the grid
-   *	@ post none
+   * @ param new x and y values of the grid
+   * @ post none
    * @ return returns true or false on whether or not the ships are in line
    */
   public boolean inline(int newX, int newY)
@@ -108,8 +110,8 @@ public class Ship
 
   /*
    * @ pre the coordinate an opponenet entered to fire at
-   *	@ param x and y values of the grid
-   *	@ post decreases the number of ships because it was "attacked"
+   * @ param x and y values of the grid
+   * @ post decreases the number of ships because it was "attacked"
    * @ return none
    */
   public void hit(int x, int y)
@@ -119,8 +121,8 @@ public class Ship
 
   /*
    * @ pre none
-   *	@ param x and y values of the grid
-   *	@ post none
+   * @ param x and y values of the grid
+   * @ post none
    * @ return returns true or false on whether or not a specific coordinate exists or not
    */
   public boolean containsCoordinate(int x, int y)
@@ -147,8 +149,8 @@ public class Ship
 
   /*
    * @ pre the coordinate an opponenet entered to fire at a specific ship
-   *	@ param none
-   *	@ post none
+   * @ param none
+   * @ post none
    * @ return returns true or false on whether or not the ship is destroyed or not
    */
   public boolean isDestroyed()

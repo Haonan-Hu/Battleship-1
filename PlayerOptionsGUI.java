@@ -73,8 +73,8 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>
 
   /*
    * @ pre none
-   *	@ param string, stage, and font
-   *	@ post constuctor
+   * @ param string, stage, and font
+   * @ post constuctor
    * @ return none
    */
   public PlayerOptionsGUI(String gamemode, Stage s, Font f)
@@ -167,15 +167,17 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>
 
     //Make the grid for players
     gr = new GridPane();
-    for (int x = 0; x < cols; x++) {
-        ColumnConstraints c = new ColumnConstraints();
-        c.setPercentWidth(100.0 / cols);
-        gr.getColumnConstraints().add(c);
+    for (int x = 0; x < cols; x++)
+    {
+      ColumnConstraints c = new ColumnConstraints();
+      c.setPercentWidth(100.0 / cols);
+      gr.getColumnConstraints().add(c);
     }
-    for (int y = 0; y < rows; y++) {
-        RowConstraints r = new RowConstraints();
-        r.setPercentHeight(100.0 / rows);
-        gr.getRowConstraints().add(r);
+    for (int y = 0; y < rows; y++)
+    {
+      RowConstraints r = new RowConstraints();
+      r.setPercentHeight(100.0 / rows);
+      gr.getRowConstraints().add(r);
     }
 
     //Define Player options for pvp(Start and Exit)
@@ -228,8 +230,8 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>
 
   /*
    * @ pre none
-   *	@ param none
-   *	@ post gets the next scene
+   * @ param none
+   * @ post gets the next scene
    * @ return returns the next scene
    */
   @Override
@@ -240,8 +242,8 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>
 
   /*
    * @ pre none
-   *	@ param action event / button pressed
-   *	@ post button pressed goes to next scene
+   * @ param action event / button pressed
+   * @ post button pressed goes to next scene
    * @ return none
    */
   @Override
@@ -259,7 +261,9 @@ public class PlayerOptionsGUI implements OverScene, EventHandler<ActionEvent>
 
     if (e.getSource() == start)
     {
-      BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(), BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue()), player1.getText(),player2.getText()).getScene(), 9);
+      BattleshipGUI.nextScene(new BoardGUI("pogui", BattleshipGUI.getStage(),
+                              BattleshipGUI.getFont(), Integer.parseInt(shipNum.getValue()),
+                              player1.getText(),player2.getText()).getScene(), 9);
     }
   }
 
