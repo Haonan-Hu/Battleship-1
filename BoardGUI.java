@@ -1431,17 +1431,17 @@ System.out.println("key pressed");
         //the game loop
         if (!p1selecting && !p2selecting && !popupActive) {
             if (p1turn) {
-              if(hitsInaRowP1 == 3)
-              {
-                System.out.println("P1 USE THE NUKE!");
-                e.getSource();
-                nukeExecute(x,y);
-                hitsInaRowP1 = 0;
-              }
-          else{    System.out.println("P1 TURN TO SHOOT");
+             System.out.println("P1 TURN TO SHOOT");
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if (e.getSource() == board2[y][x] && player1board.getOppBoard()[y][x] == 0) {
+                          if(hitsInaRowP1 == 3)
+                          {
+                            System.out.println("P1 USE THE NUKE!");
+                            nukeExecute(x,y);
+                            hitsInaRowP1 = 0;
+                          }
+                          else{
                             String str = player2board.fire(x, y);
                             if (str == "Miss") {
                               hitsInaRowP1 = 0;
@@ -1554,23 +1554,25 @@ System.out.println("key pressed");
 
 
                         }
+                      }
                     }
                 }
-}
+
             }
 
             else if (p2turn && !versusAI) {
-              if(hitsInaRowP2 == 3)
-         {
-           System.out.println("P2 USE THE NUKE!");
-           e.getSource();
-           nukeExecute(x,y);
-           hitsInaRowP2 = 0;
-         }
-         else{
+
+
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
                         if (e.getSource() == board1[y][x] && player2board.getOppBoard()[y][x] == 0) {
+                          if(hitsInaRowP2 == 3)
+                     {
+                       System.out.println("P2 USE THE NUKE!");
+                       nukeExecute(x,y);
+                       hitsInaRowP2 = 0;
+                     }
+                     else{
                             String str = player1board.fire(x, y);
                             if (str == "Miss") {
                               hitsInaRowP2 = 0;
@@ -1649,8 +1651,8 @@ System.out.println("key pressed");
 
                         }
                     }
+                  }
                 }
-}
             }
             initFire = true;
 
@@ -1660,6 +1662,8 @@ System.out.println("key pressed");
     }
     public void Nuke(int x, int y)
     {
+      if(p2turn)
+      {
       String str = player1board.fire(x, y);
       if (str == "Miss") {
           board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
@@ -1667,8 +1671,7 @@ System.out.println("key pressed");
           board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
 
           player2board.updateOppBoard(x, y, str);
-          p1turn = true;
-          p2turn = false;
+
 
 
           if (player1board.gameOver()) {
@@ -1686,8 +1689,7 @@ System.out.println("key pressed");
        board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
 
        player2board.updateOppBoard(x, y, str);
-       p1turn = true;
-       p2turn = false;
+
        if (player1board.gameOver()) {
            flipScreen(player2name.getText() + " wins!");
        } else {
@@ -1709,8 +1711,7 @@ System.out.println("key pressed");
        }
 
 
-       p1turn = true;
-       p2turn = false;
+
 
        if (player1board.gameOver()) {
            flipScreen(player2name.getText() + " wins!");
@@ -1723,6 +1724,115 @@ System.out.println("key pressed");
        //you sunk my battleship
        //add transition screen code here
     }
+  }
+  else{
+    String str = player2board.fire(x, y);
+    if (str == "Miss") {
+      hitsInaRowP1 = 0;
+        board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+
+        board2ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+
+        player1board.updateOppBoard(x, y, str);
+
+        if (player2board.gameOver()) {
+            flipScreen(player1name.getText() + " wins!\n");
+        } else {
+            status.setText(player2name.getText() + "'s Turn");
+            if(versusAI)
+            {
+              flipScreen("YOU MISSED!");
+            }
+            else
+            {
+              flipScreen(player1name.getText() + " MISSED!\n");
+            }
+
+            if(versusAI)  //when we want the AI to then shoot next
+            {
+              System.out.println("calling AIshoot");
+              AIshoot();
+            }
+        }
+
+
+        //you missed
+        //add transition screen code here
+    } else if (str == "Hit") {
+      hitsInaRowP1++;
+        board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+
+        board2ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+
+        player1board.updateOppBoard(x, y, str);
+
+        if (player2board.gameOver()) {
+            flipScreen(player1name.getText() + " wins!\n");
+        } else {
+            status.setText(player2name.getText() + "'s Turn");
+            if(versusAI)
+            {
+              flipScreen("YOU HIT AN ENEMY SHIP!\n");
+
+            }
+            else
+            {
+              flipScreen(player1name.getText() + " HIT AN ENEMY SHIP!\n");
+            }
+
+            if(versusAI)  //when we want the AI to then shoot next
+            {
+              System.out.println("calling AIshoot");
+              AIshoot();
+            }
+        }
+
+
+        //you hit my battleship
+        //add transition screen code here
+    } else if (str == "Sunk") {
+      hitsInaRowP1++;
+        //need to change every texture of the ship
+        Ship s = player2board.shipAt(x, y);
+        for (Point p : (s.getShipCoordinates())) {
+            board2[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+            board2ref[(int) p.getY()][(int) p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+
+            player1board.updateOppBoard((int) p.getX(), (int) p.getY(), str);
+
+        }
+
+
+
+
+
+        if (player2board.gameOver()) {
+            flipScreen(player1name.getText() + " wins!\n");
+        } else {
+            status.setText(player2name.getText() + "'s Turn");
+            if(versusAI)
+            {
+              flipScreen("YOU SUNK AN AI SHIP!");     //when you sink an AI ship
+            }
+            else
+            {
+              flipScreen(player1name.getText() + " SUNK AN ENEMY SHIP!\n");
+            }
+
+            if(versusAI)  //when we want the AI to then shoot next
+            {
+              System.out.println("calling AIshoot");
+              AIshoot();
+            }
+        }
+
+
+        //you sunk my battleship
+        //add transition screen code here
+    }
+
+
+  }
 
 
     }
@@ -1738,6 +1848,8 @@ System.out.println("key pressed");
     Nuke(x,y-1);
     Nuke(x-1,y-1);
     Nuke(x+1,y-1);
+  p1turn = !p1turn;
+  p2turn = !p2turn;
     }
 
 }
