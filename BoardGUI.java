@@ -749,14 +749,7 @@ public boolean enclosedVertically()
 public void AIshoot()
 {
 
-  try {
 
-        Thread.sleep(5000);
-
-  } catch (InterruptedException e)
-  {
-
-  }
   if(p2turn && versusAI) {
     System.out.println("AI line 674ish");
 
