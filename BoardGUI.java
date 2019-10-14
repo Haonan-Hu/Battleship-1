@@ -1144,8 +1144,21 @@ public void AIshoot()
             //here, instead randomly select xAI and yAI until they represent a location that hasn't been shot at before
 
             // if (e.getSource() == board1[y][x] && player2board.getOppBoard()[y][x] == 0) {
+
+            if(hitsInaRowP2 == 3 && p2canNuke)
+            {
+              System.out.println("AI USED THE NUKE!");
+              nukeExecute(x,y);
+              hitsInaRowP2 = 0;
+            }
+            else
+            {
+
+
                   String str = player1board.fire(x, y);
                   if (str == "Miss") {
+                      hitsInaRowP2 = 0;
+
                       board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
 
                       board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
@@ -1166,6 +1179,8 @@ public void AIshoot()
                       //add transition screen code here
 
                   } else if (str == "Hit") {
+                      hitsInaRowP2++;
+
                       board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
 
                       board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
@@ -1184,6 +1199,7 @@ public void AIshoot()
                       //add transition screen code here
                   } else if (str == "Sunk") {
                       //need to change every texture of the ship
+                      hitsInaRowP2++;
                       Ship s = player1board.shipAt(x, y);
                       for (Point p : (s.getShipCoordinates())) {
                           board1[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
@@ -1210,7 +1226,7 @@ public void AIshoot()
                   }
 
 
-
+              }
 
   }
 }
@@ -1668,6 +1684,8 @@ System.out.println("key pressed");
       {
       p2canNuke = false;
       String str = player1board.fire(x, y);
+
+
       if (str == "Miss") {
           board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
 
@@ -1729,7 +1747,7 @@ System.out.println("key pressed");
     }
   }
   else{
-    p1canNuke = false;   
+    p1canNuke = false;
     String str = player2board.fire(x, y);
     if (str == "Miss") {
       hitsInaRowP1 = 0;
@@ -1843,17 +1861,23 @@ System.out.println("key pressed");
 
     public void nukeExecute(int x, int y)
     {
-    Nuke(x,y);
-    Nuke(x+1,y);
-    Nuke(x-1,y);
-    Nuke(x-1,y+1);
-    Nuke(x,y+1);
-    Nuke(x+1,y+1);
-    Nuke(x,y-1);
-    Nuke(x-1,y-1);
-    Nuke(x+1,y-1);
-  p1turn = !p1turn;
-  p2turn = !p2turn;
+        Nuke(x,y);
+        Nuke(x+1,y);
+        Nuke(x-1,y);
+        Nuke(x-1,y+1);
+        Nuke(x,y+1);
+        Nuke(x+1,y+1);
+        Nuke(x,y-1);
+        Nuke(x-1,y-1);
+        Nuke(x+1,y-1);
+
+        p1turn = !p1turn;
+        p2turn = !p2turn;
+
+        if(p2turn && versusAI) //calling for AI's turn
+        {
+          AIshoot();
+        }
     }
 
 }
