@@ -4,3 +4,5 @@ Random numbers:
 https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
 Setting image size:
 https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
+Setting button position:
+https://stackoverflow.com/questions/30641187/position-javafx-button-in-a-specific-location?rq=1
