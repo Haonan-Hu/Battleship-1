@@ -92,7 +92,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private Image radarImage;
     private Stage s;
 
-    private Label player1name, player2name, status, rotateInstr;
+    private Label player1name, player2name, status, rotateInstr, nukeText;
 
     private boolean versusAI = false; //set to true if playing again AI
     private int xAI, yAI; //to randomly select coordinates for placing and shooting
@@ -137,7 +137,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
           versusAI = true;
         }
 
-        status = new Label(this.player1name.getText() + " selecting ships\n");
+        status = new Label(this.player1name.getText() + " selecting ships\n");    //middle text for selecting ships
         status.setWrapText(true);
         rotateInstr = new Label("Press R to rotate piece");
 
@@ -337,6 +337,17 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         gr.setHalignment(status, HPos.RIGHT);
         gr.add(rotateInstr, 0, 0);
         gr.setHalignment(rotateInstr, HPos.LEFT);
+
+        //HERE WE ADD THE NUKE TEXT UNDER PLAYER1
+        nukeText = new Label();
+        // nukeText = new Label("YOU EARNED A NUKE! LAUNCH IT NOW!");
+        nukeText.setWrapText(true);
+        nukeText.setTextAlignment(TextAlignment.CENTER);
+        nukeText.setFont(Font.font("Verdana", 30));
+        nukeText.setTextFill(Color.web("#E50303"));
+
+        gr.add(nukeText, 0,3);
+        gr.setHalignment(nukeText, HPos.CENTER);
 
 
         gr.setStyle("-fx-background-color: lightslategray;");
@@ -1479,6 +1490,15 @@ System.out.println("key pressed");
         //the game loop
         if (!p1selecting && !p2selecting && !popupActive) {
             if (p1turn) {
+              if(hitsInaRowP2 == 3 && p2canNuke)    //TEXT FOR IF P2 EARNS A NUKE
+              {
+                nukeText.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
+              }
+              else
+              {
+                nukeText.setText(""); //set text back to nothing once nuke is used
+              }
+
              System.out.println("P1 TURN TO SHOOT");
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
@@ -1610,6 +1630,14 @@ System.out.println("key pressed");
 
             else if (p2turn && !versusAI) {
 
+              if(hitsInaRowP1 == 3 && p1canNuke)    //TEXT FOR IF P1 HAS A NUKE
+              {
+                nukeText.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
+              }
+              else
+              {
+                nukeText.setText(""); //set text back to nothing once nuke is used
+              }
 
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
