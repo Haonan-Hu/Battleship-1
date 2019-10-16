@@ -40,6 +40,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
@@ -212,6 +213,24 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         board1ref = new ImageView[rows - 1][cols - 1];
         board2ref = new ImageView[rows - 1][cols - 1];
+
+
+        Button radar = new Button();
+        radar.setText("RADAR 1 Per Player");
+        radar.setOnAction(e -> s.close());
+        // radar.setLayoutX(56);
+        // radar.setLayoutY(300);
+        // player1.add(radar);
+        // buttons.add(radar);
+        // player1.add(radar,20,30);
+
+        gr.getChildren().add(radar);
+        // gr.add(radar,1,2);
+        gr.setHalignment(radar, HPos.CENTER);
+        // gr.setValignment(radar, VPos.CENTER);
+        radar.setTranslateX(310);
+        radar.setTranslateY(20);
+
 
         for (int c = 0; c < cols - 1; c++) {
             for (int r = 0; r < rows - 1; r++) {
