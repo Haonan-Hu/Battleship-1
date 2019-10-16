@@ -75,3 +75,16 @@ Chance
 Agenda:
 *Fixed popups for all gamemodes
 *Attempted to fix button highlight bug
+
+MEETING 7 IS MONDAY OF FALL BREAK NEED TO ADD
+Meeting 7:
+Location:
+10/14/2019 @
+Sarah, Haonan, Chance, Markus
+
+Meeting 8:
+Location LEEP2 1322
+10/16/2019 @ 9:00AM to 10:50AM
+Agenda:
+*Add nuke text for player 1
+*Add radar button
