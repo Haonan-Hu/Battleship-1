@@ -2,3 +2,5 @@ Icon image:
 https://publicdomainvectors.org/en/free-clipart/Battleship-colorful-sketch/69364.html
 Random numbers:
 https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
+Setting image size:
+https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx

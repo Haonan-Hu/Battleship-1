@@ -64,6 +64,7 @@ import javafx.concurrent.WorkerStateEvent;
 
 import java.util.concurrent.ThreadLocalRandom;  //for random numbers
 
+
 //#megaclass!!!!!
 
 
@@ -88,6 +89,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private ImageView[][] board1ref, board2ref;
     private int shipSelecting = 0;
     private Image image;
+    private Image radarImage;
     private Stage s;
 
     private Label player1name, player2name, status, rotateInstr;
@@ -148,6 +150,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         //images code begin
 
         image = new Image(getClass().getResourceAsStream("images/water.png"));
+        radarImage = new Image(getClass().getResourceAsStream("images/radar.png"),70,70, false, false);
+        //https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
+
+
 
         ships = new Image[5];
         shipsInOrder = new Image[5];
@@ -216,7 +222,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
 
         Button radar = new Button();
-        radar.setText("RADAR 1 Per Player");
+        // radar.setText("RADAR 1 Per Player");
         radar.setOnAction(e -> s.close());
         // radar.setLayoutX(56);
         // radar.setLayoutY(300);
@@ -230,6 +236,10 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         // gr.setValignment(radar, VPos.CENTER);
         radar.setTranslateX(310);
         radar.setTranslateY(20);
+
+        radar.setDisable(false);  //when true, you cannot click the radar
+
+        radar.setGraphic(new ImageView(radarImage));
 
 
         for (int c = 0; c < cols - 1; c++) {
