@@ -1698,7 +1698,7 @@ System.out.println("key pressed");
                                     }
                                     else
                                     {
-                                      flipScreen(player1name.getText() + " HIT AN ENEMY SHIP!\n");
+                                      flipScreen(player2name.getText() + " HIT AN ENEMY SHIP!\n");
                                     }
                                 }
 
