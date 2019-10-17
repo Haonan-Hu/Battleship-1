@@ -92,7 +92,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private Image radarImage;
     private Stage s;
 
-    private Label player1name, player2name, status, rotateInstr, nukeText;
+    private Label player1name, player2name, status, rotateInstr, nukeTextP1, nukeTextP2;
 
     private boolean versusAI = false; //set to true if playing again AI
     private int xAI, yAI; //to randomly select coordinates for placing and shooting
@@ -339,15 +339,23 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         gr.setHalignment(rotateInstr, HPos.LEFT);
 
         //HERE WE ADD THE NUKE TEXT UNDER PLAYER1
-        nukeText = new Label();
-        // nukeText = new Label("YOU EARNED A NUKE! LAUNCH IT NOW!");
-        nukeText.setWrapText(true);
-        nukeText.setTextAlignment(TextAlignment.CENTER);
-        nukeText.setFont(Font.font("Verdana", 30));
-        nukeText.setTextFill(Color.web("#E50303"));
+        nukeTextP1 = new Label();
+        nukeTextP1.setWrapText(true);
+        nukeTextP1.setTextAlignment(TextAlignment.CENTER);
+        nukeTextP1.setFont(Font.font("Verdana", 30));
+        nukeTextP1.setTextFill(Color.web("#E50303"));
 
-        gr.add(nukeText, 0,3);
-        gr.setHalignment(nukeText, HPos.CENTER);
+        gr.add(nukeTextP1, 0,3);
+        gr.setHalignment(nukeTextP1, HPos.CENTER);
+
+        nukeTextP2 = new Label();
+        nukeTextP2.setWrapText(true);
+        nukeTextP2.setTextAlignment(TextAlignment.CENTER);
+        nukeTextP2.setFont(Font.font("Verdana", 30));
+        nukeTextP2.setTextFill(Color.web("#E50303"));
+
+        gr.add(nukeTextP2, 2,3);
+        gr.setHalignment(nukeTextP2, HPos.CENTER);
 
 
         gr.setStyle("-fx-background-color: lightslategray;");
@@ -1492,11 +1500,11 @@ System.out.println("key pressed");
             if (p1turn) {
               if(hitsInaRowP2 == 3 && p2canNuke)    //TEXT FOR IF P2 EARNS A NUKE
               {
-                nukeText.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
+                nukeTextP2.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
               }
               else
               {
-                nukeText.setText(""); //set text back to nothing once nuke is used
+                nukeTextP2.setText(""); //set text back to nothing once nuke is used
               }
 
              System.out.println("P1 TURN TO SHOOT");
@@ -1632,11 +1640,11 @@ System.out.println("key pressed");
 
               if(hitsInaRowP1 == 3 && p1canNuke)    //TEXT FOR IF P1 HAS A NUKE
               {
-                nukeText.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
+                nukeTextP1.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
               }
               else
               {
-                nukeText.setText(""); //set text back to nothing once nuke is used
+                nukeTextP1.setText(""); //set text back to nothing once nuke is used
               }
 
                 for (int x = 0; x < cols - 1; x++) {
