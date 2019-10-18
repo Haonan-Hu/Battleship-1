@@ -519,7 +519,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                     }
                     else
                     {
-                      Thread.sleep(5000);
+                      Thread.sleep(2000);
                     }
                 } catch (InterruptedException e) {
                 }
@@ -1573,7 +1573,14 @@ System.out.println("key pressed");
                                     }
                                     else
                                     {
-                                      flipScreen(player1name.getText() + " HIT AN ENEMY SHIP!\n");
+                                      if(hitsInaRowP1 == 3)
+                                      {
+                                        flipScreen(player1name.getText() + " HIT AN ENEMY SHIP!\n" + player1name.getText() + " EARNED A NUKE!\n");
+                                      }
+                                      else
+                                      {
+                                        flipScreen(player1name.getText() + " HIT AN ENEMY SHIP!\n");
+                                      }
                                     }
 
                                     if(versusAI)  //when we want the AI to then shoot next
@@ -1613,7 +1620,14 @@ System.out.println("key pressed");
                                     }
                                     else
                                     {
-                                      flipScreen(player1name.getText() + " SUNK AN ENEMY SHIP!\n");
+                                      if(hitsInaRowP1 == 3)
+                                      {
+                                        flipScreen(player1name.getText() + " HIT AN ENEMY SHIP!\n" + player1name.getText() + " EARNED A NUKE!\n");
+                                      }
+                                      else
+                                      {
+                                        flipScreen(player1name.getText() + " SUNK AN ENEMY SHIP!\n");
+                                      }
                                     }
 
                                     if(versusAI)  //when we want the AI to then shoot next
@@ -1638,13 +1652,13 @@ System.out.println("key pressed");
 
             else if (p2turn && !versusAI) {
 
-              if(hitsInaRowP1 == 3 && p1canNuke)    //TEXT FOR IF P1 HAS A NUKE
+              if(hitsInaRowP2 == 3 && p2canNuke)    //TEXT FOR IF P1 HAS A NUKE
               {
-                nukeTextP1.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
+                nukeTextP2.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
               }
               else
               {
-                nukeTextP1.setText(""); //set text back to nothing once nuke is used
+                nukeTextP2.setText(""); //set text back to nothing once nuke is used
               }
 
                 for (int x = 0; x < cols - 1; x++) {
@@ -1698,7 +1712,14 @@ System.out.println("key pressed");
                                     }
                                     else
                                     {
-                                      flipScreen(player2name.getText() + " HIT AN ENEMY SHIP!\n");
+                                      if(hitsInaRowP2 == 3)
+                                      {
+                                        flipScreen(player2name.getText() + " HIT AN ENEMY SHIP!\n" + player2name.getText() + " EARNED A NUKE!\n");
+                                      }
+                                      else
+                                      {
+                                        flipScreen(player2name.getText() + " HIT AN ENEMY SHIP!\n");
+                                      }
                                     }
                                 }
 
@@ -1724,7 +1745,14 @@ System.out.println("key pressed");
                                     flipScreen(player2name.getText() + " wins!\n");
                                 } else {
                                     status.setText(player1name.getText() + "'s Turn\n");
-                                    flipScreen(player2name.getText() + " SUNK AN ENEMY SHIP!\n");
+                                    if(hitsInaRowP2 == 3)
+                                    {
+                                      flipScreen(player2name.getText() + " SUNK AN ENEMY SHIP!\n" + player2name.getText() + " EARNED A NUKE!\n");
+                                    }
+                                    else
+                                    {
+                                      flipScreen(player2name.getText() + " SUNK AN ENEMY SHIP!\n");
+                                    }
                                 }
 
 
