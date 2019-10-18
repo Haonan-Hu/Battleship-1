@@ -1278,6 +1278,16 @@ public void AIshoot()
               }
 
   }
+
+  if(hitsInaRowP2 == 3 && p2canNuke)    //TEXT FOR IF P1 HAS A NUKE
+  {
+    nukeTextP2.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
+  }
+  else
+  {
+    nukeTextP2.setText(""); //set text back to nothing once nuke is used
+  }
+
 }
 
     /*
@@ -1498,15 +1508,6 @@ System.out.println("key pressed");
         //the game loop
         if (!p1selecting && !p2selecting && !popupActive) {
             if (p1turn) {
-              if(hitsInaRowP2 == 3 && p2canNuke)    //TEXT FOR IF P2 EARNS A NUKE
-              {
-                nukeTextP2.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
-              }
-              else
-              {
-                nukeTextP2.setText(""); //set text back to nothing once nuke is used
-              }
-
              System.out.println("P1 TURN TO SHOOT");
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
@@ -1641,25 +1642,22 @@ System.out.println("key pressed");
                                 //you sunk my battleship
                                 //add transition screen code here
                             }
-
-
                         }
                       }
                     }
                 }
 
+                if(hitsInaRowP1 == 3 && p1canNuke)    //TEXT FOR IF P1 HAS A NUKE
+                {
+                  nukeTextP1.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
+                }
+                else
+                {
+                  nukeTextP1.setText(""); //set text back to nothing once nuke is used
+                }
             }
 
             else if (p2turn && !versusAI) {
-
-              if(hitsInaRowP2 == 3 && p2canNuke)    //TEXT FOR IF P1 HAS A NUKE
-              {
-                nukeTextP2.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
-              }
-              else
-              {
-                nukeTextP2.setText(""); //set text back to nothing once nuke is used
-              }
 
                 for (int x = 0; x < cols - 1; x++) {
                     for (int y = 0; y < rows - 1; y++) {
@@ -1764,6 +1762,15 @@ System.out.println("key pressed");
                         }
                     }
                   }
+                }
+
+                if(hitsInaRowP2 == 3 && p2canNuke)    //TEXT FOR IF P1 HAS A NUKE
+                {
+                  nukeTextP2.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
+                }
+                else
+                {
+                  nukeTextP2.setText(""); //set text back to nothing once nuke is used
                 }
             }
             initFire = true;
