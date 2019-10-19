@@ -1986,4 +1986,18 @@ System.out.println("key pressed");
         }
     }
 
+    public void radar(int x, int y)
+    {
+      scan(x,y);
+      scan(x, y+1);
+      scan(x, y-1);
+      scan(x+1,y);
+      scan(x-1, y);
+    }
+
+    public void scan(int x, int y)
+    {
+
+    }
+
 }
