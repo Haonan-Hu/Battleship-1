@@ -223,12 +223,18 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         Button radar = new Button();
         // radar.setText("RADAR 1 Per Player");
-        radar.setOnAction(e -> radar());
-        // radar.setLayoutX(56);
-        // radar.setLayoutY(300);
-        // player1.add(radar);
-        // buttons.add(radar);
-        // player1.add(radar,20,30);
+
+        // radar.setOnAction(e -> this.radar());
+
+        radar.setOnAction(new EventHandler<ActionEvent>() {
+          @Override public void handle(ActionEvent event) {
+            s.radar();
+          }
+        });
+
+        // radar.addActionListener(e -> radar());
+
+
 
         gr.getChildren().add(radar);
         // gr.add(radar,1,2);
@@ -2002,24 +2008,25 @@ System.out.println("key pressed");
       scan(x, y+1);
       scan(x, y-1);
       scan(x+1,y);
-      pscan(x-1, y);
+      scan(x-1, y);
     }
 
     }
 
     public void scan(int x, int y)
     {
-      if (x >= boardSize || y >= boardSize || x < 0 || y < 0)
+      if (x >= cols-2 || y >= cols-2 || x < 0 || y < 0)
       {
         return;
       }
       if(p1turn == true)
       {
-        player1board.getOppBoard()[y][x].setGraphic(player2board.getBoard()[y][x].getGraphic());
+        board2[y][x].setGraphic(board2ref[y][x]);
       }
       else
       {
-        player2board.getOppBoard()[y][x].setGraphic(player1board.getBoard()[y][x].getGraphic());
+        board1[y][x].setGraphic(board1ref[y][x]);
+        // player2board.getOppBoard()[y][x].setGraphic(player1board.getBoard()[y][x].getGraphic());
       }
     }
 
