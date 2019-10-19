@@ -115,6 +115,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private boolean shootLEFT = false;
     private boolean letsShootNow = false;
 
+    private Button radar = new Button();
+
+    private boolean useRadar = false;
+    private int p1xRadarCoord;
+    private int p1yRadarCoord;
+    private int p2xRadarCoord;
+    private int p2yRadarCoord;
+    private boolean p1radarWasUsed = false;
+    private boolean p2radarWasUsed = false;
 
 
     /*
@@ -221,16 +230,18 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         board2ref = new ImageView[rows - 1][cols - 1];
 
 
-        Button radar = new Button();
+        // Button radar = new Button();
         // radar.setText("RADAR 1 Per Player");
 
-        // radar.setOnAction(e -> this.radar());
-
-        radar.setOnAction(new EventHandler<ActionEvent>() {
-          @Override public void handle(ActionEvent event) {
-            s.radar();
-          }
+        radar.setOnAction(e -> {
+          useRadar = true;
         });
+
+        // radar.setOnAction(new EventHandler<ActionEvent>() {
+        //   @Override public void handle(ActionEvent event) {
+        //     s.radar();
+        //   }
+        // });
 
         // radar.addActionListener(e -> radar());
 
@@ -243,7 +254,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         radar.setTranslateX(310);
         radar.setTranslateY(20);
 
-        radar.setDisable(false);  //when true, you cannot click the radar
+        radar.setDisable(true);  //when true, you cannot click the radar
 
         radar.setGraphic(new ImageView(radarImage));
 
@@ -569,7 +580,14 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
 
                     }
-
+                    if(p1radarWasUsed)
+                    {
+                      radar(p1xRadarCoord,p1yRadarCoord);
+                    }
+                    else
+                    {
+                      radar.setDisable(false); //enables player 1's radar if not yet used
+                    }
 
                 } else if (p2turn) {
 
@@ -592,10 +610,18 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                             else if (oppBoard[y][x] == 3)
                                 board1[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
 
+
                         }
 
                     }
-
+                    if(p2radarWasUsed)
+                    {
+                      radar(p2xRadarCoord,p2yRadarCoord);
+                    }
+                    else
+                    {
+                      radar.setDisable(false); //enables player 2's radar if not yet used
+                    }
 
                 }
                 if (p2selecting || p1selecting)
@@ -1336,6 +1362,48 @@ System.out.println("key pressed");
             }
         });
 
+
+        if(useRadar)  //if the radar button was clicked
+        {
+          System.out.println("USE RADAR\n");
+
+          if(p1turn)
+          {
+            for (int x = 0; x < cols - 1; x++)
+            {
+                for (int y = 0; y < rows - 1; y++)
+                {
+                    if (e.getSource() == board2[y][x])
+                    {
+                      radar(x,y);
+                    }
+                }
+
+              }
+              p1radarWasUsed = true;
+              radar.setDisable(true); //disable player 1 from using the radar
+          }
+          else
+          {
+            for (int x = 0; x < cols - 1; x++)
+            {
+                for (int y = 0; y < rows - 1; y++)
+                {
+                    if (e.getSource() == board1[y][x])
+                    {
+                      radar(x,y);
+                    }
+                }
+
+              }
+              p2radarWasUsed = true;
+              radar.setDisable(true); //disable player 2 from using the radar
+          }
+
+            useRadar = false;
+            return;
+          }
+
         if (p1selecting && shipSelecting < 5 && !popupActive) {
 
 
@@ -1783,8 +1851,10 @@ System.out.println("key pressed");
 
         }
 
-
+        radar.setDisable(true); //disables the radar
     }
+
+
     public void Nuke(int x, int y)
     {
       nukeShotCounter++;
@@ -1994,7 +2064,19 @@ System.out.println("key pressed");
 
     public void radar(int x, int y)
     {
-      if(p1turn == true)
+      if(p1turn)
+      {
+        p1xRadarCoord = x;
+        p1yRadarCoord = y;
+      }
+      else
+      {
+        p2xRadarCoord = x;
+        p2yRadarCoord = y;
+      }
+
+
+      if(p1turn)
       {
       scan(x,y);
       scan(x, y+1);
@@ -2015,16 +2097,23 @@ System.out.println("key pressed");
 
     public void scan(int x, int y)
     {
-      if (x >= cols-2 || y >= cols-2 || x < 0 || y < 0)
+      System.out.println("IN SCAN()\n");
+
+      if (x > cols-2 || y > cols-2 || x < 0 || y < 0) //checking if out of bounds
       {
         return;
       }
-      if(p1turn == true)
+      else if(p1turn)
       {
+        System.out.println("IN SCAN() p1turn\n" + "x: " + x + "y: " + y);
         board2[y][x].setGraphic(board2ref[y][x]);
+        // board2[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
+      //  board2ref[y][x] = new ImageView(new Image("images/hit.png", 50, 50, true, true));
+
       }
       else
       {
+        System.out.println("IN SCAN() p2turn\n");
         board1[y][x].setGraphic(board1ref[y][x]);
         // player2board.getOppBoard()[y][x].setGraphic(player1board.getBoard()[y][x].getGraphic());
       }
