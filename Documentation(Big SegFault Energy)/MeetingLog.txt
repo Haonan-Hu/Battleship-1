@@ -64,27 +64,41 @@ Location: LEEP2 1324, Leep2 Ground Floor
 All in attendance
 Agenda:
 *Fixed median difficulty AI would stack on while loop if you put three horizontal battleships together
-*
 
 Meeting 6:
 Location: LEEP2 1324, Leep2 Ground Floor
 10/12/2019 @ 2:30 AM to 5:02 PM
-Thomas
-Chance
-
+Thomas Chance
 Agenda:
 *Fixed popups for all gamemodes
 *Attempted to fix button highlight bug
 
-MEETING 7 IS MONDAY OF FALL BREAK NEED TO ADD
 Meeting 7:
-Location:
-10/14/2019 @
+Location: LEEP2 1324
+10/14/2019 @ 12:00PM to 16:00
 Sarah, Haonan, Chance, Markus
+Agenda:
+*Fixed nuke AI
+*Reformatted files
 
 Meeting 8:
-Location LEEP2 1322
+Location: LEEP2 1322
 10/16/2019 @ 9:00AM to 10:50AM
+Sarah, Haonan, Chance, Thomas
 Agenda:
 *Add nuke text for player 1
 *Add radar button
+
+Meeting 9:
+Location: Leep2 groud floor Alcove
+10/18/2019 @ 16:00 to 17:00AM
+Haonan, Chance, Thomas
+Agenda:
+*Fixed Nuke text bug for both players
+
+Meeting 10:
+Location LEEP2 1326
+10/16/2019 @ 18:30PM to XXXXXXX
+Markus, Haonan, Chance, Thomas
+Agenda:
+*Radar implementation
