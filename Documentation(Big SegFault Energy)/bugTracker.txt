@@ -5,9 +5,7 @@ TODO
 -Player1 cannot rotate his first ship
 -Once 2 players placed their ships, player2's board has a highlighted block shows player2's ship location,
 it disappears next turn
--When playing against the AI, the popup for what you just shot at appears immediately behind the popup for the AI
--Wrong player name being printed when player 2 shoots
-- Nuke popups (9 popups behind each other)
+
 
 
 finished
@@ -15,3 +13,6 @@ finished
 -Cannot place ships in between two ships, even for valid locations at certain times. Seems like it thinks the ship
 to be placed is colliding with the two on it's sides.
 -IMPORTANT! When you rotate a ship while placing it, the middle of the ship becomes the placement point.
+-When playing against the AI, the popup for what you just shot at appears immediately behind the popup for the AI
+-Wrong player name being printed when player 2 shoots
+- Nuke popups (9 popups behind each other)

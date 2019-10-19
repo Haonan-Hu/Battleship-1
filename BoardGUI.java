@@ -118,6 +118,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
     private Button radar = new Button();
 
     private boolean useRadar = false;
+    //since a radar can only be used once per game per player, these variables store the location that the radar was used vvvv
+    //this is because we need to recall the location the player placed the radar each turn to update the board to display the hidden ships
+    //since the boards are cleared every turn
     private int p1xRadarCoord;
     private int p1yRadarCoord;
     private int p2xRadarCoord;
@@ -251,7 +254,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         // gr.add(radar,1,2);
         gr.setHalignment(radar, HPos.CENTER);
         // gr.setValignment(radar, VPos.CENTER);
-        radar.setTranslateX(310);
+        radar.setTranslateX(375); //overiding to position the radar image
         radar.setTranslateY(20);
 
         radar.setDisable(true);  //when true, you cannot click the radar
@@ -509,8 +512,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         if(versusAI && p2turn || p2selecting)   //if the AI active and is its turn
         {
 
-          stage.setX(599);      //set the x and y coordinate of the pop up to below the player 1 pop up
-          stage.setY(500);
+          stage.setX(545);      //set the x and y coordinate of the pop up to below the player 1 pop up
+          stage.setY(400);
 
           stage.setAlwaysOnTop(true);   //the popup always appears on top of the other scenes
           stage.show();                 //show the popup
@@ -518,6 +521,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         }
         else
         {
+          stage.setX(545);
+          stage.setY(200);
+
           stage.setAlwaysOnTop(true);   //the popup always appears on top of the other scenes
           stage.show();                 //show the popup
           popupActive = true;
@@ -580,7 +586,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
 
                     }
-                    if(p1radarWasUsed)
+                    if(p1radarWasUsed)  //if player 1 has used his one-time radar, then each turn we have to call radar with the permanent coordinates of
+                                        //p1xRadarCoord,p1yRadarCoord, so that way it re-updates the '+' sign of the radar. If we didn't do this, then, because
+                                        //every turn the boards are cleared, then after the turn the radar is used, the ships disovered by the radar would not show up
                     {
                       radar(p1xRadarCoord,p1yRadarCoord);
                     }
@@ -614,7 +622,9 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                         }
 
                     }
-                    if(p2radarWasUsed)
+                    if(p2radarWasUsed)//if player 2 has used his one-time radar, then each turn we have to call radar with the permanent coordinates of
+                                        //p1xRadarCoord,p1yRadarCoord, so that way it re-updates the '+' sign of the radar. If we didn't do this, then, because
+                                        //every turn the boards are cleared, then after the turn the radar is used, the ships disovered by the radar would not show up
                     {
                       radar(p2xRadarCoord,p2yRadarCoord);
                     }
