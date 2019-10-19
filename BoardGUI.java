@@ -148,7 +148,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         status = new Label(this.player1name.getText() + " selecting ships\n");    //middle text for selecting ships
         status.setWrapText(true);
-        rotateInstr = new Label("Press R to rotate piece");
+        rotateInstr = new Label("Press R to rotate ship" + "\n" + "Radar button dislpays enemy ships (one per player)"+ "\n" + "Three hits in a row = nuke (one per player)");
 
 
         this.player1name.setFont(f);
