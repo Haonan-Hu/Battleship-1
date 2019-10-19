@@ -223,7 +223,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
         Button radar = new Button();
         // radar.setText("RADAR 1 Per Player");
-        radar.setOnAction(e -> s.close());
+        radar.setOnAction(e -> radar());
         // radar.setLayoutX(56);
         // radar.setLayoutY(300);
         // player1.add(radar);
@@ -1988,16 +1988,41 @@ System.out.println("key pressed");
 
     public void radar(int x, int y)
     {
+      if(p1turn == true)
+      {
       scan(x,y);
       scan(x, y+1);
       scan(x, y-1);
       scan(x+1,y);
       scan(x-1, y);
     }
+    else
+    {
+      scan(x,y);
+      scan(x, y+1);
+      scan(x, y-1);
+      scan(x+1,y);
+      pscan(x-1, y);
+    }
+
+    }
 
     public void scan(int x, int y)
     {
-
+      if (x >= boardSize || y >= boardSize || x < 0 || y < 0)
+      {
+        return;
+      }
+      if(p1turn == true)
+      {
+        player1board.getOppBoard()[y][x].setGraphic(player2board.getBoard()[y][x].getGraphic());
+      }
+      else
+      {
+        player2board.getOppBoard()[y][x].setGraphic(player1board.getBoard()[y][x].getGraphic());
+      }
     }
+
+
 
 }
