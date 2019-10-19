@@ -2116,14 +2116,23 @@ System.out.println("key pressed");
       else if(p1turn)
       {
         System.out.println("IN SCAN() p1turn\n" + "x: " + x + "y: " + y);
+        if(player2board.getBoard()[y][x] == 0)  //if that location is an empty space, we will update it to a "MISS"
+        {
+          board2ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+          player1board.getOppBoard()[y][x] = 1;  //updates from player 1's view that that location is now a miss, so they cannot click it and shoot there
+        }
         board2[y][x].setGraphic(board2ref[y][x]);
-        // board2[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
-      //  board2ref[y][x] = new ImageView(new Image("images/hit.png", 50, 50, true, true));
 
       }
       else
       {
         System.out.println("IN SCAN() p2turn\n");
+        if(player1board.getBoard()[y][x] == 0)  //if that location is an empty space, we will update it to a "MISS"
+        {
+          board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+          player2board.getOppBoard()[y][x] = 1;  //updates from player 2's view that that location is now a miss, so they cannot click it and shoot there
+
+        }
         board1[y][x].setGraphic(board1ref[y][x]);
         // player2board.getOppBoard()[y][x].setGraphic(player1board.getBoard()[y][x].getGraphic());
       }
