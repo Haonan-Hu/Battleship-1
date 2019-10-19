@@ -89,14 +89,14 @@ Agenda:
 *Add nuke text for player 1
 *Add radar button
 
-Meeting 8:
+Meeting 9:
 Location: Leep2 groud floor Alcove
 10/18/2019 @ 16:00 to 17:00AM
 Haonan, Chance, Thomas
 Agenda:
 *Fixed Nuke text bug for both players
 
-Meeting 9:
+Meeting 10:
 Location LEEP2 1326
 10/16/2019 @ 18:30PM to XXXXXXX
 Markus, Haonan, Chance, Thomas
