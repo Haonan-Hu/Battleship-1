@@ -226,4 +226,23 @@ https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-
 Setting button position:
 https://stackoverflow.com/questions/30641187/position-javafx-button-in-a-specific-location?rq=1
 
+https://github.com/maxdgoad/othello-max
+
+https://blog.idrsolutions.com/2014/05/tutorial-change-default-cursor-javafx/
+
+https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
+
+https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/BackgroundFill.html
+
+https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/package-summary.html
+
+https://stackoverflow.com/questions/26454149/make-javafx-wait-and-continue-with-code/26454506
+
+https://www.geeksforgeeks.org/javafx-popup-class/
+
+https://www.programcreek.com/java-api-examples/?api=javafx.scene.input.KeyEvent
+
+https://stackoverflow.com/questions/31370478/how-get-an-event-when-text-in-a-textfield-changes-javafx/31370556
+
+
 
