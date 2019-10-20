@@ -1457,7 +1457,7 @@ public void handle(ActionEvent e) {
                                 }
                                 else
                                 {
-                                  if(hitsInaRowP1 == 3) //if p1 earned a nuke, displays that
+                                  if(hitsInaRowP1 == 3 && p1canNuke) //if p1 earned a nuke, displays that
                                   {
                                     flipScreen(player1name.getText() + " HIT AN ENEMY SHIP!\n" + player1name.getText() + " EARNED A NUKE!\n");
                                   }
@@ -1543,7 +1543,7 @@ public void handle(ActionEvent e) {
                                 }
                                 else  //if not versus AI
                                 {
-                                  if(hitsInaRowP2 == 3) //if you earned a Nuke, we display that you hit and earned a Nuke
+                                  if(hitsInaRowP2 == 3 && p2canNuke) //if you earned a Nuke, we display that you hit and earned a Nuke
                                   {
                                     flipScreen(player2name.getText() + " HIT AN ENEMY SHIP!\n" + player2name.getText() + " EARNED A NUKE!\n");
                                   }
