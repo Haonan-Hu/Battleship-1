@@ -440,61 +440,60 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         //popup code
 
         //clear boards inbetween turns!!!!
-        for (int y = 0; y < 8; y++) {
+        for (int y = 0; y < 8; y++) {       //double for loop for each location in the board
             for (int x = 0; x < 8; x++) {
-                board1[y][x].setGraphic(new ImageView(image));
-                board2[y][x].setGraphic(new ImageView(image));
+                board1[y][x].setGraphic(new ImageView(image));  //set the images of board1 to all water images
+                board2[y][x].setGraphic(new ImageView(image));  //set the images of board2 to all water images
             }
         }
 
-        Label close = new Label();
-        Stage stage = new Stage();
+        Label close = new Label();    //creating a label for the popups for each player
+        Stage stage = new Stage();    //create a new stage for the popups to occur on
 
-        if(versusAI)
+        if(versusAI)    //if versusAI is chosen at the menu screen
         {
-          if (p1turn)
+          if (p1turn)   //if it's player1's turn
           {
-            close.setText(messageToPlayer + this.player1name.getText() + "'s turn in 2 seconds\n");
+            close.setText(messageToPlayer + this.player1name.getText() + "'s turn in 2 seconds\n");   //set the text of the pop up to it's player1's turn
           }
-          else if (p2turn)
+          else if (p2turn)    //if it's player2's turn
           {
-            close.setText(messageToPlayer);
+            close.setText(messageToPlayer);   //AI doesn't get a popup for their turn
           }
-          else if (p1selecting)
+          else if (p1selecting)   //if player1 is selecting ships
           {
-              close.setText(this.player1name.getText() + " selecting ships in 2 seconds\n");
-              //System.out.println("player 1 selecting");
+              close.setText(this.player1name.getText() + " selecting ships in 2 seconds\n");  //change pop up to say player1 is selecting ships
           }
-          else if (p2selecting)
+          else if (p2selecting)   //if player2 is selecting ships
           {
-            close.setText(this.player2name.getText() + " selecting ships in 2 seconds");
+            close.setText(this.player2name.getText() + " selecting ships in 2 seconds");  //change pop up to say player 2 is selecting ships
           }
-          if (messageToPlayer.contains("wins"))
+          if (messageToPlayer.contains("wins"))   //if the popup reads "win"
           {
-            close.setText(messageToPlayer + "Closing game in 2 seconds");
+            close.setText(messageToPlayer + "Closing game in 2 seconds");   //set the pop up text to closing game in 2 seconds
           }
         }
-        else
+        else  //if player vs player is chosen at the start menu
         {
-          if (p1turn)
+          if (p1turn)   //if it's player1's turn
           {
-            close.setText(messageToPlayer + this.player1name.getText() + "'s turn in 5 seconds\n");
+            close.setText(messageToPlayer + this.player1name.getText() + "'s turn in 5 seconds\n");   //change pop up to say player1's turn
           }
-          else if (p2turn)
+          else if (p2turn)    //if it's player2's turn
           {
-            close.setText(messageToPlayer + this.player2name.getText() + "'s turn in 5 seconds");
+            close.setText(messageToPlayer + this.player2name.getText() + "'s turn in 5 seconds");   //change pop up to say player2's turn
           }
-          else if (p1selecting) {
-              close.setText(this.player1name.getText() + " selecting ships in 5 seconds\n");
-              System.out.println("player 1 selecting\n");
-          }
-          else if (p2selecting)
+          else if (p1selecting)   //if player1 is selecting ships
           {
-            close.setText(this.player2name.getText() + " selecting ships in 5 seconds");
+            close.setText(this.player1name.getText() + " selecting ships in 5 seconds\n");  //change pop up to say player1's selecting ships
           }
-          if (messageToPlayer.contains("wins"))
+          else if (p2selecting)   //if player2 is selecting ships
           {
-            close.setText(messageToPlayer + "Closing game in 5 seconds");
+            close.setText(this.player2name.getText() + " selecting ships in 5 seconds");  //change pop up to say selecting player2's selecting ships
+          }
+          if (messageToPlayer.contains("wins"))   //if pop up contains "wins"
+          {
+            close.setText(messageToPlayer + "Closing game in 5 seconds");   //change pop up to say closing game
           }
         }
 
@@ -517,138 +516,123 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
           stage.setAlwaysOnTop(true);   //the popup always appears on top of the other scenes
           stage.show();                 //show the popup
-          popupActive = true;
+          popupActive = true;           //popup is now active
         }
-        else
+        else    //if we aren't playering against AI
         {
-          stage.setX(545);
+          stage.setX(545);    //set the x and y coordinate of player2's pop up to be in line with player1's
           stage.setY(200);
 
           stage.setAlwaysOnTop(true);   //the popup always appears on top of the other scenes
           stage.show();                 //show the popup
-          popupActive = true;
+          popupActive = true;           //popup is now active
         }
 
         //https://stackoverflow.com/questions/26454149/make-javafx-wait-and-continue-with-code/26454506
         //sleep thread code
 
-        Task<Void> sleeper = new Task<Void>() {
+        Task<Void> sleeper = new Task<Void>() {   //creating a new task called sleeper to pause the game during popups
             @Override
-            protected Void call() throws Exception {
-                try {
-                    if(versusAI)
+            protected Void call() throws Exception {    //set the function as protected
+              try{                    //try catch block for the sleeper
+                    if(versusAI)      //if versusAI was chosen at the menu
                     {
-                      Thread.sleep(2000);
+                      Thread.sleep(2000);   //set the sleep timer to 2 seconds
                     }
-                    else
+                    else    //if player vs player
                     {
-                      Thread.sleep(5000);
+                      Thread.sleep(5000);   //set the sleep timer to 5 seconds
                     }
-                } catch (InterruptedException e) {
                 }
-                return null;
+              catch (InterruptedException e)
+              {
+              }
+              return null;    //returns null, as the sleeper function only pauses the timer and doesn't return anything
             }
         };
 
-        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {   //function for when the sleeper returns
             @Override
             public void handle(WorkerStateEvent event) {
-                if (close.getText().contains("wins"))       //if the text in a popup reads "wins" end the program, basically
+                if (close.getText().contains("wins"))       //if the text in a popup reads "wins" end the program
                 {
-                  System.exit(0);
+                  System.exit(0);   //once a player wins, exit the program
                 }
-                pop.hide();         //this line and the two following it happen after every turn
-                stage.hide();
-                popupActive = false;
+                pop.hide();          //this line and the two following it happen after every turn
+                stage.hide();        //hide the stage the popup is on
+                popupActive = false;    //popup is no longer active
 
-                if (p1turn) {
+                if (p1turn) {   //if it's player1's turn
 
-                    //transition screen code
-                    //buttonSwap( board2, board2Opp);
-
-                    int[][] oppBoard = player1board.getOppBoard();
-                    for (int y = 0; y < 8; y++) {
+                    int[][] oppBoard = player1board.getOppBoard();    //create a new 2D board array for player1's view of player2's board
+                    for (int y = 0; y < 8; y++) {       //for loop to set graphics of player1's view of player2's board
                         for (int x = 0; x < 8; x++) {
 
-                            board1[y][x].setGraphic(board1ref[y][x]);
+                            board1[y][x].setGraphic(board1ref[y][x]);   //the left board gets set to player1's view
 
-
-                            if (oppBoard[y][x] == 0)
-                                board2[y][x].setGraphic(new ImageView(image));
-                            else if (oppBoard[y][x] == 1)
-                                board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
-                            else if (oppBoard[y][x] == 2)
-                                board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
-                            else if (oppBoard[y][x] == 3)
-                                board2[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
-
+                            if (oppBoard[y][x] == 0)       //if the oppboard is a 0
+                                board2[y][x].setGraphic(new ImageView(image));    //set the graphic to water
+                            else if (oppBoard[y][x] == 1)   //if the oppbaord is a 1
+                                board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));   //set the image to the miss icon
+                            else if (oppBoard[y][x] == 2)   //if the oppbaord is a 2
+                                board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));    //set the image to the hit icon
+                            else if (oppBoard[y][x] == 3)   //if the oppbaord is a 3
+                                board2[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));   //set the image to the sunk icon
                         }
-
-
                     }
                     if(p1radarWasUsed)  //if player 1 has used his one-time radar, then each turn we have to call radar with the permanent coordinates of
                                         //p1xRadarCoord,p1yRadarCoord, so that way it re-updates the '+' sign of the radar. If we didn't do this, then, because
                                         //every turn the boards are cleared, then after the turn the radar is used, the ships disovered by the radar would not show up
                     {
-                      radar(p1xRadarCoord,p1yRadarCoord);
+                      radar(p1xRadarCoord,p1yRadarCoord);   //call radar, passing in the origin given by where the player clicked on the opponent's board
                     }
-                    else
+                    else    //if radar was not used this turn
                     {
                       radar.setDisable(false); //enables player 1's radar if not yet used
                     }
 
-                } else if (p2turn) {
+                }
 
+                else if (p2turn)    //if it's player2's turn
+                {
 
-                    //transition screen code
-                    //buttonSwap( board1, board1Opp);
-
-                    int[][] oppBoard = player2board.getOppBoard();
-                    for (int y = 0; y < 8; y++) {
+                    int[][] oppBoard = player2board.getOppBoard();    //create a new 2D board array for player2's view of player1's board
+                    for (int y = 0; y < 8; y++) {     //for loop to set graphics of player2's view of player1's board
                         for (int x = 0; x < 8; x++) {
 
-                            board2[y][x].setGraphic(board2ref[y][x]);
+                            board2[y][x].setGraphic(board2ref[y][x]);   //the right board gets set to player2's view
 
-                            if (oppBoard[y][x] == 0)
-                                board1[y][x].setGraphic(new ImageView(image));
-                            else if (oppBoard[y][x] == 1)
-                                board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
-                            else if (oppBoard[y][x] == 2)
-                                board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
-                            else if (oppBoard[y][x] == 3)
-                                board1[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
-
-
+                            if (oppBoard[y][x] == 0)    //if the oppboard is a 0
+                                board1[y][x].setGraphic(new ImageView(image));    //set the graphic to water
+                            else if (oppBoard[y][x] == 1)  //if the oppboard is a 1
+                                board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));   //set the image to the miss icon
+                            else if (oppBoard[y][x] == 2)  //if the oppboard is a 2
+                                board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));    //set the image to the hit icon
+                            else if (oppBoard[y][x] == 3)  //if the oppboard is a 3
+                                board1[y][x].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));   //set the image to the sunk icon
                         }
-
                     }
                     if(p2radarWasUsed)//if player 2 has used his one-time radar, then each turn we have to call radar with the permanent coordinates of
                                         //p1xRadarCoord,p1yRadarCoord, so that way it re-updates the '+' sign of the radar. If we didn't do this, then, because
                                         //every turn the boards are cleared, then after the turn the radar is used, the ships disovered by the radar would not show up
                     {
-                      radar(p2xRadarCoord,p2yRadarCoord);
+                      radar(p2xRadarCoord,p2yRadarCoord);   //call radar, passing in the origin given by where the player clicked on the opponent's board
                     }
-                    else
+                    else    //if radar was not used this turn
                     {
-                      radar.setDisable(false); //enables player 2's radar if not yet used
+                      radar.setDisable(false);  //enables player 2's radar if not yet used
                     }
 
                 }
-                if (p2selecting || p1selecting)
-                    options.setCursor(new ImageCursor(ships[0],
+                if (p2selecting || p1selecting)                   //if either player is selecting
+                    options.setCursor(new ImageCursor(ships[0],   //set the cursor to the ships image they are currently on
                             ships[0].getWidth() / 2,
                             ships[0].getHeight() / 2));
-
             }
-
-
         });
 
-        new Thread(sleeper).start();      //this is where the popup is called
-
-
-
-    }
+        new Thread(sleeper).start();      //the popup is called and starts the sleeper
+    }   //end setOnSucceeded
 
 
     /*
