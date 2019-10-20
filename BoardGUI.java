@@ -1100,8 +1100,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent>
 
     /*
      * @ pre none
-     *	@ param action event / button pressed
-     *	@ post every time you click a button or press a key it reacts
+     * @ param action event / button pressed
+     * @ post every time you click a button or press a key it reacts
      * @ return none
      */
     @Override
