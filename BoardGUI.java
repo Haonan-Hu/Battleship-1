@@ -240,20 +240,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
           useRadar = true;
         });
 
-        // radar.setOnAction(new EventHandler<ActionEvent>() {
-        //   @Override public void handle(ActionEvent event) {
-        //     s.radar();
-        //   }
-        // });
-
-        // radar.addActionListener(e -> radar());
-
-
-
         gr.getChildren().add(radar);
-        // gr.add(radar,1,2);
         gr.setHalignment(radar, HPos.CENTER);
-        // gr.setValignment(radar, VPos.CENTER);
         radar.setTranslateX(375); //overiding to position the radar image
         radar.setTranslateY(20);
 
@@ -381,12 +369,6 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         gr.setStyle("-fx-background-color: lightslategray;");
         options = new Scene(gr, 1000, 800);
 
-
-        //The highest level backend object.
-        //Controls a majority of the game logic
-
-        // Game game = new Game(numOfShips);
-
         //two player boards
         player1board = new GameBoard();
         player2board = new GameBoard();
@@ -419,7 +401,6 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
             }
         }
 
-        //System.out.println(tempShip.getShipCoordinates().toString());
         player.addShip(tempShip);
 
     }
@@ -688,6 +669,7 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         do{
           yAI = ThreadLocalRandom.current().nextInt(0, 8);
           xAI = ThreadLocalRandom.current().nextInt(0, 8);
+          //works cited https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
           randomHorizontal = ThreadLocalRandom.current().nextInt(0,2); //randomly chooses 0 or 1, hence false or true.
           if(randomHorizontal == 0)
           {
@@ -700,25 +682,15 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
         }while(!(shipSelecting < numOfShips && !player2board.isOccupied(xAI, yAI, shipSelecting + 1, horizontal)));
 
 
-        // yAI = ThreadLocalRandom.current().nextInt(0, 8);
-        // xAI = ThreadLocalRandom.current().nextInt(0, 8);
         System.out.println("yAI then xAI");
         System.out.println(yAI);
         System.out.println(xAI);
-        //works cited https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
 
         System.out.println("Inside AIturn");
         System.out.println(Thread.currentThread());
 
         int x = xAI;
         int y = yAI;
-
-          // for (int x = 0; x < cols - 1; x++) {
-          //     for (int y = 0; y < rows - 1; y++) {
-                  // if (board2[yAI][xAI] == board2[y][x] && shipSelecting < numOfShips && !player2board.isOccupied(x, y, shipSelecting + 1, horizontal)) {
-
-                    System.out.println("INSIDE DOUBLE FOR LOOP");
-                    System.out.println("shipSelecting = " + shipSelecting);
 
                       placeShips(player2board, x, y, shipSelecting + 1);
 
@@ -776,7 +748,6 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
 
                       } else if (shipSelecting == numOfShips) {
                           shipSelecting = 0;
-                          System.out.println("p2selecting = false");
                           p2selecting = false;
                           p1selecting = false;
                           options.setCursor(Cursor.DEFAULT);
@@ -790,83 +761,18 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
                       }
                       else
                       {
-                        System.out.println("else statement for whem shipSelecting != numOfShip");
-                      //  AIturn();
+                        // System.out.println("else statement for whem shipSelecting != numOfShip");
                       }
 
-                  // } else if (player2board.isOccupied(x, y, shipSelecting +1, horizontal)) {
-                  //     System.out.println("Invalid Spot");
-                  //     System.out.println("shipSelecting = " + shipSelecting);
-                  //     System.out.println(yAI);
-                  //     System.out.println(xAI);
-                  //     System.out.println(Thread.currentThread());
-                  //     //AIturn();
-                  // }
+
 
               }
 
           }
 
-
-
-
-
-  //  }
   System.out.println("returning AIturn");
   return;
 }
-
-//checks if a 'bridge' of vertical HITs are enclosed by either MISSES or SUNKS, meaning that they are not a part of a vertical ship
-//instead, they must each be individual pieces of horizontal ships. Then, we start shooting horizontally instead
-
-//TODO out of bounds checks
-
-public boolean enclosedVertically()
-{
-  boolean enclosedAtTop = false;
-  boolean enclosedAtBottom = false;
-
-  //looping to the top HIT
-  while(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 2)
-  {
-    yCurrentCoordinate--;
-  }
-  //if the spot above the top most HIT in the 'bridge' is a MISS or SUNK, then it's enclosed at the top
-  if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 1 || player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 3)
-  {
-    enclosedAtTop = true;
-  }
-
-  //now looping to the bottom HIT
-  while(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 2)
-  {
-    yCurrentCoordinate++;
-  }
-  //if the spot below the bottom most HIT in the 'bridge' is a MISS or SUNK, then it's enclosed at the bottom
-  if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 1 || player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 3)
-  {
-    enclosedAtBottom = true;
-  }
-
-  //if this 'bridge' was enclosed at both the top and bottom, then we return true and shoot right from the origin
-  if(enclosedAtTop && enclosedAtBottom)
-  {
-    yCurrentCoordinate = yFirstHit;
-    xCurrentCoordinate = xFirstHit;
-
-    return true;
-  }
-  else
-  {
-    yCurrentCoordinate = yFirstHit; //reinitialize the current coordinates to the origin
-    xCurrentCoordinate = xFirstHit;
-    return false;
-  }
-
-}
-
-
-
 
 //when we want the AI to shoot. Needs to be outside of EventHandler since AI isn't actually pressing a button
 public void AIshoot()
@@ -884,9 +790,8 @@ public void AIshoot()
       // randomly shooting
       if(gamemode == "Easy")
       {
-        System.out.println("SHOOTING EASY");
         do{
-          yAI = ThreadLocalRandom.current().nextInt(0, 8);
+          yAI = ThreadLocalRandom.current().nextInt(0, 8);  //setting random location to shoot as long as it is a valid location
           xAI = ThreadLocalRandom.current().nextInt(0, 8);
         }while(player2board.getOppBoard()[yAI][xAI] != 0);
       }
@@ -928,12 +833,6 @@ public void AIshoot()
           yFirstHit = yAI;
           xCurrentCoordinate = xFirstHit; //initialize xCurrentCoordinate to the first hit
           yCurrentCoordinate = yFirstHit; //initialize xCurrentCoordinate to the first hit
-          System.out.println("Inside shootRandomly");
-          System.out.println("yCurrentCoordinate = ");
-          System.out.println(yCurrentCoordinate);
-          System.out.println("xCurrentCoordinate = ");
-          System.out.println(xCurrentCoordinate);
-
 
         }
         else
@@ -943,15 +842,8 @@ public void AIshoot()
           xCurrentCoordinate = xFirstHit;
           yCurrentCoordinate = yFirstHit;
 
-          //TODO stop it from going out of bounds
           while(!letsShootNow)
           {
-            System.out.println("Inside WHILE-LOOP");
-            System.out.println("yCurrentCoordinate = ");
-            System.out.println(yCurrentCoordinate);
-            System.out.println("xCurrentCoordinate = ");
-            System.out.println(xCurrentCoordinate);
-
 
             //if the origin is a sunk ship spot then change origin to any hit spot
             if(player2board.getOppBoard()[yFirstHit][xFirstHit] == 3)
@@ -973,24 +865,9 @@ public void AIshoot()
               }
             }
 
-            if(shootUP) //TODO make sure to account for out of bounds shooting. TODO account for sunk ships
+            if(shootUP)
             {
-
               //SHOOTING UP
-
-              //if(enclosedVertically())
-              //{
-              //  shootUP = false;
-              //  shootDOWN = false;
-              //  shootRIGHT = true;  //if the vertical HITs are enclosed by either MISSES or SUNKS, then that means these vertical HITs
-              //                      //are part of horizontal ships, so to prevent a looping of going up and down repeatedly, we start shooting right now
-              //}
-              //else if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
-              //{
-              //  System.out.println("SHOOT UP else if SUNK");
-              //  xFirstHit = xCurrentCoordinate;
-              //  yFirstHit = yCurrentCoordinate;
-              //}
               if(yCurrentCoordinate-1 < 0)
               {
                 shootUP = false;  //we will now shoot down next time
@@ -1011,11 +888,6 @@ public void AIshoot()
                 System.out.println("Else-If Statement UP");
                 letsShootNow = true;  //kick out of while-loop
               }
-              // else if(player2board.getOppBoard()[yCurrentCoordinate-1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
-              // {
-              //   xFirstHit = xCurrentCoordinate;
-              //   yFirstHit = yCurrentCoordinate;
-              // }
               else
               {
                 System.out.println("ELSE UP");
@@ -1028,26 +900,10 @@ public void AIshoot()
                 shootLEFT = false;
                 shootDOWN = true;
               }
-
             }
             else if(shootDOWN)
             {
-
               //SHOOTING DOWN
-
-              //if(enclosedVertically())
-              //{
-              //  shootUP = false;
-              //  shootDOWN = false;
-              //  shootRIGHT = true;  //if the vertical HITs are enclosed by either MISSES or SUNKS, then that means these vertical HITs
-                                    //are part of horizontal ships, so to prevent a looping of going up and down repeatedly, we start shooting right now
-              //}
-              //if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
-              //{
-              //  System.out.println("SHOOT DOWN else if SUNK");
-              //  xFirstHit = xCurrentCoordinate;
-              //  yFirstHit = yCurrentCoordinate;
-              //}
               if(yCurrentCoordinate+1 >= 8)
               {
                 shootUP = false;
@@ -1062,7 +918,6 @@ public void AIshoot()
               {
                 System.out.println("Else-If 2 Statement DOWN");
                 yCurrentCoordinate++; //starts traversing down now
-                // shootVertical = false; //only set this to false in the down check
               }
 
               else if((player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate] != 1) && player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 0) ////if the current coordinate is not a miss AND if the next one down after going down following all the HITs is a blank spot, then we should shoot at it
@@ -1071,18 +926,10 @@ public void AIshoot()
                 System.out.println("Else-If 0 Statement DOWN");
                 letsShootNow = true;  //kick out of while-loop
               }
-              // else if(player2board.getOppBoard()[yCurrentCoordinate+1][xCurrentCoordinate] == 3)  //if the next location is a sunk ship, then make this location the origin
-              // {
-              //   xFirstHit = xCurrentCoordinate;
-              //   yFirstHit = yCurrentCoordinate;
-              // }
               else
               {
                 System.out.println("DOWN");
 
-                // xCurrentCoordinate = xFirstHit; //we exhausted all down moves, so go back to origin and try going right and left since we know the ship cannot be a vertical one
-                // yCurrentCoordinate = yFirstHit;
-                //this is bad because it can create a loop.
                 xCurrentCoordinate = xFirstHit; //we exhausted all up moves, so go back to origin and try going right and left
                 yCurrentCoordinate = yFirstHit;
                 shootDOWN = false;
@@ -1094,7 +941,6 @@ public void AIshoot()
             else if(shootRIGHT)
             {
               //SHOOTING RIGHT
-
 
               if(xCurrentCoordinate+1 >= 8)
               {
@@ -1110,7 +956,6 @@ public void AIshoot()
               {
                 System.out.println("Else-If 2 Statement RIGHT");
                 xCurrentCoordinate++; //starts traversing down now
-                // shootVertical = false; //only set this to false in the down check
               }
               else if((player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate] != 1) &&player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate+1] == 0) ////if the current coordinate is not a miss AND if the next one right after going right following all the HITs is a blank spot, then we should shoot at it
               {
@@ -1118,12 +963,6 @@ public void AIshoot()
                 System.out.println("Else-If 0 Statement RIGHT");
                 letsShootNow = true;  //kick out of while-loop
               }
-              //else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate+1] == 3)  //if the next location is a sunk ship, then make this location the origin
-              //{
-              //  System.out.println("SHOOT RIGHT else if SUNK");
-              //  xFirstHit = xCurrentCoordinate;
-              //  yFirstHit = yCurrentCoordinate;
-              //}
               else
               {
                 System.out.println("RIGHT");
@@ -1141,7 +980,6 @@ public void AIshoot()
             {
               //SHOOTING LEFT
 
-
               if(xCurrentCoordinate+1 < 0)
               {
                 shootUP = true;
@@ -1156,7 +994,6 @@ public void AIshoot()
               {
                 System.out.println("Else-If 2 Statement LEFT");
                 xCurrentCoordinate--; //starts traversing down now
-                // shootVertical = false; //only set this to false in the down check
               }
               else if((player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate] != 1) && player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate-1] == 0) ////if the current coordinate is not a miss AND if the next one left after going left following all the HITs is a blank spot, then we should shoot at it
               {
@@ -1164,12 +1001,6 @@ public void AIshoot()
                 System.out.println("Else-If 0 Statement LEFT");
                 letsShootNow = true;  //kick out of while-loop
               }
-              //else if(player2board.getOppBoard()[yCurrentCoordinate][xCurrentCoordinate-1] == 3)  //if the next location is a sunk ship, then make this location the origin
-              //{
-              //  System.out.println("SHOOT LEFT else if SUNK");
-              //  xFirstHit = xCurrentCoordinate;
-              //  yFirstHit = yCurrentCoordinate;
-              //}
               else
               {
 
@@ -1184,22 +1015,16 @@ public void AIshoot()
                 shootDOWN = false;
               }
             }
-
           }
-
-
 
           xAI = xCurrentCoordinate;
           yAI = yCurrentCoordinate;
         }
-
-
         //end Medium shooting
       }
 
       if(gamemode == "Hard")
       {
-        System.out.println("SHOOTING HARD");
           for(int xvalue=0;xvalue<cols-1;xvalue++)
           {
             for(int yvalue=0;yvalue<rows-1;yvalue++)
@@ -1207,9 +1032,7 @@ public void AIshoot()
 
               xAI = xvalue;
               yAI = yvalue;
-              System.out.println("In hard mode");
-              System.out.println("yAI = " + yAI);
-              System.out.println("xAI = " + xAI);
+
               if(player1board.getBoard()[yAI][xAI] == 1 && player2board.getOppBoard()[yAI][xAI] == 0)
               {
                 break;  //breaks out of this for loop if yAI and xAI represent a location that is a ship and hasn't been shot at yet
@@ -1232,19 +1055,13 @@ public void AIshoot()
       x = xAI;
       y = yAI;
 
-            //here, instead randomly select xAI and yAI until they represent a location that hasn't been shot at before
-
-            // if (e.getSource() == board1[y][x] && player2board.getOppBoard()[y][x] == 0) {
-
             if(hitsInaRowP2 == 3 && p2canNuke)
             {
-              System.out.println("AI USED THE NUKE!");
               nukeExecute(x,y);
               hitsInaRowP2 = 0;
             }
             else
             {
-
 
                   String str = player1board.fire(x, y);
                   if (str == "Miss") {
@@ -1300,7 +1117,6 @@ public void AIshoot()
 
                       }
 
-
                       p1turn = true;
                       p2turn = false;
 
@@ -1311,14 +1127,11 @@ public void AIshoot()
                           flipScreen("AI SUNK YOUR BATTLESHIP!\n");
                       }
 
-
                       //you sunk my battleship
                       //add transition screen code here
                   }
 
-
               }
-
   }
 
   if(hitsInaRowP2 == 3 && p2canNuke)    //TEXT FOR IF P1 HAS A NUKE
@@ -1346,22 +1159,14 @@ System.out.println("key pressed");
         options.getRoot().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
 
-
                 if (ke.getCode() == KeyCode.R && (p1selecting || p2selecting)) {
 
-                    //System.out.println("rotate");
-
-                    //notice the set rotate hehehe ;)
                     if (horizontal) {
                         options.setCursor(new ImageCursor(shipsVert[shipSelecting],
-                                // shipsVert[shipSelecting].getWidth() / (2 * (shipSelecting + 1)),
-                                // shipsVert[shipSelecting].getHeight() / (2)));
                                 shipsVert[shipSelecting].getHeight() / (2 * (shipSelecting + 1)),
                                 shipsVert[shipSelecting].getWidth() / (2)));
                     } else if (!horizontal) {
                         options.setCursor(new ImageCursor(ships[shipSelecting],
-                                // ships[shipSelecting].getWidth() / (2),
-                                // ships[shipSelecting].getHeight() / (2 * (shipSelecting + 1))));
                                 ships[shipSelecting].getHeight() / (2),
                                 ships[shipSelecting].getWidth() / (2 * (shipSelecting + 1))));
                     }
@@ -1371,7 +1176,6 @@ System.out.println("key pressed");
                 }
             }
         });
-
 
         if(useRadar)  //if the radar button was clicked
         {
@@ -1416,13 +1220,11 @@ System.out.println("key pressed");
 
         if (p1selecting && shipSelecting < 5 && !popupActive) {
 
-
             for (int x = 0; x < cols - 1; x++) {
                 for (int y = 0; y < rows - 1; y++) {
                     if (e.getSource() == board1[y][x] && shipSelecting < numOfShips && !player1board.isOccupied(x, y, shipSelecting + 1, horizontal)) {
 
                         placeShips(player1board, x, y, shipSelecting + 1);
-                        //player1board.printBoard();
 
                         if (horizontal) {
 
@@ -1461,8 +1263,6 @@ System.out.println("key pressed");
 
                         }
 
-
-                        //board1[y][x].setGraphic(new ImageView(ships[shipSelecting]));
                         shipSelecting++;
 
                         if (shipSelecting < numOfShips) {
@@ -1495,7 +1295,6 @@ System.out.println("key pressed");
                         }
 
                     } else if (player1board.isOccupied(x, y, shipSelecting, horizontal)) {
-                        //System.out.println("Invalid Spot");
                     }
 
                 }
@@ -1572,10 +1371,8 @@ System.out.println("key pressed");
                             options.setCursor(Cursor.DEFAULT);
                             p1turn = true;
 
-
                             status.setText(player1name.getText() + "'s Turn\n");
                             flipScreen("");
-
 
                         }
 
@@ -1633,7 +1430,6 @@ System.out.println("key pressed");
                                       AIshoot();
                                     }
                                 }
-
 
                                 //you missed
                                 //add transition screen code here
@@ -1932,8 +1728,6 @@ System.out.println("key pressed");
            status.setText(player1name.getText() + "'s Turn");
            // flipScreen("YOU SUNK MY BATTLESHIP!");
        }
-
-
        //you sunk my battleship
        //add transition screen code here
     }
@@ -2016,10 +1810,6 @@ System.out.println("key pressed");
 
         }
 
-
-
-
-
         if (player2board.gameOver()) {
             flipScreen(player1name.getText() + " wins!\n");
         } else {
@@ -2039,7 +1829,6 @@ System.out.println("key pressed");
               AIshoot();
             }
         }
-
 
         //you sunk my battleship
         //add transition screen code here
@@ -2134,10 +1923,8 @@ System.out.println("key pressed");
 
         }
         board1[y][x].setGraphic(board1ref[y][x]);
-        // player2board.getOppBoard()[y][x].setGraphic(player1board.getBoard()[y][x].getGraphic());
       }
     }
-
 
 
 }
