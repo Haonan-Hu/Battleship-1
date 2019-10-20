@@ -1610,8 +1610,13 @@ public void handle(ActionEvent e) {
     radar.setDisable(true); //disables the radar
 }
 
-
-public void Nuke(int x, int y)    //nuke function for if the player earns a nuke
+/*
+ * @ pre none
+ * @ param x and y for coordinates
+ * @ post nuke function for if the player earns a nuke
+ * @ return none
+ */
+public void Nuke(int x, int y)
 {
   nukeShotCounter++;    //increase the nukeShotCounter variable, since we have called this function from nukeExecute
 
@@ -1763,7 +1768,13 @@ else if (str == "Sunk") {     //if the string is sunk
   }
 }   //end nuke function
 
-public void nukeExecute(int x, int y)   //nukeExecute function that calls the nuke function for each location
+/*
+ * @ pre none
+ * @ param x and y as coordinates
+ * @ post nukeExecute function that calls the nuke function for each location
+ * @ return none
+ */
+public void nukeExecute(int x, int y)
 {
     Nuke(x,y);      //call nuke at the center location
     Nuke(x+1,y);    //call nuke at the right location
@@ -1784,6 +1795,12 @@ public void nukeExecute(int x, int y)   //nukeExecute function that calls the nu
     }
 }   //end nukeExecute function
 
+/*
+ * @ pre none
+ * @ param x and y are coordinates
+ * @ post a + shape radar placed on desired location
+ * @ return none
+ */
 public void radar(int x, int y)   //radar function that calls scan to gather the enemy board
 {
   if(p1turn)    //if it's player1 using the radar
@@ -1816,7 +1833,13 @@ else             //if it's player2 using the radar
 
 }   //end radar function
 
-public void scan(int x, int y)    //scan function that scans the enemy player's board
+/*
+ * @ pre none
+ * @ param x and y are coordinates
+ * @ post scan function that scans the enemy player's board
+ * @ return none
+ */
+public void scan(int x, int y)
 {
 
   if (x > cols-2 || y > cols-2 || x < 0 || y < 0) //checking if out of bounds
