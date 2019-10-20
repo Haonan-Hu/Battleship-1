@@ -1,16 +1,16 @@
 Meeting 0:
 Location: Eaton Hall Lawr2
-09/27/2019 @ 11:30 to 11:50
+09/27/2019 @ 11:30AM to 11:50AM
 All in attendance
 Agenda:
 *Brainstorming for extra features that we need to add
   *Nuke on hit streak
-  *UAV(probably)
-*Trying to solve Compilor Error
+  *UAV radar(probably)
+*Trying to solve Compiler Error
 
 Meeting 1:
 Location: Eaton Hall Lawr2
-09/30/2019 @ 11:35 to 11:50
+09/30/2019 @ 11:35AM to 11:50AM
 All in attendance
 Agenda:
 *Fixed compile Error(Thanks to Markus)
@@ -36,7 +36,7 @@ Agenda:
 
 Meeting 2:
 Location: LEEP2 1328
-10/05/2019 @ 12:00 to 17:00
+10/05/2019 @ 12:00PM to 5:00PM
 Haonan, Chance, Thomas
 Agenda:
 *Class diagram for the project
@@ -45,7 +45,7 @@ Agenda:
 
 Meeting 3:
 Location: LEEP2 1328
-10/05/2019 @ 12:00 PM to 17:00PM
+10/06/2019 @ 12:00PM to 5:00PM
 Chance, Thomas
 Agenda:
 *AI(easy mode) is done
@@ -53,29 +53,29 @@ Agenda:
 
 Meeting 4:
 Location: LEEP2 1322, Eaton 1005C
-10/05/2019 @ 9:00 AM to 10:50PM
+10/09/2019 @ 9:00AM to 10:50AM
 All in attendance
 Agenda:
 *Help group members have a good understanding of the classes function
 
 Meeting 5:
 Location: LEEP2 1324, Leep2 Ground Floor
-10/11/2019 @ 9:00 AM to 10:50PM
+10/11/2019 @ 9:00AM to 10:50AM
 All in attendance
 Agenda:
 *Fixed median difficulty AI would stack on while loop if you put three horizontal battleships together
 
 Meeting 6:
 Location: LEEP2 1324, Leep2 Ground Floor
-10/12/2019 @ 2:30 AM to 5:02 PM
-Thomas Chance
+10/12/2019 @ 2:30PM to 5:02PM
+Thomas, Chance
 Agenda:
 *Fixed popups for all gamemodes
 *Attempted to fix button highlight bug
 
 Meeting 7:
 Location: LEEP2 1324
-10/14/2019 @ 12:00PM to 16:00
+10/14/2019 @ 12:00PM to 4:00PM
 Sarah, Haonan, Chance, Markus
 Agenda:
 *Fixed nuke AI
@@ -90,15 +90,46 @@ Agenda:
 *Add radar button
 
 Meeting 9:
-Location: Leep2 groud floor Alcove
-10/18/2019 @ 16:00 to 17:00AM
+Location: Leep2 ground floor Alcove
+10/18/2019 @ 4:00PM to 5:00PM
 Haonan, Chance, Thomas
 Agenda:
 *Fixed Nuke text bug for both players
 
 Meeting 10:
 Location LEEP2 1326
-10/16/2019 @ 18:30PM to XXXXXXX
+10/18/2019 @ 6:30PM to 8:30PM
 Markus, Haonan, Chance, Thomas
 Agenda:
 *Radar implementation
+
+Meeting 11:
+Location LEEP2 1326
+10/18/2019 @ 8:30PM to 10:00PM
+Markus, Chance, Thomas
+Agenda:
+*Compete radar implementation
+
+Meeting 12:
+Location LEEP2 1324
+10/19/2019 @ 4:00PM to 6:00PM, 7:00PM to 9:00PM
+Chance, Thomas
+Agenda:
+*Radar bug fix
+*Begin commenting
+
+Meeting 13:
+Location LEEP2 1324
+10/19/2019 @ 11:00AM to 1:15PM
+Haonan, Thomas, Chance
+Agenda:
+*Commenting/documentation
+*Resolve merge conflicts
+
+Meeting 14:
+Location LEEP2 1324
+10/19/2019 @ 1:15PM to 3:30PM
+All in attendance
+Agenda:
+*Finish retrospective/documentation
+*Turn in final version of project
