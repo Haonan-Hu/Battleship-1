@@ -465,14 +465,12 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
           {
             close.setText(messageToPlayer + this.player2name.getText() + "'s turn in 5 seconds");   //change pop up to say player2's turn
           }
-<<<<<<< HEAD
           else if (p1selecting)   //if player1 is selecting ships
           {
             close.setText(this.player1name.getText() + " selecting ships in 5 seconds\n");  //change pop up to say player1's selecting ships
-=======
+          }
           else if (p1selecting) {
               close.setText(this.player1name.getText() + " selecting ships in 5 seconds\n");
->>>>>>> c4f118d139b5c5a389c766eba4d8ff13cdd42363
           }
           else if (p2selecting)   //if player2 is selecting ships
           {
