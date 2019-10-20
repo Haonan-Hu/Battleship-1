@@ -1,6 +1,6 @@
 # Battleship-1
 Battleship game made in Java with JavaFX (FOR KU EECS 448 FALL 2019)
-
+Forked from team Poor Yorick: https://github.com/maxdgoad/Battleship 
 # HOW TO DOWNLOAD AND PLAY:
 Due to version errors with Java, do the following for Mac (and similar actions for Linux) in order to compile and play the game.
 
@@ -15,7 +15,7 @@ Due to version errors with Java, do the following for Mac (and similar actions f
     &nbsp;&nbsp;&nbsp;  *Type in: sudo rm -fr /Library/Java/JavaVirtualMachines/jdkXXXX.jdk(deleating path, if you have multiple jdk version installed,\
      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  use commands to delete them all and make sure there is nothing left in /Library/Java/JavaVirtualMachines)\
    &nbsp;&nbsp;&nbsp; *Second Step(install JDK8)\
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *Link is here: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html\
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *Link is here: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html \
      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *Type in: open ~/.bash_profile\
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  *Add export JAVA_HOME=$(/usr/libexec/java_home) (Manually set up Path)\
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *Save and close file\
@@ -244,5 +244,5 @@ https://www.programcreek.com/java-api-examples/?api=javafx.scene.input.KeyEvent
 
 https://stackoverflow.com/questions/31370478/how-get-an-event-when-text-in-a-textfield-changes-javafx/31370556
 
-
+Forked from Team Poor Yorick: https://github.com/maxdgoad/Battleship
 
