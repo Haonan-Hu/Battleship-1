@@ -5,6 +5,7 @@ TODO
 -Player1 cannot rotate his first ship
 -Once 2 players placed their ships, player2's board has a highlighted block shows player2's ship location,
 it disappears next turn
+-When you win by using a Nuke, it prints 9 "you win" messages behind "you used a nuke" message
 
 
 
