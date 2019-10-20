@@ -628,8 +628,8 @@ public class BoardGUI implements OverScene, EventHandler<ActionEvent> {
      */
 
     @Override
-    public Scene getScene() {
-        return options;
+    public Scene getScene() {   //overiding the getScene functino
+        return options;   //returns options scene for the game options in the menu
     }
 
 
@@ -1085,7 +1085,7 @@ public void AIshoot()
 
   if(hitsInaRowP2 == 3 && p2canNuke)    //TEXT FOR IF P1 HAS A NUKE
   {
-    nukeTextP2.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");
+    nukeTextP2.setText("YOU EARNED A NUKE! LAUNCH IT NOW!");    //set the text to earned a nuke
   }
   else
   {
@@ -1600,94 +1600,84 @@ public void AIshoot()
     }
 
 
-    public void Nuke(int x, int y)
+    public void Nuke(int x, int y)    //nuke function for if the player earns a nuke
     {
-      nukeShotCounter++;
+      nukeShotCounter++;    //increase the nukeShotCounter variable, since we have called this function from nukeExecute
 
-      if(nukeShotCounter == 8)
+      if(nukeShotCounter == 8)    //if nukeShotCounter is 8, we have exhausted the shots for our nuke
       {
-        flipScreen("LAUNCHING NUKE!\n");
-        nukeShotCounter = 0;
+        flipScreen("LAUNCHING NUKE!\n");    //send the message for the popup as launching nuke
+        nukeShotCounter = 0;    //reset nukeShotCounter for the next player's use
       }
 
-      if(p2turn)
+      if(p2turn)    //if it's player 2's turn
       {
-      p2canNuke = false;
-      String str = player1board.fire(x, y);
+      p2canNuke = false;      //set p2canNuke to false, they have now used their one-time use nuke
+      String str = player1board.fire(x, y);       //set a string for determining the value of the shot for firing
 
 
-      if (str == "Miss") {
-          board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+      if (str == "Miss") {      //if the string is a miss
+          board1[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));   //set the graphic to a miss on player1's board
 
-          board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+          board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));    //set the graphic to a miss on the left board
 
-          player2board.updateOppBoard(x, y, str);
+          player2board.updateOppBoard(x, y, str);   //update the oppBoard of player2 passing in a miss for string
 
 
 
-          if (player1board.gameOver()) {
-          } else {
-              status.setText(player1name.getText() + "'s Turn");
+          if (player1board.gameOver()) {    //if the game ended
           }
-          //you missed
-       //add transition screen code here
+          else {  //if the game did not end
+              status.setText(player1name.getText() + "'s Turn");    //set the center label text to player1's turn
+          }
 
-    } else if (str == "Hit") {
-       board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+        }
+      else if (str == "Hit") {      //if the string is a hit
+       board1[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));   //set the graphic to a hit on player1's board
+       board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));    //set the graphic to a hit on the left board
 
-       board1ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
+       player2board.updateOppBoard(x, y, str);    //update the oppBoard of player2 passing in a hit for the string
 
-       player2board.updateOppBoard(x, y, str);
-
-       if (player1board.gameOver()) {
-           flipScreen(player2name.getText() + " wins!");
-       } else {
-           status.setText(player1name.getText() + "'s Turn");
+       if (player1board.gameOver()) {   //if the game ended
+           flipScreen(player2name.getText() + " wins!");    //set the pop up text to player2 wins
+       } else {   //if the game did not end
+           status.setText(player1name.getText() + "'s Turn");   //set the center label text to player1's turn
        }
 
        //you hit my battleship
        //add transition screen code here
-    } else if (str == "Sunk") {
-       //need to change every texture of the ship
-       Ship s = player1board.shipAt(x, y);
-       for (Point p : (s.getShipCoordinates())) {
-           board1[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
-
-           board1ref[(int) p.getY()][(int) p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
-           player2board.updateOppBoard((int) p.getX(), (int) p.getY(), str);
-
+    } else if (str == "Sunk") {   //if the string is a sunk
+       Ship s = player1board.shipAt(x, y);        //create a new ship object at the x and y that player2 shot
+       for (Point p : (s.getShipCoordinates())) {   //for each pice of the ship
+           board1[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));    //set the graphic to sunk on player1's board
+           board1ref[(int) p.getY()][(int) p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));   //set the graphic to sunk on the left board
+           player2board.updateOppBoard((int) p.getX(), (int) p.getY(), str);    //update player2 board, passing in sunk for the string
        }
 
-
-
-
-       if (player1board.gameOver()) {
-           // flipScreen(player2name.getText() + " wins!");
-       } else {
-           status.setText(player1name.getText() + "'s Turn");
-           // flipScreen("YOU SUNK MY BATTLESHIP!");
+       if (player1board.gameOver()) {   //if the game ended
        }
-       //you sunk my battleship
-       //add transition screen code here
+       else {   //if the game did not end
+           status.setText(player1name.getText() + "'s Turn");   //set the center label text to player1's turn
+       }
     }
   }
-  else{
-    p1canNuke = false;
-    String str = player2board.fire(x, y);
-    if (str == "Miss") {
-      hitsInaRowP1 = 0;
-        board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));
 
-        board2ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+  else{     //if it's player1's turn
+    p1canNuke = false;    //set p1canNuke to false, they have used their one use nuke
+    String str = player2board.fire(x, y);   //create a string for determing the value of the shot
+    if (str == "Miss") {    //if the string is a miss
+      hitsInaRowP1 = 0;   //set hitsInaRowP1 to 0, they did not get a hit
+        board2[y][x].setGraphic(new ImageView(new Image("images/miss.png", 50, 50, true, true)));   //set the graphic of player2's board to a miss
+        board2ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));    //set the graphic of the right board to a miss
 
-        player1board.updateOppBoard(x, y, str);
+        player1board.updateOppBoard(x, y, str);   //update player1's opp board, passing in miss as the string
 
-        if (player2board.gameOver()) {
-            flipScreen(player1name.getText() + " wins!\n");
+        if (player2board.gameOver()) {      //if the game ended
+            flipScreen(player1name.getText() + " wins!\n");   //set the popup text to player 1 wins
         }
-        else {
-            status.setText(player2name.getText() + "'s Turn");
-            if(versusAI)
+        else {    //if the game did not end
+            status.setText(player2name.getText() + "'s Turn");    //set the center label to player2's turn
+            if(versusAI)    //if we are playing AI
             {
               // flipScreen("YOU MISSED!");
             }
@@ -1698,166 +1688,150 @@ public void AIshoot()
 
             if(versusAI)  //when we want the AI to then shoot next
             {
-              AIshoot();
+              AIshoot();    //call AIshoot so the AI shoots
             }
         }
+      }
+    else if (str == "Hit") {    //if the string is a hit
+      hitsInaRowP1++;             //increment hitsInaRowP1
+        board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));  //set the graphic of player2's board to hit
+        board2ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));   //set the graphic of the right board to hit
 
+        player1board.updateOppBoard(x, y, str);   //update player1's opp board passing in hit as the string
 
-        //you missed
-        //add transition screen code here
-    } else if (str == "Hit") {
-      hitsInaRowP1++;
-        board2[y][x].setGraphic(new ImageView(new Image("images/hit.png", 50, 50, true, true)));
-
-        board2ref[y][x] = (new ImageView(new Image("images/hit.png", 50, 50, true, true)));
-
-        player1board.updateOppBoard(x, y, str);
-
-        if (player2board.gameOver()) {
+        if (player2board.gameOver()) {    //if the game ended
             flipScreen(player1name.getText() + " wins!\n");
-        } else {
-            status.setText(player2name.getText() + "'s Turn");
-            if(versusAI)
+        }
+        else {    //if the game did not end
+            status.setText(player2name.getText() + "'s Turn");      //set the center label to player2's turn
+            if(versusAI)    //if we are facing AI
             {
               // flipScreen("YOU HIT AN ENEMY SHIP!\n");
             }
-            else
+            else    //if we are not facing AI
             {
               // flipScreen(player1name.getText() + " HIT AN ENEMY SHIP!\n");
             }
 
             if(versusAI)  //when we want the AI to then shoot next
             {
-              AIshoot();
+              AIshoot();    //call AIshoot so the AI shoots
             }
         }
+    }
+    else if (str == "Sunk") {     //if the string is sunk
+      hitsInaRowP1++;   //increment hitsInaRowP1
+        Ship s = player2board.shipAt(x, y);         //create a ship object at the x and y the player shot
+        for (Point p : (s.getShipCoordinates())) {    //for the length of the ship
+            board2[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));   //set the graphic of player2's board to a sunk
+            board2ref[(int) p.getY()][(int) p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));      //set the graphi of the right board to a sunk
 
-
-        //you hit my battleship
-        //add transition screen code here
-    } else if (str == "Sunk") {
-      hitsInaRowP1++;
-        //need to change every texture of the ship
-        Ship s = player2board.shipAt(x, y);
-        for (Point p : (s.getShipCoordinates())) {
-            board2[(int) p.getY()][(int) p.getX()].setGraphic(new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
-            board2ref[(int) p.getY()][(int) p.getX()] = (new ImageView(new Image("images/sunk.png", 50, 50, true, true)));
-
-            player1board.updateOppBoard((int) p.getX(), (int) p.getY(), str);
+            player1board.updateOppBoard((int) p.getX(), (int) p.getY(), str);   //udpate p1's oppBoard, passing in sunk as the string
 
         }
 
-        if (player2board.gameOver()) {
-            flipScreen(player1name.getText() + " wins!\n");
+        if (player2board.gameOver()) {      //if the game ended
+            flipScreen(player1name.getText() + " wins!\n");     //set the popup text to player1 wins
         } else {
-            status.setText(player2name.getText() + "'s Turn");
-            if(versusAI)
+            status.setText(player2name.getText() + "'s Turn");    //set the center label text to player2's turn
+            if(versusAI)    //if we are facing AI
             {
               // flipScreen("YOU SUNK AN AI SHIP!");     //when you sink an AI ship
             }
-            else
+            else    //if we are not facing AI
             {
               // flipScreen(player1name.getText() + " SUNK AN ENEMY SHIP!\n");
             }
 
             if(versusAI)  //when we want the AI to then shoot next
             {
-              AIshoot();
+              AIshoot();      //call AIshoot so the AI can shoot
             }
+          }
         }
+      }
+    }   //end nuke function
 
-        //you sunk my battleship
-        //add transition screen code here
-    }
-
-
-  }
-
-
-    }
-
-    public void nukeExecute(int x, int y)
+    public void nukeExecute(int x, int y)   //nukeExecute function that calls the nuke function for each location
     {
-        Nuke(x,y);
-        Nuke(x+1,y);
-        Nuke(x-1,y);
-        Nuke(x-1,y+1);
-        Nuke(x,y+1);
-        Nuke(x+1,y+1);
-        Nuke(x,y-1);
-        Nuke(x-1,y-1);
-        Nuke(x+1,y-1);
+        Nuke(x,y);      //call nuke at the center location
+        Nuke(x+1,y);    //call nuke at the right location
+        Nuke(x-1,y);    //call nuke at the left location
+        Nuke(x-1,y+1);  //call nuke at the top left location
+        Nuke(x,y+1);    //call nuke at the middle top location
+        Nuke(x+1,y+1);  //call nuke at the top right location
+        Nuke(x,y-1);    //call nuke at the middle bottom location
+        Nuke(x-1,y-1);  //call nuke at the bottom left location
+        Nuke(x+1,y-1);  //call nuke at the bottom right location
 
-        p1turn = !p1turn;
+        p1turn = !p1turn;   //switching to the next turn
         p2turn = !p2turn;
 
         if(p2turn && versusAI) //calling for AI's turn
         {
-          AIshoot();
+          AIshoot();    //call AIshoot so AI can shoot
         }
-    }
+    }   //end nukeExecute function
 
-    public void radar(int x, int y)
+    public void radar(int x, int y)   //radar function that calls scan to gather the enemy board
     {
-      if(p1turn)
+      if(p1turn)    //if it's player1 using the radar
       {
-        p1xRadarCoord = x;
+        p1xRadarCoord = x;    //set the origin coordinates of the radar
         p1yRadarCoord = y;
       }
-      else
+      else          //if it's player2 using the radar
       {
         p2xRadarCoord = x;
         p2yRadarCoord = y;
       }
 
-
-      if(p1turn)
+      if(p1turn)    //if it's player1 using the radar
       {
-      scan(x,y);
-      scan(x, y+1);
-      scan(x, y-1);
-      scan(x+1,y);
-      scan(x-1, y);
+      scan(x,y);      //call scan at the center location
+      scan(x, y+1);   //call scan at the center top location
+      scan(x, y-1);   //call scan at the center bottom location
+      scan(x+1,y);    //call scan at the right location
+      scan(x-1, y);   //call scan at the left location
     }
-    else
+    else             //if it's player2 using the radar
     {
-      scan(x,y);
-      scan(x, y+1);
-      scan(x, y-1);
-      scan(x+1,y);
-      scan(x-1, y);
+      scan(x,y);      //call scan at the center location
+      scan(x, y+1);   //call scan at the center top location
+      scan(x, y-1);   //call scan at the center bottom location
+      scan(x+1,y);    //call scan at the right location
+      scan(x-1, y);   //call scan at the left location
     }
 
-    }
+  }   //end radar function
 
-    public void scan(int x, int y)
+    public void scan(int x, int y)    //scan function that scans the enemy player's board
     {
 
       if (x > cols-2 || y > cols-2 || x < 0 || y < 0) //checking if out of bounds
       {
-        return;
+        return;   //if out of bounds just return out of the function
       }
-      else if(p1turn)
+      else if(p1turn)   //if in bounds and player1's turn
       {
         if(player2board.getBoard()[y][x] == 0)  //if that location is an empty space, we will update it to a "MISS"
         {
-          board2ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+          board2ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));    //update the right board with misses if there are no ships on player2's board
           player1board.getOppBoard()[y][x] = 1;  //updates from player 1's view that that location is now a miss, so they cannot click it and shoot there
         }
-        board2[y][x].setGraphic(board2ref[y][x]);
+        board2[y][x].setGraphic(board2ref[y][x]);   //set the graphic of player2's board to newly updated graphic locations
 
       }
-      else
+      else    //if in bounds and player2's turn
       {
         if(player1board.getBoard()[y][x] == 0)  //if that location is an empty space, we will update it to a "MISS"
         {
-          board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));
+          board1ref[y][x] = (new ImageView(new Image("images/miss.png", 50, 50, true, true)));    //update the left board with misses if there are no ships on player1's board
           player2board.getOppBoard()[y][x] = 1;  //updates from player 2's view that that location is now a miss, so they cannot click it and shoot there
 
         }
-        board1[y][x].setGraphic(board1ref[y][x]);
+        board1[y][x].setGraphic(board1ref[y][x]);   //set the graphic of player1's board to the newly updated graphic locations
       }
-    }
+    }   //end the scan function
 
-
-}
+}  //end boardGUI
